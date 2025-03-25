@@ -1,0 +1,23 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<!--<suite name="Login Test Suite">-->
+<!--    <test name="Login Test Cases">-->
+<!--        <classes>-->
+<!--            <class name="tests.LoginTestWeb"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--</suite>-->
+<suite name="CompleteTestSuite">
+
+<test name="SingleUserLoginTest">
+    <classes>
+        <class name="tests.LoginTestWeb"/>
+    </classes>
+</test>
+
+<test name="MultiUserLoginTest" parallel="methods" thread-count="4">
+    <classes>
+        <class name="tests.MultiUserLoginTest"/>
+    </classes>
+</test>
+
+</suite>
