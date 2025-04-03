@@ -10,10 +10,15 @@ import org.testng.annotations.BeforeClass;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 
 public class BaseTestApp {
     protected AndroidDriver driver;
+    protected List<String> expectedMenusORG = Arrays.asList("Kiểm kê", "Sửa chữa", "Cấp phát", "Điều chuyển", "Thanh lý", "Chuyển đi", "Thu hồi", "Bảo trì", "In QR", "Ghi chú", "Danh sách TS");
+    protected List<String> expectedMenusAM = Arrays.asList("Kiểm kê", "Sửa chữa", "Cấp phát", "Điều chuyển", "Thanh lý", "Chuyển đi", "Thu hồi", "Bảo trì", "In QR", "Ghi chú","Danh sách TS");
+    protected List<String> expectedMenusAU = Arrays.asList("Sửa chữa", "Cấp phát", "Điều chuyển","Thu hồi", "Bảo trì", "In QR", "Ghi chú", "Danh sách TS");
+    protected List<String> expectedMenusUser = Arrays.asList("In QR", "Danh sách TS");
 
     @BeforeClass
     public void setup() throws MalformedURLException {

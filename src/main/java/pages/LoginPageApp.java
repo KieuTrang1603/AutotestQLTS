@@ -107,13 +107,15 @@ public class LoginPageApp {
         try {
             // Kiểm tra một phần tử đặc trưng trên trang chính sau đăng nhập
             WebElement homeElement = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                    AppiumBy.xpath("//android.view.View[@content-desc='Phòng VTTTBYT 1']")
+                    AppiumBy.xpath("//android.view.View[@content-desc='Bệnh viện đa khoa A']")
             ));
             return homeElement.isDisplayed();
         } catch (Exception e) {
             return false;
         }
     }
+
+
 
     // Phương thức đăng nhập chung
     public void login(String username, String password) {

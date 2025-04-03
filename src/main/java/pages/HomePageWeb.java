@@ -17,6 +17,14 @@ public class HomePageWeb {
     @FindBy(xpath = "//div[contains(@class, 'topbar-navigation')]//button//span[@class='item-text']")
     private List<WebElement> menuButtons;
 
+    @FindBy(xpath = "//button//span[text()='Quản lý']")
+    private WebElement manager;
+
+    @FindBy(xpath = "//button//span//div//span[text()='Quản lý TSCĐ']")
+    private WebElement manager_tscd;
+
+    @FindBy(xpath = "//button[text()='Cấp phát TSCĐ']")
+    private WebElement allocation_voucher_tscd;
     // Constructor
     public HomePageWeb(WebDriver driver) {
         this.driver = driver;
@@ -40,5 +48,11 @@ public class HomePageWeb {
             }
         }
         return true;
+    }
+
+    public void Allocation_voucher_ui(){
+        manager.click();
+        manager_tscd.click();
+        allocation_voucher_tscd.click();
     }
 }
