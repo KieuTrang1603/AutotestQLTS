@@ -1,16 +1,16 @@
 package tests;
-import org.testng.Assert;
+import drivers.DriverManager;
 import org.testng.annotations.Test;
-import pages.HomePageApp;
-import pages.LoginPageApp;
+import pagesapp.HomePageApp;
+import pagesapp.LoginPageApp;
 import base.BaseTestApp;
 
 public class LoginTestApp extends BaseTestApp {
 
     @Test
     public void testSuccessfulLoginORG() {
-        LoginPageApp loginPageapp = new LoginPageApp(driver);
-        HomePageApp homePageApp = new HomePageApp(driver);
+        LoginPageApp loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
+        HomePageApp homePageApp = new HomePageApp(DriverManager.getAppiumDriver());
         loginPageapp.login("bvdka", "123456");
         if (homePageApp.isMenuDisplayedCorrectly(expectedMenusORG) && loginPageapp.isLoginSuccessful()) {
             System.out.println("Đăng nhập thành công!");
@@ -18,13 +18,13 @@ public class LoginTestApp extends BaseTestApp {
             System.out.println("Đăng nhập thất bại!");
 //            Assert.assertFalse(loginPageapp.getErrorMessage().isEmpty(), "Lỗi hiển thị không mong đợi!");
         }
-        homePageApp.setLogOut();
+        homePageApp.setLogOut2();
     }
 
     @Test
     public void testSuccessfulLoginAM() {
-        LoginPageApp loginPageapp = new LoginPageApp(driver);
-        HomePageApp homePageApp = new HomePageApp(driver);
+        LoginPageApp loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
+        HomePageApp homePageApp = new HomePageApp(DriverManager.getAppiumDriver());
         loginPageapp.login("pvt1", "123456");
         if (homePageApp.isMenuDisplayedCorrectly(expectedMenusAM)) {
             System.out.println("Đăng nhập thành công!");
@@ -37,8 +37,8 @@ public class LoginTestApp extends BaseTestApp {
 
     @Test
     public void testSuccessfulLoginAU() {
-        LoginPageApp loginPageapp = new LoginPageApp(driver);
-        HomePageApp homePageApp = new HomePageApp(driver);
+        LoginPageApp loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
+        HomePageApp homePageApp = new HomePageApp(DriverManager.getAppiumDriver());
         loginPageapp.login("audemo", "123123");
         if (homePageApp.isMenuDisplayedCorrectly(expectedMenusAU)) {
             System.out.println("Đăng nhập thành công!");
@@ -46,13 +46,13 @@ public class LoginTestApp extends BaseTestApp {
             System.out.println("Đăng nhập thất bại!");
 //            Assert.assertFalse(loginPageapp.getErrorMessage().isEmpty(), "Lỗi hiển thị không mong đợi!");
         }
-        homePageApp.setLogOut();
+        homePageApp.setLogOut1();
     }
 
     @Test
     public void testSuccessfulLoginUser() {
-        LoginPageApp loginPageapp = new LoginPageApp(driver);
-        HomePageApp homePageApp = new HomePageApp(driver);
+        LoginPageApp loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
+        HomePageApp homePageApp = new HomePageApp(DriverManager.getAppiumDriver());
         loginPageapp.login("userkn", "123456");
         if (homePageApp.isMenuDisplayedCorrectly(expectedMenusUser)) {
             System.out.println("Đăng nhập thành công!");
@@ -60,7 +60,7 @@ public class LoginTestApp extends BaseTestApp {
             System.out.println("Đăng nhập thất bại!");
 //            Assert.assertFalse(loginPageapp.getErrorMessage().isEmpty(), "Lỗi hiển thị không mong đợi!");
         }
-        homePageApp.setLogOut();
+        homePageApp.setLogOut1();
     }
 
 //    @Test

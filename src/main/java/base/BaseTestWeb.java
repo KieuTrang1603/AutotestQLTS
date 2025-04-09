@@ -1,5 +1,6 @@
 package base;
 
+import drivers.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
@@ -9,8 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BaseTestWeb {
-    private static ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
-    protected WebDriver driver;
     protected List<String> expectedMenusORG = Arrays.asList("Trang chủ", "Yêu cầu trình duyệt", "Quản lý", "Báo cáo tổng hợp", "Danh mục", "Hệ thống");
     protected List<String> expectedMenusAM = Arrays.asList("Trang chủ", "Yêu cầu trình duyệt", "Quản lý", "Báo cáo tổng hợp", "Danh mục");
     protected List<String> expectedMenusAU = Arrays.asList("Trang chủ", "Quản lý");
@@ -18,26 +17,23 @@ public class BaseTestWeb {
 
     @BeforeMethod
     public void setUp() {
+        WebDriver driver;
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://asvn.oceantech.com.vn/session/signin");
-        threadLocalDriver.set(driver);
+        DriverManager.setWebDriver(driver);
     }
-    public WebDriver getDriver() {
-        return threadLocalDriver.get();
-    }
+
 
     @AfterMethod
     public void tearDown() {
         try {
-            WebDriver driver = threadLocalDriver.get();
-            if (driver != null) {
-                driver.quit();
+            WebDriver driver = DriverManager.getWebDriver();
+            if (DriverManager.getWebDriver() != null) {
+                DriverManager.quitWebDriver();
             }
         } catch (Exception e) {
             System.out.println("Lỗi khi đóng WebDriver: " + e.getMessage());
-        } finally {
-            threadLocalDriver.remove(); // Xóa ThreadLocal
         }
     }
 }

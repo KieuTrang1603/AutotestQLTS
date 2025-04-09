@@ -1,14 +1,12 @@
 package tests;
 
 
-import base.BaseTestApp;
 import base.BaseTestWeb;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import drivers.DriverManager;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.HomePageWeb;
-import pages.LoginPageWeb;
+import pagesweb.HomePageWeb;
+import pagesweb.LoginPageWeb;
 
 public class LoginTestWeb extends BaseTestWeb {
     private LoginPageWeb loginPageWeb;
@@ -16,8 +14,8 @@ public class LoginTestWeb extends BaseTestWeb {
 
     @Test
     public void testSuccessfulLoginORG() {
-        loginPageWeb = new LoginPageWeb(driver);
-        homePageWeb = new HomePageWeb(driver);
+        loginPageWeb = new LoginPageWeb(DriverManager.getWebDriver());
+        homePageWeb = new HomePageWeb(DriverManager.getWebDriver());
         // Điều hướng đến trang đăng nhập
         loginPageWeb.navigateToLoginPage();
 
@@ -35,8 +33,8 @@ public class LoginTestWeb extends BaseTestWeb {
 
     @Test
     public void testSuccessfulLoginAM() {
-        loginPageWeb = new LoginPageWeb(driver);
-        homePageWeb = new HomePageWeb(driver);
+        loginPageWeb = new LoginPageWeb(DriverManager.getWebDriver());
+        homePageWeb = new HomePageWeb(DriverManager.getWebDriver());
         // Điều hướng đến trang đăng nhập
         loginPageWeb.navigateToLoginPage();
 
@@ -54,8 +52,8 @@ public class LoginTestWeb extends BaseTestWeb {
 
     @Test
     public void testSuccessfulLoginAU() {
-        loginPageWeb = new LoginPageWeb(driver);
-        homePageWeb = new HomePageWeb(driver);
+        loginPageWeb = new LoginPageWeb(DriverManager.getWebDriver());
+        homePageWeb = new HomePageWeb(DriverManager.getWebDriver());
         // Điều hướng đến trang đăng nhập
         loginPageWeb.navigateToLoginPage();
 
@@ -73,8 +71,8 @@ public class LoginTestWeb extends BaseTestWeb {
 
     @Test
     public void testSuccessfulLoginUser() {
-        loginPageWeb = new LoginPageWeb(driver);
-        homePageWeb = new HomePageWeb(driver);
+        loginPageWeb = new LoginPageWeb(DriverManager.getWebDriver());
+        homePageWeb = new HomePageWeb(DriverManager.getWebDriver());
         // Điều hướng đến trang đăng nhập
         loginPageWeb.navigateToLoginPage();
 
@@ -92,7 +90,7 @@ public class LoginTestWeb extends BaseTestWeb {
 
     @Test
     public void testInvalidLogin_incorrectaccount() {
-        loginPageWeb = new LoginPageWeb(driver);
+        loginPageWeb = new LoginPageWeb(DriverManager.getWebDriver());
         // Điều hướng đến trang đăng nhập
         loginPageWeb.navigateToLoginPage();
 
@@ -117,7 +115,7 @@ public class LoginTestWeb extends BaseTestWeb {
 
     @Test
     public void testInvalidLogin_incorrectpassword() {
-        loginPageWeb = new LoginPageWeb(driver);
+        loginPageWeb = new LoginPageWeb(DriverManager.getWebDriver());
         // Điều hướng đến trang đăng nhập
         loginPageWeb.navigateToLoginPage();
 
@@ -142,7 +140,7 @@ public class LoginTestWeb extends BaseTestWeb {
 
     @Test
     public void testInvalidLogin_emptyaccount() {
-        loginPageWeb = new LoginPageWeb(driver);
+        loginPageWeb = new LoginPageWeb(DriverManager.getWebDriver());
         // Điều hướng đến trang đăng nhập
         loginPageWeb.navigateToLoginPage();
 
@@ -161,7 +159,7 @@ public class LoginTestWeb extends BaseTestWeb {
 
     @Test
     public void testInvalidLogin_emptypassword() {
-        loginPageWeb = new LoginPageWeb(driver);
+        loginPageWeb = new LoginPageWeb(DriverManager.getWebDriver());
         // Điều hướng đến trang đăng nhập
         loginPageWeb.navigateToLoginPage();
 

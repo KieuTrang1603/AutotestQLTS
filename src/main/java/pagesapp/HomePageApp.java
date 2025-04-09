@@ -1,4 +1,4 @@
-package pages;
+package pagesapp;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
@@ -49,6 +49,25 @@ public class HomePageApp {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement logOutElement = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ScrollView/android.view.View[4]"))
+        );
+        logOutElement.click();
+        LogOutPageApp logOutPageApp = new LogOutPageApp(driver);
+        logOutPageApp.tapLogOutView();
+    }
+    public void setLogOut1(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement logOutElement = wait.until(
+                ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View[4]"))
+        );
+        logOutElement.click();
+        LogOutPageApp logOutPageApp = new LogOutPageApp(driver);
+        logOutPageApp.tapLogOutView();
+    }
+
+    public void setLogOut2(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement logOutElement = wait.until(
+                ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ScrollView/android.view.View[3]"))
         );
         logOutElement.click();
         LogOutPageApp logOutPageApp = new LogOutPageApp(driver);
