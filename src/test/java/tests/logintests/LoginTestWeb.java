@@ -1,4 +1,4 @@
-package tests;
+package tests.logintests;
 
 
 import base.BaseTestWeb;
@@ -7,6 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pagesweb.HomePageWeb;
 import pagesweb.LoginPageWeb;
+import utils.MyUtil;
 
 public class LoginTestWeb extends BaseTestWeb {
     private LoginPageWeb loginPageWeb;
@@ -26,7 +27,7 @@ public class LoginTestWeb extends BaseTestWeb {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(expectedMenusORG), "Không hiển thị đúng menu role ORG");
+        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusORG()), "Không hiển thị đúng menu role ORG");
         // Kiểm tra xem đã chuyển sang trang khác sau khi đăng nhập chưa
         Assert.assertFalse(loginPageWeb.isLoginPageDisplayed(), "Đăng nhập không thành công, vẫn ở trang đăng nhập");
     }
@@ -45,7 +46,7 @@ public class LoginTestWeb extends BaseTestWeb {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(expectedMenusAM), "Không hiển thị đúng menu role ORG");
+        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusAM()), "Không hiển thị đúng menu role ORG");
         // Kiểm tra xem đã chuyển sang trang khác sau khi đăng nhập chưa
         Assert.assertFalse(loginPageWeb.isLoginPageDisplayed(), "Đăng nhập không thành công, vẫn ở trang đăng nhập");
     }
@@ -64,7 +65,7 @@ public class LoginTestWeb extends BaseTestWeb {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(expectedMenusAU), "Không hiển thị đúng menu role ORG");
+        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusAU()), "Không hiển thị đúng menu role ORG");
         // Kiểm tra xem đã chuyển sang trang khác sau khi đăng nhập chưa
         Assert.assertFalse(loginPageWeb.isLoginPageDisplayed(), "Đăng nhập không thành công, vẫn ở trang đăng nhập");
     }
@@ -83,7 +84,7 @@ public class LoginTestWeb extends BaseTestWeb {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(expectedMenusUser), "Không hiển thị đúng menu role ORG");
+        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusUser()), "Không hiển thị đúng menu role ORG");
         // Kiểm tra xem đã chuyển sang trang khác sau khi đăng nhập chưa
         Assert.assertFalse(loginPageWeb.isLoginPageDisplayed(), "Đăng nhập không thành công, vẫn ở trang đăng nhập");
     }
@@ -110,7 +111,6 @@ public class LoginTestWeb extends BaseTestWeb {
 
         // Kiểm tra xem vẫn còn ở trang đăng nhập
         Assert.assertTrue(loginPageWeb.isLoginPageDisplayed(), "Không ở trang đăng nhập sau khi đăng nhập không hợp lệ");
-
     }
 
     @Test

@@ -1,5 +1,6 @@
-package tests;
+package tests.logintests;
 
+import base.BaseMultiTestWeb;
 import base.BaseTestWeb;
 import drivers.DriverManager;
 import org.testng.Assert;
@@ -7,17 +8,18 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pagesweb.HomePageWeb;
 import pagesweb.LoginPageWeb;
+import utils.MyUtil;
 
 import java.util.List;
 
-public class MultiUserLoginTest extends BaseTestWeb {
+public class MultiUserLoginTest extends BaseMultiTestWeb {
     @DataProvider(name = "userData", parallel = true)
     public Object[][] getUsers() {
         return new Object[][] {
-                {"bvdka", "123456", expectedMenusORG},
-                {"pvt1", "123456", expectedMenusAM},
-                {"audemo", "123123", expectedMenusAU},
-                {"userkn", "123456", expectedMenusUser}
+                {"bvdka", "123456", MyUtil.getExpectedMenusORG()},
+                {"pvt1", "123456", MyUtil.getExpectedMenusAM()},
+                {"audemo", "123123", MyUtil.getExpectedMenusAU()},
+                {"userkn", "123456", MyUtil.getExpectedMenusUser()}
         };
     }
 

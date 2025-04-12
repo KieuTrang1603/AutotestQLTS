@@ -1,4 +1,4 @@
-package tests;
+package tests.logintests;
 import drivers.DriverManager;
 import org.testng.annotations.Test;
 import pagesapp.HomePageApp;
