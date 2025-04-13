@@ -65,9 +65,11 @@ public class LoginTestWeb extends BaseTestWeb {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusAU()), "Không hiển thị đúng menu role ORG");
+        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusAU()),
+                "Không hiển thị đúng menu role ORG");
         // Kiểm tra xem đã chuyển sang trang khác sau khi đăng nhập chưa
-        Assert.assertFalse(loginPageWeb.isLoginPageDisplayed(), "Đăng nhập không thành công, vẫn ở trang đăng nhập");
+        Assert.assertFalse(loginPageWeb.isLoginPageDisplayed(),
+                "Đăng nhập không thành công, vẫn ở trang đăng nhập");
     }
 
     @Test
@@ -84,9 +86,11 @@ public class LoginTestWeb extends BaseTestWeb {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusUser()), "Không hiển thị đúng menu role ORG");
+        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusUser()),
+                "Không hiển thị đúng menu role ORG");
         // Kiểm tra xem đã chuyển sang trang khác sau khi đăng nhập chưa
-        Assert.assertFalse(loginPageWeb.isLoginPageDisplayed(), "Đăng nhập không thành công, vẫn ở trang đăng nhập");
+        Assert.assertFalse(loginPageWeb.isLoginPageDisplayed(),
+                "Đăng nhập không thành công, vẫn ở trang đăng nhập");
     }
 
     @Test
@@ -99,7 +103,8 @@ public class LoginTestWeb extends BaseTestWeb {
         loginPageWeb.login("pvtu1", "123456");
 
         // Đợi alert xuất hiện
-        Assert.assertTrue(loginPageWeb.waitForAlert(5), "Alert không xuất hiện sau khi đăng nhập không hợp lệ");
+        Assert.assertTrue(loginPageWeb.waitForAlert(5),
+                "Alert không xuất hiện sau khi đăng nhập không hợp lệ");
 
         // Kiểm tra nội dung alert
         String alertText = loginPageWeb.getAlertText();
@@ -110,7 +115,8 @@ public class LoginTestWeb extends BaseTestWeb {
         loginPageWeb.acceptAlert();
 
         // Kiểm tra xem vẫn còn ở trang đăng nhập
-        Assert.assertTrue(loginPageWeb.isLoginPageDisplayed(), "Không ở trang đăng nhập sau khi đăng nhập không hợp lệ");
+        Assert.assertTrue(loginPageWeb.isLoginPageDisplayed(),
+                "Không ở trang đăng nhập sau khi đăng nhập không hợp lệ");
     }
 
     @Test
@@ -123,7 +129,8 @@ public class LoginTestWeb extends BaseTestWeb {
         loginPageWeb.login("pvt1", "1234567");
 
         // Đợi alert xuất hiện
-        Assert.assertTrue(loginPageWeb.waitForAlert(5), "Alert không xuất hiện sau khi đăng nhập không hợp lệ");
+        Assert.assertTrue(loginPageWeb.waitForAlert(5),
+                "Alert không xuất hiện sau khi đăng nhập không hợp lệ");
 
         // Kiểm tra nội dung alert
         String alertText = loginPageWeb.getAlertText();
@@ -134,7 +141,8 @@ public class LoginTestWeb extends BaseTestWeb {
         loginPageWeb.acceptAlert();
 
         // Kiểm tra xem vẫn còn ở trang đăng nhập
-        Assert.assertTrue(loginPageWeb.isLoginPageDisplayed(), "Không ở trang đăng nhập sau khi đăng nhập không hợp lệ");
+        Assert.assertTrue(loginPageWeb.isLoginPageDisplayed(),
+                "Không ở trang đăng nhập sau khi đăng nhập không hợp lệ");
 
     }
 
@@ -147,13 +155,16 @@ public class LoginTestWeb extends BaseTestWeb {
         // Thực hiện đăng nhập với thông tin không hợp lệ
         loginPageWeb.login("", "1234567");
         // Kiểm tra xem thông báo lỗi có hiển thị không
-        Assert.assertTrue(loginPageWeb.isErrorMessageDisplayed(), "Thông báo lỗi không hiển thị dưới ô tài khoản!");
+        Assert.assertTrue(loginPageWeb.isErrorMessageDisplayed(),
+                "Thông báo lỗi không hiển thị dưới ô tài khoản!");
 
         // Kiểm tra hiển thị dưới thông báo
-        Assert.assertTrue(loginPageWeb.emptyusername(), "Thông báo lỗi không nằm ngay bên dưới ô tài khoản!");
+        Assert.assertTrue(loginPageWeb.emptyusername(),
+                "Thông báo lỗi không nằm ngay bên dưới ô tài khoản!");
 
         // Kiểm tra xem vẫn còn ở trang đăng nhập
-        Assert.assertTrue(loginPageWeb.isLoginPageDisplayed(), "Không ở trang đăng nhập sau khi đăng nhập không hợp lệ");
+        Assert.assertTrue(loginPageWeb.isLoginPageDisplayed(),
+                "Không ở trang đăng nhập sau khi đăng nhập không hợp lệ");
 
     }
 
@@ -166,12 +177,15 @@ public class LoginTestWeb extends BaseTestWeb {
         // Thực hiện đăng nhập với thông tin không hợp lệ
         loginPageWeb.login("pvt1", "");
         // Kiểm tra xem thông báo lỗi có hiển thị không
-        Assert.assertTrue(loginPageWeb.isErrorMessageDisplayed(), "Thông báo lỗi không hiển thị dưới ô mật khẩu!");
+        Assert.assertTrue(loginPageWeb.isErrorMessageDisplayed(),
+                "Thông báo lỗi không hiển thị dưới ô mật khẩu!");
 
         // Kiểm tra hiển thị dưới thông báo
-        Assert.assertTrue(loginPageWeb.emptypassword(), "Thông báo lỗi không nằm ngay bên dưới ô mật khẩu!");
+        Assert.assertTrue(loginPageWeb.emptypassword(),
+                "Thông báo lỗi không nằm ngay bên dưới ô mật khẩu!");
 
         // Kiểm tra xem vẫn còn ở trang đăng nhập
-        Assert.assertTrue(loginPageWeb.isLoginPageDisplayed(), "Không ở trang đăng nhập sau khi đăng nhập không hợp lệ");
+        Assert.assertTrue(loginPageWeb.isLoginPageDisplayed(),
+                "Không ở trang đăng nhập sau khi đăng nhập không hợp lệ");
     }
 }

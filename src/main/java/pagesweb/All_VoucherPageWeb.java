@@ -4,15 +4,24 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.MyUtil;
 
 import java.time.Duration;
+import java.util.List;
 
 public class All_VoucherPageWeb {
     private final WebDriver driver;
     private final WebDriverWait wait;
+
+    @FindBy(xpath = "//button//span[@class='MuiButton-label']")
+    private List<WebElement> menuButtons;
+
+    @FindBy(xpath = "//p[contains(@class, 'MuiTablePagination-caption') and contains(text(), 'trong')]")
+    private WebElement paginationText;
 
     // Constructor
     public All_VoucherPageWeb(WebDriver driver) {
@@ -21,11 +30,11 @@ public class All_VoucherPageWeb {
         PageFactory.initElements(driver, this);
     }
 
-    public void navigateToAllocation_VoucherPage(){
+    public void navigateToAllocation_VoucherPage(String user, String password){
         LoginPageWeb loginPageWeb = new LoginPageWeb(driver);
         HomePageWeb homePageWeb = new HomePageWeb(driver);
         loginPageWeb.navigateToLoginPage();
-        loginPageWeb.login("pvt1", "123456");
+        loginPageWeb.login(user, password);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -54,4 +63,43 @@ public class All_VoucherPageWeb {
         }
     }
 
+    //Kiem tra thanh menu hien thi dung k
+    public boolean isMenuDisplayedCorrectly(List <String> expectedMenus){
+        if (menuButtons.size() != expectedMenus.size()) {
+            System.out.println("Số lượng menu không khớp! Mong đợi: " + expectedMenus.size() + ", Thực tế: " + menuButtons.size());
+            return false;
+        }
+
+        // Kiểm tra từng menu có tồn tại không
+        for (String expectedMenu : expectedMenus) {
+            boolean menuExists = menuButtons.stream().anyMatch(button -> button.getText().trim().equalsIgnoreCase(expectedMenu));
+            if (!menuExists) {
+                System.out.println("Không tìm thấy menu: " + expectedMenu);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public String getPaginationText() {
+        paginationText.getText();
+        System.out.println("Text lấy được: " + paginationText);
+        return paginationText.getText();
+    }
+
+    public boolean checkSobanghi(Integer sobanghi){
+        System.out.println("Dữ liệu lấy ra: " + getPaginationText());
+        String total = MyUtil.getSobangi(getPaginationText());
+        System.out.println("Số lương bản ghi trên UI: " + total);
+        Integer sobanghi_ui= MyUtil.convertToInt(total);
+        if (sobanghi_ui != null) {
+            System.out.printf("Số lượng bản ghi sau khi convert: %d%n", sobanghi_ui);
+        } else {
+            System.out.println("Số lượng bản ghi sau khi convert: null");
+        }
+        if(sobanghi_ui != null && sobanghi_ui.equals(sobanghi)){
+            return true;}
+        else
+            return false;
+    }
 }
