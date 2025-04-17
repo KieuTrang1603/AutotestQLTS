@@ -1,11 +1,21 @@
 package utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class MyUtil {
-    final static String ngaychungtu = "13/04/2025";
+    //final static String ngaychungtu = "13/04/2025";
+    public static final String DOWNLOAD_PATH = "D:\\Tester\\Auto\\Selenium\\Login\\File";
+    public static final String FILE_PATH = "D:\\Tester\\Auto\\Selenium\\Login\\File\\Mẫu nhập tài sản đã cấp phát.xlsx";
+    public static final String FILE_PATH1 = "D:\\Tester\\Auto\\Selenium\\Login\\File\\Mẫu nhập tài sản đã cấp phát (1).xlsx";
+    public static final String FILE_NAME = "D:\\Tester\\Auto\\Selenium\\Login\\File\\Mẫu nhập tài sản đã cấp phát";
     public static List<String> getExpectedMenusORG() {
         return Arrays.asList("Trang chủ", "Yêu cầu trình duyệt", "Quản lý", "Báo cáo tổng hợp", "Danh mục", "Hệ thống");
     }
@@ -47,7 +57,9 @@ public class MyUtil {
     }
 
     public static String getNgaychungtu(){
-        return ngaychungtu;
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return today.format(formatter);
     }
 
     public static String getSobangi(String text){
@@ -63,5 +75,31 @@ public class MyUtil {
             System.err.println("Không thể chuyển đổi chuỗi thành số: " + numberString);
             return -1; // hoặc throw, hoặc return null nếu bạn sửa sang Integer
         }
+    }
+
+    public static String getFutureDate(int daysAfterToday) {
+        LocalDate futureDate = LocalDate.now().plusDays(daysAfterToday);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return futureDate.format(formatter);
+    }
+
+    public static String subtractOneDayFromDate(String inputDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            LocalDate date = LocalDate.parse(inputDate, formatter);
+            LocalDate newDate = date.minusDays(1);
+            return newDate.format(formatter);
+        } catch (DateTimeParseException e) {
+            System.err.println("Ngày không hợp lệ: " + inputDate);
+            return null;
+        }
+    }
+
+    public static String convertDate(String dateStr) throws ParseException {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        Date date = inputFormat.parse(dateStr);
+        return outputFormat.format(date);
     }
 }

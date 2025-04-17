@@ -156,7 +156,7 @@ public class LoginTestWeb extends BaseTestWeb {
         loginPageWeb.login("", "1234567");
         // Kiểm tra xem thông báo lỗi có hiển thị không
         Assert.assertTrue(loginPageWeb.isErrorMessageDisplayed(),
-                "Thông báo lỗi không hiển thị dưới ô tài khoản!");
+                "Thông báo lỗi không hiển thị!");
 
         // Kiểm tra hiển thị dưới thông báo
         Assert.assertTrue(loginPageWeb.emptyusername(),
@@ -178,7 +178,7 @@ public class LoginTestWeb extends BaseTestWeb {
         loginPageWeb.login("pvt1", "");
         // Kiểm tra xem thông báo lỗi có hiển thị không
         Assert.assertTrue(loginPageWeb.isErrorMessageDisplayed(),
-                "Thông báo lỗi không hiển thị dưới ô mật khẩu!");
+                "Thông báo lỗi không hiển thị!");
 
         // Kiểm tra hiển thị dưới thông báo
         Assert.assertTrue(loginPageWeb.emptypassword(),

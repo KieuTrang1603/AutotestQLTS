@@ -1,6 +1,7 @@
 package utils;
 
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class DataBaseUtils {
         }
     }
 
-    public static List<String> getPhongBan() throws SQLException {
+    public static List<String> getNamePhongBan() throws SQLException {
         String query = "SELECT name FROM tbl_department WHERE org_id = ? AND is_active = 1";
         List<String> names = new ArrayList<>();
 
@@ -51,6 +52,25 @@ public class DataBaseUtils {
         }
 
         return names;
+    }
+
+    public static List<String> getCodePhongBan() throws SQLException {
+        String query = "SELECT code FROM tbl_department WHERE org_id = ? AND is_active = 1";
+        List<String> codes = new ArrayList<>();
+
+        try (
+                Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)
+        ) {
+            stmt.setString(1, ORG_ID);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                codes.add(rs.getString("code"));
+            }
+        }
+
+        return codes;
     }
 
     public static String getDepartmentNameByCode(String code) throws SQLException {
@@ -183,5 +203,45 @@ public class DataBaseUtils {
             return rs.getInt(1);
         }
         return 0;
+    }
+
+    public static List<String> getAssetsAvailable(String departmentId, String allocationStatusId) throws SQLException, ParseException {
+        String query = "SELECT a.code AS asset_code, a.date_of_reception, t.code AS store_code " +
+                "FROM tbl_asset a " +
+                "LEFT JOIN tbl_store t ON a.store_id = t.id " +
+                "WHERE a.org_id = ? " +
+                "AND a.asset_class = 1 " +
+                "AND a.is_deleted = 0 " +
+                "AND a.management_department_id = ? " +
+                "AND (a.status = ? OR a.status = ?) " +
+                "AND a.id NOT IN (" +
+                "    SELECT asset_id FROM tbl_asset_voucher vdt " +
+                "    JOIN tbl_voucher v ON vdt.voucher_id = v.id " +
+                "    WHERE v.allocation_status_id = ?" +
+                ")"+
+                "LIMIT 1";
+
+        Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, ORG_ID);
+        statement.setString(2, departmentId);
+        statement.setString(3, status_luu_kho);
+        statement.setString(4, status_nhap_kho);
+        statement.setString(5, allocationStatusId);
+
+        List<String> result = new ArrayList<>();
+        ResultSet rs = statement.executeQuery();
+        if (rs.next()) {
+            String assetCode = rs.getString("asset_code");
+            String issueDate = MyUtil.convertDate(rs.getString("date_of_reception"));
+            String warehouseName = rs.getString("store_code");
+            result.add(0,"1");
+            result.add(1, issueDate);
+            result.add(2, assetCode);
+            result.add(3, warehouseName);
+        } else {
+            System.out.println("Không có tài sản phù hợp.");
+        }
+        return result;
     }
 }

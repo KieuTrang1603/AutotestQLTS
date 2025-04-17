@@ -1,6 +1,7 @@
 package tests.allo_vouchers;
 
 import Dialogs.DS_TSCD_Dialog;
+import base.BaseMultiTestWeb;
 import base.BaseTestWeb;
 import drivers.DriverManager;
 import org.testng.Assert;
@@ -13,6 +14,7 @@ import pagesweb.All_VoucherPageWeb;
 import utils.DataBaseUtils;
 import utils.MyUtil;
 
+import java.awt.*;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,131 +24,305 @@ import java.util.List;
 
 import static utils.DataBaseUtils.getConnection;
 
-public class Allocations_VoucherTestCreateFunWeb extends BaseTestWeb {
+public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
     All_VoucherPageWeb all_vou;
-    @BeforeClass
-    public void prepareVoucherCreatePage(){
+    All_VoucherCreatePageWeb all;
+    DS_TSCD_Dialog ds;
+//    @BeforeClass
+//    public void prepareVoucherCreatePage(){
+//        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
+//        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
+//        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+//        all_vou.All_Btn_click();
+//    }
+    @Test(priority = 1)
+    public void testCreateAllocation_emptyNgayChungTu(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
+        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
+        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
         all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        all_vou.closeMenu();
         all_vou.All_Btn_click();
-    }
-    @Test
-    public void testNgayTaoPhieu_ShouldBeToday_AndReadonly() {
-        All_VoucherCreatePageWeb all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        // 1. Kiểm tra giá trị là ngày hôm nay
-        String expectedDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-        String actualDate = all.getNgayTaoPhieuValue();
-        Assert.assertEquals(actualDate, expectedDate, "Ngày tạo phiếu không phải là ngày hiện tại!");
-        // 2. Kiểm tra không chỉnh sửa được
-        boolean isReadonly = all.isNgayTaoPhieuReadonly();
-        Assert.assertTrue(isReadonly, "Trường 'Ngày tạo phiếu' không bị readonly!");
-    }
-
-    @Test
-    public void testNgayChungTu_ShouldBeToday_AndEdit() {
-        All_VoucherCreatePageWeb all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        // 1. Kiểm tra giá trị là ngày hôm nay
-        String expectedDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-        String actualDate = all.getNgayTaoPhieuValue();
-        Assert.assertEquals(actualDate, expectedDate, "Ngày chứng từ không khớp với ngày hiện tại!");
-        // 2. Kiểm tra chỉnh sửa được
-        boolean isEdit = all.isNgayChungTuEditable();
-        Assert.assertTrue(isEdit, "Trường 'Ngày chứng từ' không được chỉnh sửa!");
-    }
-
-    @Test
-    public void testNhapNgayKhongHopLe(){
-        All_VoucherCreatePageWeb all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        all.setNgayChungTuInput("29/02/2025");
-        // Kiểm tra trường có bị đánh dấu là không hợp lệ không
-        Assert.assertTrue(all.isNgayChungTuKhongHopLe(), "Không báo lỗi khi nhập ngày không hợp lệ");
-    }
-
-    @Test
-    public void testPhongBanGiao() {
-        All_VoucherCreatePageWeb all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        String maPBG= "1.8.PVT";
-        try {
-            String departmentName = DataBaseUtils.getDepartmentNameByCode(maPBG);
-                System.out.println("Data from database: " + departmentName);
-                Assert.assertTrue(all.checkPhongBanBanGiao(departmentName),
-                        "Trường 'Phòng ban bàn giao' không hiển thị đúng!");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Test
-    public void testNguoiBanGiao(){
-        All_VoucherCreatePageWeb all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        String department_id = "9484b376-8470-4d06-b1a0-e59179f93ca6";
-        try {
-            List<String> displayNames = DataBaseUtils.getUserByDepartmentId(department_id);
-            System.out.println("Data from database: " + displayNames);
-            Assert.assertTrue(all.checkNguoiBanGiao(displayNames),
-                    "Danh sách 'Người bàn giao' chưa hiển thị đúng!");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Test
-    public void testTrangThaiPhieu(){
-        All_VoucherCreatePageWeb all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        Assert.assertTrue(all.checkTrangThaiPhieu(MyUtil.getTrangThaiPhieuAllocations()), "Danh sách 'Trạng thái phiếu' chưa hiển thị đúng!");
-    }
-
-    @Test
-    public void testPhongBanTiepNhan(){
-        All_VoucherCreatePageWeb all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        try {
-            List<String> expectedDepartments = DataBaseUtils.getPhongBan();
-            Assert.assertTrue(all.checkPhongBanTiepNhan(expectedDepartments),
-                    "Danh sách 'Phòng ban tiếp nhận' chưa hiển thị đúng!");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Test()
-    public void testNguoiTiepNhanFirstly(){
-        All_VoucherCreatePageWeb all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        boolean able = all.isNguoiTiepNhanAble();
-        Assert.assertTrue(!able, "Trường 'Người tiếp nhận' không disable khi chưa chọn phòng ban giao");
-    }
-
-    @Test(dependsOnMethods = "testNguoiTiepNhanFirstly")
-    public void testNguoiTiepNhan(){
-        All_VoucherCreatePageWeb all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
+        all.clearNgayChungTu();
+        all.chonNguoiBanGiaoInput();
         all.chonPhongBanTiepNhanInput();
-        String maPTN = MyUtil.getMaPhongTiepNhan(all.getPhongBanTiepNhanInput());
-        try {
-            String department_id = DataBaseUtils.getDepartmentIdByCode(maPTN);
-            System.out.println("Data from DB: " + department_id);
-            List<String> displayNames = DataBaseUtils.getUserByDepartmentId(department_id);
-            System.out.println("Data from database: " + displayNames);
-            Assert.assertTrue(all.checkNguoiTiepNhan(displayNames),
-                    "Danh sách 'Người bàn giao' chưa hiển thị đúng!");
+        all.chonNguoiTiepNhanInput();
+        ds.chonTSCD();
+        all.setLuu_btn();
+        // Kiểm tra xem thông báo lỗi có hiển thị không
+        Assert.assertTrue(all.isErrorMessageDisplayed(),
+                "Thông báo lỗi không hiển thị!");
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        // Kiểm tra hiển thị dưới thông báo
+        Assert.assertTrue(all.empty(1),
+                "Thông báo lỗi không nằm ngay bên dưới ô Ngày chứng từ!");
+
+        // Kiểm tra xem vẫn còn ở trang thêm mới
+        Assert.assertTrue(all.isAllocatonDialogDisplayed(),
+                "Form bị ẩn sau khi click Lưu với dữ liệu thiếu");
     }
 
-    @Test
-    public void testDanhsachTSCD(){
-        All_VoucherCreatePageWeb all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        all.openDialogChonTS();
-        String department_id = "9484b376-8470-4d06-b1a0-e59179f93ca6";
-        String status_allocations = "71b6b0a1-d225-44db-95c5-b00a47c4789b";
-        try {
-            Integer sobanghi = DataBaseUtils.countAssetsAvailable(department_id, status_allocations);
-            System.out.printf("Data from database: %d%n", sobanghi);
-            Assert.assertTrue(all.checkSobanghi(sobanghi),
-                    "Danh sách 'Người bàn giao' chưa hiển thị đúng!");
+    @Test(priority = 2)
+    public void testCreateAllocation_emptyNguoiBanGiao(){
+        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
+        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
+        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
+        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        all_vou.closeMenu();
+        all_vou.All_Btn_click();
+        all.setNgayChungTuInput(MyUtil.getNgaychungtu());
+        all.clearNguoiBanGiao();
+        all.chonPhongBanTiepNhanInput();
+        all.chonNguoiTiepNhanInput();
+        ds.chonTSCD();
+        all.setLuu_btn();
+        // Kiểm tra xem thông báo lỗi có hiển thị không
+        Assert.assertTrue(all.isErrorMessageDisplayed(),
+                "Thông báo lỗi không hiển thị!");
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        // Kiểm tra hiển thị dưới thông báo
+        Assert.assertTrue(all.empty(3),
+                "Thông báo lỗi không nằm ngay bên dưới ô Người bàn giao!");
+
+        // Kiểm tra xem vẫn còn ở trang thêm mới
+        Assert.assertTrue(all.isAllocatonDialogDisplayed(),
+                "Form bị ẩn sau khi click Lưu với dữ liệu thiếu");
+    }
+
+    @Test(priority = 3)
+    public void testCreateAllocation_emptyPhongBanTiepNhan(){
+        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
+        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
+        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
+        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        all_vou.closeMenu();
+        all_vou.All_Btn_click();
+        all.setNgayChungTuInput(MyUtil.getNgaychungtu());
+        all.chonNguoiBanGiaoInput();
+        all.clearPhongBanTiepNhan();
+        ds.chonTSCD();
+        all.setLuu_btn();
+        // Kiểm tra xem thông báo lỗi có hiển thị không
+        Assert.assertTrue(all.isErrorMessageDisplayed(),
+                "Thông báo lỗi không hiển thị!");
+
+        // Kiểm tra hiển thị dưới thông báo
+        Assert.assertTrue(all.empty(5),
+                "Thông báo lỗi không nằm ngay bên dưới ô Phòng ban tiếp nhận!");
+
+        // Kiểm tra xem vẫn còn ở trang thêm mới
+        Assert.assertTrue(all.isAllocatonDialogDisplayed(),
+                "Form bị ẩn sau khi click Lưu với dữ liệu thiếu");
+    }
+
+    @Test(priority = 4)
+    public void testCreateAllocation_emptyNguoiTiepNhan(){
+        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
+        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
+        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
+        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        all_vou.closeMenu();
+        all_vou.All_Btn_click();
+        all.setNgayChungTuInput(MyUtil.getNgaychungtu());
+        all.chonNguoiBanGiaoInput();
+        all.chonPhongBanTiepNhanInput();
+        all.clearNguoiTiepNhan();
+        ds.chonTSCD();
+        all.setLuu_btn();
+        // Kiểm tra xem thông báo lỗi có hiển thị không
+        Assert.assertTrue(all.isErrorMessageDisplayed(),
+                "Thông báo lỗi không hiển thị!");
+
+        // Kiểm tra hiển thị dưới thông báo
+        Assert.assertTrue(all.empty(6),
+                "Thông báo lỗi không nằm ngay bên dưới ô Người tiếp nhận!");
+
+        // Kiểm tra xem vẫn còn ở trang thêm mới
+        Assert.assertTrue(all.isAllocatonDialogDisplayed(),
+                "Form bị ẩn sau khi click Lưu với dữ liệu thiếu");
+    }
+
+    @Test(priority = 5)
+    public void testCreateAllocation_emptyChonTS(){
+        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
+        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
+        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        all_vou.closeMenu();
+        all_vou.All_Btn_click();
+        all.setNgayChungTuInput(MyUtil.getNgaychungtu());
+        all.chonNguoiBanGiaoInput();
+        all.chonPhongBanTiepNhanInput();
+        all.chonNguoiTiepNhanInput();
+        all.setLuu_btn();
+        String toastText = all.getToastMessageText();
+
+        //Kiêm tra hiển thị thông báo
+        Assert.assertEquals(toastText, "Bạn chưa chọn tài sản nào",
+                "Toast không hiển thị hoặc sai nội dung.");
+
+        // Kiểm tra xem vẫn còn ở trang thêm mới
+        Assert.assertTrue(all.isAllocatonDialogDisplayed(),
+                "Form bị ẩn sau khi click Lưu với dữ liệu thiếu");
+    }
+
+    @Test(priority = 6)
+    public void testCreateAllocation_emptyTrangThaiPhieu(){
+        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
+        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
+        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
+        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        all_vou.closeMenu();
+        all_vou.All_Btn_click();
+        all.setNgayChungTuInput(MyUtil.getNgaychungtu());
+        all.chonNguoiBanGiaoInput();
+        all.chonPhongBanTiepNhanInput();
+        all.chonNguoiTiepNhanInput();
+        ds.chonTSCD();
+        all.clearTrangThaiPhieu();
+        all.setLuu_btn();
+
+        // Kiểm tra xem thông báo lỗi có hiển thị không
+        Assert.assertTrue(all.isErrorMessageDisplayed(),
+                "Thông báo lỗi không hiển thị!");
+
+        // Kiểm tra hiển thị dưới thông báo
+        Assert.assertTrue(all.empty(4),
+                "Thông báo lỗi không nằm ngay bên dưới ô Trạng Thái Phiếu!");
+
+        // Kiểm tra xem vẫn còn ở trang thêm mới
+        Assert.assertTrue(all.isAllocatonDialogDisplayed(),
+                "Form bị ẩn sau khi click Lưu với dữ liệu thiếu");
+    }
+
+    @Test(priority = 7)
+    public void testCreateAllocation_NgayChungTuFutureDate(){
+        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
+        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
+        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
+        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        all_vou.closeMenu();
+        all_vou.All_Btn_click();
+        all.setNgayChungTuInput(MyUtil.getFutureDate(1));
+        all.chonNguoiBanGiaoInput();
+        all.chonPhongBanTiepNhanInput();
+        all.chonNguoiTiepNhanInput();
+        ds.chonTSCD();
+        all.chonTrangThaiPhieu(1);
+        all.setLuu_btn();
+
+        // Kiểm tra xem thông báo lỗi có hiển thị không
+        Assert.assertTrue(all.isErrorMessageDisplayed1(),
+                "Thông báo lỗi không hiển thị!");
+
+        // Kiểm tra hiển thị dưới thông báo
+        Assert.assertTrue(all.empty(7),
+                "Thông báo lỗi không nằm ngay bên dưới ô Ngày chứng từ!");
+
+        // Kiểm tra xem vẫn còn ở trang thêm mới
+        Assert.assertTrue(all.isAllocatonDialogDisplayed(),
+                "Form bị ẩn sau khi click Lưu với dữ liệu thiếu");
+    }
+
+    @Test(priority = 8)
+    public void testCreateAllocation_NgayChungTuLessNgayTiepNhan(){
+        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
+        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
+        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
+        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        all_vou.closeMenu();
+        all_vou.All_Btn_click();
+        all.chonNguoiBanGiaoInput();
+        all.chonPhongBanTiepNhanInput();
+        all.chonNguoiTiepNhanInput();
+        ds.chonTSCD();
+        all.chonTrangThaiPhieu(1);
+        all.setNgayChungTuInput(all.lessNgayTiepNhan());
+        all.setLuu_btn();
+        String toastText = all.getToastMessageText();
+        //Kiêm tra hiển thị thông báo
+        Assert.assertEquals(toastText, "Ngày chứng từ không thể nhỏ hơn ngày tiếp nhận",
+                "Toast không hiển thị hoặc sai nội dung.");
+
+        // Kiểm tra xem vẫn còn ở trang thêm mới
+        Assert.assertTrue(all.isAllocatonDialogDisplayed(),
+                "Form bị ẩn sau khi click Lưu với dữ liệu thiếu");
+    }
+
+    @Test(priority = 9)
+    public void testCreateAllocation_TrangThaiMoiTao(){
+        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
+        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
+        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
+        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        all_vou.closeMenu();
+        all_vou.All_Btn_click();
+        all.setNgayChungTuInput(MyUtil.getNgaychungtu());
+        all.chonNguoiBanGiaoInput();
+        all.chonPhongBanTiepNhanInput();
+        all.chonNguoiTiepNhanInput();
+        ds.chonTSCD();
+        all.chonTrangThaiPhieu(1);
+        all.setLuu_btn();
+        String toastText = all_vou.getToastMessageText();
+
+        //Kiêm tra hiển thị thông báo
+        Assert.assertEquals(toastText, "Thành công",
+                "Toast không hiển thị hoặc sai nội dung.");
+
+        // Kiểm tra xem về trang danh sách cấp phát
+        Assert.assertFalse(all.isAllocatonDialogDisplayed(),
+                "Form chưa bị ẩn sau khi click Lưu với dữ liệu chuẩn");
+    }
+
+    @Test(priority = 10)
+    public void testCreateAllocation_TrangThaiChoTiepNhan(){
+        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
+        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
+        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
+        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        all_vou.closeMenu();
+        all_vou.All_Btn_click();
+        all.setNgayChungTuInput(MyUtil.getNgaychungtu());
+        all.chonNguoiBanGiaoInput();
+        all.chonPhongBanTiepNhanInput();
+        all.chonNguoiTiepNhanInput();
+        ds.chonTSCD();
+        all.chonTrangThaiPhieu(3);
+        all.setLuu_btn();
+        String toastText = all_vou.getToastMessageText();
+
+        //Kiêm tra hiển thị thông báo
+        Assert.assertEquals(toastText, "Thành công",
+                "Toast không hiển thị hoặc sai nội dung.");
+
+        // Kiểm tra xem về trang danh sách cấp phát
+        Assert.assertFalse(all.isAllocatonDialogDisplayed(),
+                "Form chưa bị ẩn sau khi click Lưu với dữ liệu chuẩn");
+    }
+
+    @Test(priority = 11)
+    public void testCreateAllocation_TrangThaiDaCapPhat(){
+        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
+        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
+        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
+        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        all_vou.closeMenu();
+        all_vou.All_Btn_click();
+        all.setNgayChungTuInput(MyUtil.getNgaychungtu());
+        all.chonNguoiBanGiaoInput();
+        all.chonPhongBanTiepNhanInput();
+        all.chonNguoiTiepNhanInput();
+        ds.chonTSCD();
+        all.chonTrangThaiPhieu(2);
+        all.setLuu_btn();
+        String toastText = all_vou.getToastMessageText();
+
+        //Kiêm tra hiển thị thông báo
+        Assert.assertEquals(toastText, "Thành công",
+                "Toast không hiển thị hoặc sai nội dung.");
+
+        // Kiểm tra xem về trang danh sách cấp phát
+        Assert.assertFalse(all.isAllocatonDialogDisplayed(),
+                "Form chưa bị ẩn sau khi click Lưu với dữ liệu chuẩn");
     }
 }
