@@ -20,16 +20,32 @@ public class MyUtil {
         return Arrays.asList("Trang chủ", "Yêu cầu trình duyệt", "Quản lý", "Báo cáo tổng hợp", "Danh mục", "Hệ thống");
     }
 
+    public static List<String> getExpectedMenusORGApp() {
+        return Arrays.asList("Kiểm kê", "Sửa chữa", "Cấp phát", "Điều chuyển", "Thanh lý", "Chuyển đi", "Thu hồi", "Bảo trì", "In QR", "Ghi chú");
+    }
+
     public static List<String> getExpectedMenusAM() {
         return Arrays.asList("Trang chủ", "Yêu cầu trình duyệt", "Quản lý", "Báo cáo tổng hợp", "Danh mục");
+    }
+
+    public static List<String> getExpectedMenusAMApp() {
+        return Arrays.asList("Kiểm kê", "Sửa chữa", "Cấp phát", "Điều chuyển", "Thanh lý", "Chuyển đi", "Thu hồi", "Bảo trì", "In QR", "Ghi chú");
     }
 
     public static List<String> getExpectedMenusAU() {
         return Arrays.asList("Trang chủ", "Quản lý");
     }
 
+    public static List<String> getExpectedMenusAUApp() {
+        return Arrays.asList("Sửa chữa", "Cấp phát", "Điều chuyển","Thu hồi", "Bảo trì", "In QR", "Ghi chú", "DS tài sản");
+    }
+
     public static List<String> getExpectedMenusUser() {
         return Arrays.asList("Trang chủ", "Danh sách TSCĐ", "Danh sách CCDC", "Quản lý");
+    }
+
+    public static List<String> getExpectedMenusUserApp() {
+        return Arrays.asList("In QR", "DS tài sản");
     }
 
     public static List<String> normalizeList(List<String> list) {

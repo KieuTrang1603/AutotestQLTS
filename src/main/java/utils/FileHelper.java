@@ -52,50 +52,79 @@ public class FileHelper {
         ExcelUtils.writeDataToExcel(MyUtil.FILE_PATH, fromRow, newData); // Ghi dữ liệu mới
     }
 
-//    public static File getLatestErrorFile(String downloadDir, String filePrefix) {
-//        File dir = new File(downloadDir);
-//        File[] matchingFiles = dir.listFiles((dir1, name) ->
-//                name.startsWith(filePrefix) && name.endsWith(".xlsx") && !name.contains(".crdownload")
-//        );
-//
-//        if (matchingFiles == null || matchingFiles.length == 0) {
-//            return null;
-//        }
-//
-//        // Sắp xếp theo thời gian sửa đổi gần nhất
-//        Arrays.sort(matchingFiles, Comparator.comparingLong(File::lastModified).reversed());
-//
-//        return matchingFiles[0];
-//    }
-
     public static boolean empty(int a) throws IOException {
         boolean result =false;
+        String errorRow = ExcelUtils.getDataFromErrorRow(MyUtil.FILE_PATH1, fromRow).toLowerCase();
         switch (a){
             case 1:
-                if(ExcelUtils.getDataFromErrorRow(MyUtil.FILE_PATH1, fromRow).contains("Ngày cấp phát bị trống")){
+                if (errorRow.contains("ngày cấp phát") && errorRow.contains("trống")) {
                     System.out.println("Hiển thị thông báo chính xác");
                     result= true;
                 }
                 break;
             case 2:
-                if(ExcelUtils.getDataFromErrorRow(MyUtil.FILE_PATH1, fromRow).contains("Mã tài sản bị trống")){
+                if (errorRow.contains("mã tài sản") && errorRow.contains("trống")) {
                     System.out.println("Hiển thị thông báo chính xác");
                     result= true;
                 }
                 break;
             case 3:
-                if(ExcelUtils.getDataFromErrorRow(MyUtil.FILE_PATH1, fromRow).contains("Mã kho trống")){
+                if (errorRow.contains("mã kho") && errorRow.contains("trống")) {
                     System.out.println("Hiển thị thông báo chính xác");
                     result= true;
                 }
                 break;
             case 4:
-                if(ExcelUtils.getDataFromErrorRow(MyUtil.FILE_PATH1, fromRow).contains(" Mã phòng ban tiếp nhận trống hoặc không khớp với dữ liệu.")){
+                if (errorRow.contains("mã phòng ban tiếp nhận") && errorRow.contains("trống")) {
+                    System.out.println("Hiển thị thông báo chính xác");
                     result= true;
                 }
                 break;
             case 5:
-                if(ExcelUtils.getDataFromErrorRow(MyUtil.FILE_PATH1, fromRow).contains("Mã kho không đúng")){
+                if (errorRow.contains("ngày cấp phát") && errorRow.contains("không hợp lệ")) {
+                    System.out.println("Hiển thị thông báo chính xác");
+                    result= true;
+                }
+                break;
+            case 6:
+                if (errorRow.contains("mã tài sản") && errorRow.contains("không tồn tại")) {
+                    System.out.println("Hiển thị thông báo chính xác");
+                    result= true;
+                }
+                break;
+            case 7:
+                if (errorRow.contains("mã kho") && errorRow.contains("không tồn tại")) {
+                    System.out.println("Hiển thị thông báo chính xác");
+                    result= true;
+                }
+                break;
+            case 8:
+                if (errorRow.contains("mã phòng ban tiếp nhận") && errorRow.contains("không tồn tại")) {
+                    System.out.println("Hiển thị thông báo chính xác");
+                    result= true;
+                }
+                break;
+            case 9:
+                if (errorRow.contains("người dùng") && errorRow.contains("không tồn tại")) {
+                    System.out.println("Hiển thị thông báo chính xác");
+                    result= true;
+                }
+                break;
+            case 10:
+                if (errorRow.contains("người dùng") && errorRow.contains("không thuộc phòng ban")) {
+                    System.out.println("Hiển thị thông báo chính xác");
+                    result= true;
+                }
+                break;
+            case 11:
+                if (errorRow.contains("kho") && errorRow.contains("không thuộc quyền quản lý")) {
+                    System.out.println("Hiển thị thông báo chính xác");
+                    result= true;
+                }
+                break;
+            case 12:
+                if (errorRow.contains(" ngày cấp phát") && errorRow.contains("trước ngày tiếp nhận")) {
+                    System.out.println("Hiển thị thông báo chính xác");
                     result= true;
                 }
                 break;

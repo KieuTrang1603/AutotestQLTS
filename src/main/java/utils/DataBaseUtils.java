@@ -218,7 +218,8 @@ public class DataBaseUtils {
                 "    SELECT asset_id FROM tbl_asset_voucher vdt " +
                 "    JOIN tbl_voucher v ON vdt.voucher_id = v.id " +
                 "    WHERE v.allocation_status_id = ?" +
-                ")"+
+                ") "+
+                "ORDER BY a.date_of_reception DESC " +
                 "LIMIT 1";
 
         Connection connection = getConnection();
@@ -243,5 +244,29 @@ public class DataBaseUtils {
             System.out.println("Không có tài sản phù hợp.");
         }
         return result;
+    }
+
+    public static String getUserNonDepartment(String departmentCode) throws SQLException, ParseException {
+        String query = "SELECT username " +
+                "FROM tbl_user " +
+                "WHERE org_id = ? " +
+                "AND id NOT IN (" +
+                "    SELECT user_id FROM tbl_user u " +
+                "    LEFT JOIN tbl_user_deparment ud ON u.id = ud.user_id " +
+                "    LEFT JOIN tbl_department d ON d.id = ud.department_id " +
+                "    WHERE d.code = ?" +
+                ")"+
+                "LIMIT 1";
+
+        Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, ORG_ID);
+        statement.setString(2, departmentCode);
+
+        ResultSet rs = statement.executeQuery();
+        if (rs.next()) {
+            return rs.getString("username");
+        }
+        return null;
     }
 }

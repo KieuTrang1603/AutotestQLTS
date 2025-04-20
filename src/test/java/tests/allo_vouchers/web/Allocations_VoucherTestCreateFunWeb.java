@@ -1,38 +1,24 @@
-package tests.allo_vouchers;
+package tests.allo_vouchers.web;
 
-import Dialogs.DS_TSCD_Dialog;
+import pagesweb.DS_TSCD_Dialog;
 import base.BaseMultiTestWeb;
-import base.BaseTestWeb;
 import drivers.DriverManager;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pagesweb.All_VoucherCreatePageWeb;
 import pagesweb.All_VoucherPageWeb;
-import utils.DataBaseUtils;
 import utils.MyUtil;
-
-import java.awt.*;
-import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
-import static utils.DataBaseUtils.getConnection;
 
 public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
     All_VoucherPageWeb all_vou;
     All_VoucherCreatePageWeb all;
     DS_TSCD_Dialog ds;
-//    @BeforeClass
+//    @BeforeMethod
 //    public void prepareVoucherCreatePage(){
 //        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
 //        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
 //        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+//        all_vou.closeMenu();
 //        all_vou.All_Btn_click();
 //    }
     @Test(priority = 1)

@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+
 import java.time.Duration;
 import java.util.List;
 
@@ -41,7 +42,8 @@ public class LoginPageApp {
         usernameField.click();
         usernameField.clear();
         usernameField.sendKeys(username);
-        wait.until(ExpectedConditions.attributeToBeNotEmpty(usernameField, "text"));
+        wait.until(driver -> usernameField.getAttribute("text").equals(username));
+    //    wait.until(ExpectedConditions.attributeToBeNotEmpty(usernameField, "text"));
     }
 
     // Phương thức nhập mật khẩu
@@ -50,12 +52,18 @@ public class LoginPageApp {
         passwordField.click();
         passwordField.clear();
         passwordField.sendKeys(password);
-        wait.until(ExpectedConditions.attributeToBeNotEmpty(passwordField, "text"));
+    //    wait.until(ExpectedConditions.textToBePresentInElementValue(passwordField, password));
+    //    wait.until(ExpectedConditions.attributeToBeNotEmpty(passwordField, "text"));
     }
 
     // Phương thức nhấn nút đăng nhập
     public void tapLoginButton() {
         loginButton.click();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // Phương thức lấy thông báo lỗi (nếu có)
@@ -94,14 +102,6 @@ public class LoginPageApp {
         }
     }
 
-//    public String getErrorMessageText() {
-//        try {
-//            wait.until(ExpectedConditions.visibilityOf(errorMessage)); // Chờ lỗi hiển thị
-//            return errorMessage.getText();
-//        } catch (Exception e) {
-//            return "Không tìm thấy thông báo lỗi";
-//        }
-//    }
     public boolean isLoginSuccessful() {
         try {
             // Kiểm tra một phần tử đặc trưng trên trang chính sau đăng nhập
@@ -114,7 +114,29 @@ public class LoginPageApp {
         }
     }
 
+    public boolean isLoginPageDisplayed() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return loginButton.isDisplayed();
+    }
 
+    public boolean isErrorMessage(){
+        try {
+            // Cần thêm thời gian chờ dài hơn để bắt toast
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement toast = wait.until(ExpectedConditions.presenceOfElementLocated(
+                    By.xpath("//android.widget.Toast[contains(@text, 'cần điền')]")
+            ));
+            System.out.println("Toast message: " + toast.getText());
+            return true;
+        } catch (Exception e) {
+            System.out.println("Không bắt được Toast: " + e.getMessage());
+            return false;
+        }
+    }
 
     // Phương thức đăng nhập chung
     public void login(String username, String password) {

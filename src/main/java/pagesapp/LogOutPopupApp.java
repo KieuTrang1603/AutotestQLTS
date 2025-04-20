@@ -1,9 +1,8 @@
-package popups;
+package pagesapp;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -26,7 +25,7 @@ public class LogOutPopupApp {
     public void tapLogOutButton() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement logOut_button = wait.until(
-                ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.Button[@content-desc='Đăng xuất']"))
+                ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.Button[@content-desc='Đăng xuất']"))
         );
         logOut_button.click();
     }

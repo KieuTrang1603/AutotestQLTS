@@ -1,4 +1,4 @@
-package Dialogs;
+package pagesweb;
 
 import org.openqa.selenium.NoSuchElementException;
 import utils.FileHelper;

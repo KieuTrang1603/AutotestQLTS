@@ -26,11 +26,6 @@ public class BaseTestApp {
     private String PORT = "4723";
     private int TIMEOUT_SERVICE = 60;
 
-    protected List<String> expectedMenusORG = Arrays.asList("Kiểm kê", "Sửa chữa", "Cấp phát", "Điều chuyển", "Thanh lý", "Chuyển đi", "Thu hồi", "Bảo trì", "In QR", "Ghi chú", "Danh sách TS");
-    protected List<String> expectedMenusAM = Arrays.asList("Kiểm kê", "Sửa chữa", "Cấp phát", "Điều chuyển", "Thanh lý", "Chuyển đi", "Thu hồi", "Bảo trì", "In QR", "Ghi chú","Danh sách TS");
-    protected List<String> expectedMenusAU = Arrays.asList("Sửa chữa", "Cấp phát", "Điều chuyển","Thu hồi", "Bảo trì", "In QR", "Ghi chú", "Danh sách TS");
-    protected List<String> expectedMenusUser = Arrays.asList("In QR", "Danh sách TS");
-
     @BeforeSuite
     public void runAppiumServer() {
         //Kill process on port

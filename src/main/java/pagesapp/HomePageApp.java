@@ -9,14 +9,20 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.HashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
 public class HomePageApp {
     private final AndroidDriver driver;
     private final WebDriverWait wait ;
 
-    @FindBy(xpath = "//android.widget.ScrollView/android.view.View[6]/android.view.View/android.view.View[@content-desc]")
+    @FindBy(xpath = "//android.view.View[@content-desc='Chức năng']/following-sibling::android.view.View//android.view.View[@content-desc]")
     private List<WebElement> menuItems;
+
+    @FindBy(xpath = "//android.view.View[contains(@content-desc,'Cấp phát')]")
+    private WebElement all_voucher;
 
     // Khởi tạo các phần tử giao diện bằng Page Factory
     public HomePageApp(AndroidDriver driver) {
@@ -25,6 +31,7 @@ public class HomePageApp {
         PageFactory.initElements(driver, this);
     }
 
+
     //Kiem tra thanh menu hien thi dung k
     public boolean isMenuDisplayedCorrectly(List <String> expectedMenus){
         if (menuItems.size() != expectedMenus.size()) {
@@ -32,20 +39,26 @@ public class HomePageApp {
             return false;
         }
 
-        // Kiểm tra từng menu có tồn tại không
+        // Kiểm tra từng menu mong đợi có tồn tại (phần tên) trong danh sách hiển thị không
         for (String expectedMenu : expectedMenus) {
-            boolean menuExists = menuItems.stream()
-                    .map(view -> view.getText().trim())
-                    .anyMatch(text -> text.contains(expectedMenu));
+            boolean menuExists = false;
+            for (WebElement menuItem : menuItems) {
+                String actualText = menuItem.getAttribute("content-desc");
+                System.out.println(actualText);
+                if (actualText.contains(expectedMenu)) { // Kiểm tra xem text thực tế có bắt đầu bằng tên menu mong đợi không
+                    menuExists = true;
+                    break;
+                }
+            }
             if (!menuExists) {
-                System.out.println("Không tìm thấy menu: " + expectedMenu);
+                System.out.println("Không tìm thấy menu có tên: " + expectedMenu);
                 return false;
             }
         }
         return true;
     }
 
-    public void setLogOut(){
+    public void setLogOutAM(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement logOutElement = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ScrollView/android.view.View[4]"))
@@ -54,7 +67,7 @@ public class HomePageApp {
         LogOutPageApp logOutPageApp = new LogOutPageApp(driver);
         logOutPageApp.tapLogOutView();
     }
-    public void setLogOut1(){
+    public void setLogOutAU(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement logOutElement = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View[4]"))
@@ -64,13 +77,17 @@ public class HomePageApp {
         logOutPageApp.tapLogOutView();
     }
 
-    public void setLogOut2(){
+    public void setLogOutORG(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement logOutElement = wait.until(
-                ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ScrollView/android.view.View[3]"))
+                ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.ScrollView/android.view.View[3]"))
         );
         logOutElement.click();
         LogOutPageApp logOutPageApp = new LogOutPageApp(driver);
         logOutPageApp.tapLogOutView();
+    }
+
+    public void navigationtoAllocation(){
+        all_voucher.click();
     }
 }

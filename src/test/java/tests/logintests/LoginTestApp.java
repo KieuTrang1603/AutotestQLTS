@@ -1,105 +1,96 @@
 package tests.logintests;
 import drivers.DriverManager;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pagesapp.HomePageApp;
 import pagesapp.LoginPageApp;
 import base.BaseTestApp;
+import utils.MyUtil;
 
 public class LoginTestApp extends BaseTestApp {
+    LoginPageApp loginPageapp;
+    HomePageApp homePageApp;
 
-    @Test
+    @BeforeClass
+    public void creatsetup(){
+        loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
+        homePageApp = new HomePageApp(DriverManager.getAppiumDriver());
+    }
+    @Test(priority = 8)
     public void testSuccessfulLoginORG() {
-        LoginPageApp loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
-        HomePageApp homePageApp = new HomePageApp(DriverManager.getAppiumDriver());
         loginPageapp.login("bvdka", "123456");
-        if (homePageApp.isMenuDisplayedCorrectly(expectedMenusORG) && loginPageapp.isLoginSuccessful()) {
+        if (homePageApp.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusORGApp()) && loginPageapp.isLoginSuccessful()) {
             System.out.println("Đăng nhập thành công!");
         } else {
             System.out.println("Đăng nhập thất bại!");
 //            Assert.assertFalse(loginPageapp.getErrorMessage().isEmpty(), "Lỗi hiển thị không mong đợi!");
         }
-        homePageApp.setLogOut2();
+        homePageApp.setLogOutORG();
     }
 
-    @Test
+    @Test(priority = 7)
     public void testSuccessfulLoginAM() {
-        LoginPageApp loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
-        HomePageApp homePageApp = new HomePageApp(DriverManager.getAppiumDriver());
         loginPageapp.login("pvt1", "123456");
-        if (homePageApp.isMenuDisplayedCorrectly(expectedMenusAM)) {
+        if (homePageApp.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusAMApp())) {
             System.out.println("Đăng nhập thành công!");
         } else {
             System.out.println("Đăng nhập thất bại!");
 //            Assert.assertFalse(loginPageapp.getErrorMessage().isEmpty(), "Lỗi hiển thị không mong đợi!");
         }
-        homePageApp.setLogOut();
+
+        homePageApp.setLogOutAM();
     }
 
-    @Test
+    @Test(priority = 6)
     public void testSuccessfulLoginAU() {
-        LoginPageApp loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
-        HomePageApp homePageApp = new HomePageApp(DriverManager.getAppiumDriver());
         loginPageapp.login("audemo", "123123");
-        if (homePageApp.isMenuDisplayedCorrectly(expectedMenusAU)) {
+        if (homePageApp.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusAUApp())) {
             System.out.println("Đăng nhập thành công!");
         } else {
             System.out.println("Đăng nhập thất bại!");
 //            Assert.assertFalse(loginPageapp.getErrorMessage().isEmpty(), "Lỗi hiển thị không mong đợi!");
         }
-        homePageApp.setLogOut1();
+        homePageApp.setLogOutAU();
     }
 
-    @Test
+    @Test(priority = 5)
     public void testSuccessfulLoginUser() {
-        LoginPageApp loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
-        HomePageApp homePageApp = new HomePageApp(DriverManager.getAppiumDriver());
         loginPageapp.login("userkn", "123456");
-        if (homePageApp.isMenuDisplayedCorrectly(expectedMenusUser)) {
+        if (homePageApp.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusUserApp())) {
             System.out.println("Đăng nhập thành công!");
         } else {
             System.out.println("Đăng nhập thất bại!");
 //            Assert.assertFalse(loginPageapp.getErrorMessage().isEmpty(), "Lỗi hiển thị không mong đợi!");
         }
-        homePageApp.setLogOut1();
+        homePageApp.setLogOutAU();
     }
 
-//    @Test
-//    public void testInvalidLogin_incorrectaccount() {
-//        LoginPageApp loginPageapp = new LoginPageApp(driver);
-//        loginPageapp.login("pvvt1", "123456");
-//
-//        // Kiểm tra có thông báo lỗi hay không
-////        Assert.assertTrue(loginPageapp.getErrorMessage().contains("Tài khoản mật khẩu không chính xác"), "Không có thông báo lỗi!");
-//        // Kiểm tra lỗi có xuất hiện không
-//        if (loginPageapp.isErrorMessageDisplayed()) {
-//            String errorText = "Tài khoản mật khẩu không chính xác";
-//            System.out.println("Thông báo lỗi hiển thị: " + errorText);
-//
-//            // Kiểm tra xem thông báo lỗi có đúng không
-//            Assert.assertEquals(errorText, "Hiển thị sai");
-//        } else {
-//            System.out.println("Không thấy thông báo lỗi!");
-//            Assert.fail("Thông báo lỗi không xuất hiện");
-//        }
-//    }
+    @Test(priority = 3)
+    public void testInvalidLogin_incorrectaccount() {
+        loginPageapp.login("pvvt1", "123456");
+        // Kiểm tra vẫn ở màn đăng nhap khong
+        Assert.assertTrue(loginPageapp.isLoginPageDisplayed(), "Không còn ở màn đăng nhập");
+    }
 
-//    @Test
-//    public void testInvalidLogin_emptyaccount() {
-//        LoginPageApp loginPageapp = new LoginPageApp(driver);
-//        loginPageapp.login("", "123456");
-//
-//        // Kiểm tra có thông báo lỗi hay không
-////        Assert.assertTrue(loginPageapp.getErrorMessage().contains("Tài khoản mật khẩu không chính xác"), "Không có thông báo lỗi!");
-//        // Kiểm tra lỗi có xuất hiện không
-//        if (loginPageapp.isErrorMessageDisplayed()) {
-//            String errorText = "Bạn cần nhập đầy đủ tài khoản mật khẩu";
-//            System.out.println("Thông báo lỗi hiển thị: " + errorText);
-//
-//            // Kiểm tra xem thông báo lỗi có đúng không
-//            Assert.assertEquals(errorText, "Hiển thị sai");
-//        } else {
-//            System.out.println("Không thấy thông báo lỗi!");
-//            Assert.fail("Thông báo lỗi không xuất hiện");
-//        }
-//    }
+    @Test(priority = 4)
+    public void testInvalidLogin_incorrectpassword() {
+        loginPageapp.login("pvt1", "1234567");
+        // Kiểm tra vẫn ở màn đăng nhap khong
+        Assert.assertTrue(loginPageapp.isLoginPageDisplayed(), "Không còn ở màn đăng nhập");
+    }
+
+    @Test(priority = 1)
+    public void testInvalidLogin_emptyaccount() {
+        loginPageapp.login("", "123456");
+        // Kiểm tra vẫn ở màn đăng nhap khong
+        Assert.assertTrue(loginPageapp.isLoginPageDisplayed(), "Không còn ở màn đăng nhập");
+    }
+
+    @Test(priority = 2)
+    public void testInvalidLogin_emptypassword() {
+        loginPageapp.login("pvt1", "");
+        // Kiểm tra vẫn ở màn đăng nhap khong
+        Assert.assertTrue(loginPageapp.isLoginPageDisplayed(), "Không còn ở màn đăng nhập");
+    }
 }

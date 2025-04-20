@@ -1,6 +1,6 @@
-package tests.allo_vouchers;
+package tests.allo_vouchers.web;
 
-import Dialogs.DS_TSCD_Dialog;
+import pagesweb.DS_TSCD_Dialog;
 import base.BaseTestWeb;
 import drivers.DriverManager;
 import org.testng.Assert;
@@ -42,7 +42,7 @@ public class Allocations_VoucherTestValidateWeb extends BaseTestWeb {
         All_VoucherCreatePageWeb all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
         // 1. Kiểm tra giá trị là ngày hôm nay
         String expectedDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-        String actualDate = all.getNgayTaoPhieuValue();
+        String actualDate = all.getNgayChungTu();
         Assert.assertEquals(actualDate, expectedDate, "Ngày chứng từ không khớp với ngày hiện tại!");
         // 2. Kiểm tra chỉnh sửa được
         boolean isEdit = all.isNgayChungTuEditable();

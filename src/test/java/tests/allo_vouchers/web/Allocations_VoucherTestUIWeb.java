@@ -1,10 +1,8 @@
-package tests.allo_vouchers;
+package tests.allo_vouchers.web;
 
 import base.BaseMultiTestWeb;
-import base.BaseTestWeb;
 import drivers.DriverManager;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pagesweb.All_VoucherPageWeb;
 import utils.DataBaseUtils;
