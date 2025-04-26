@@ -21,13 +21,7 @@ public class AllocationMenu {
 
         // AU
         roleMenus.put(UserRole.AU, Map.of(
-                PlatformType.WEB, Arrays.asList("Trang chủ", "Quản lý")
-        ));
-
-        // USER
-        roleMenus.put(UserRole.USER, Map.of(
-                PlatformType.WEB, Arrays.asList("Trang chủ", "Danh sách TSCĐ", "Danh sách CCDC", "Quản lý"),
-                PlatformType.APP, Arrays.asList("In QR", "DS tài sản")
+                PlatformType.WEB, Arrays.asList("Xuất Excel", "Tìm kiếm nâng cao")
         ));
     }
 

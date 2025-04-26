@@ -1,5 +1,7 @@
 package tests.allo_vouchers.web;
 
+import model.User;
+import model.UsersRole;
 import pagesweb.DS_TSCD_Dialog;
 import base.BaseTestWeb;
 import drivers.DriverManager;
@@ -21,7 +23,9 @@ public class Allocations_VoucherTestValidateWeb extends BaseTestWeb {
     @BeforeClass
     public void prepareVoucherCreatePage(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        all_vou.navigateToAllocation_VoucherPage(user.getUsername(),user.getPassword());
         all_vou.closeMenu();
         all_vou.All_Btn_click();
     }

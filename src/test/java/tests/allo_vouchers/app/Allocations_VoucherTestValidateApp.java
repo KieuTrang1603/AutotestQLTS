@@ -2,6 +2,8 @@ package tests.allo_vouchers.app;
 
 import base.BaseTestApp;
 import drivers.DriverManager;
+import model.User;
+import model.UsersRole;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -30,7 +32,9 @@ public class Allocations_VoucherTestValidateApp extends BaseTestApp {
         loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
         homePageApp = new HomePageApp(DriverManager.getAppiumDriver());
         all_vou = new All_VoucherPageApp(DriverManager.getAppiumDriver());
-        loginPageapp.login("pvt1", "123456");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        loginPageapp.login(user.getUsername(), user.getPassword());
         homePageApp.navigationtoAllocation();
         all_vou.clickThemmoi();
     }

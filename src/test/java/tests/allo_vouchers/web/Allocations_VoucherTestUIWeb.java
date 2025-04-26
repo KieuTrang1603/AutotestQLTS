@@ -3,6 +3,7 @@ package tests.allo_vouchers.web;
 import base.BaseMultiTestWeb;
 import drivers.DriverManager;
 import model.AllocationMenu;
+import model.Department;
 import model.HomeMenu;
 import model.enums.PlatformType;
 import model.enums.UserRole;
@@ -59,9 +60,8 @@ public class Allocations_VoucherTestUIWeb extends BaseMultiTestWeb {
     public void TotalRecord_AllocationAM(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
-        String department_id = "9484b376-8470-4d06-b1a0-e59179f93ca6";
         try {
-            Integer sobanghi = DataBaseUtils.countAllcationAM(department_id);
+            Integer sobanghi = DataBaseUtils.countAllcationAM(Department.DEPARTMENT_ID_AM);
             System.out.printf("Data from database: %d%n", sobanghi);
             Assert.assertTrue(all_vou.checkSobanghi(sobanghi),
                     "Số lượng bản ghi chưa hiển thị đúng!");
@@ -75,9 +75,8 @@ public class Allocations_VoucherTestUIWeb extends BaseMultiTestWeb {
     public void TotalRecord_AllocationAU(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all_vou.navigateToAllocation_VoucherPage("phs21", "123456");
-        String department_id = "f8359400-b129-4486-abae-b694589fcc1e";
         try {
-            Integer sobanghi = DataBaseUtils.countAllcationAU(department_id);
+            Integer sobanghi = DataBaseUtils.countAllcationAU(Department.DEPARTMENT_ID_AU);
             System.out.printf("Data from database: %d%n", sobanghi);
             Assert.assertTrue(all_vou.checkSobanghi(sobanghi),
                     "Số lượng bản ghi chưa chưa hiển thị đúng!");

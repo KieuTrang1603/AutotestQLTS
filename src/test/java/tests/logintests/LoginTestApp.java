@@ -1,6 +1,8 @@
 package tests.logintests;
 import drivers.DriverManager;
 import model.HomeMenu;
+import model.User;
+import model.UsersRole;
 import model.enums.PlatformType;
 import model.enums.UserRole;
 import org.testng.Assert;
@@ -21,7 +23,9 @@ public class LoginTestApp extends BaseTestApp {
     }
     @Test(priority = 8)
     public void testSuccessfulLoginORG() {
-        loginPageapp.login("bvdka", "123456");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("ORG");
+        loginPageapp.login(user.getUsername(),user.getPassword());
         if (homePageApp.isMenuDisplayedCorrectly(HomeMenu.getExpectedMenus(UserRole.ORG, PlatformType.APP)) && loginPageapp.isLoginSuccessful()) {
             System.out.println("Đăng nhập thành công!");
         } else {
@@ -33,7 +37,9 @@ public class LoginTestApp extends BaseTestApp {
 
     @Test(priority = 7)
     public void testSuccessfulLoginAM() {
-        loginPageapp.login("pvt1", "123456");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        loginPageapp.login(user.getUsername(),user.getPassword());
         if (homePageApp.isMenuDisplayedCorrectly(HomeMenu.getExpectedMenus(UserRole.AM, PlatformType.APP))) {
             System.out.println("Đăng nhập thành công!");
         } else {
@@ -46,7 +52,9 @@ public class LoginTestApp extends BaseTestApp {
 
     @Test(priority = 6)
     public void testSuccessfulLoginAU() {
-        loginPageapp.login("audemo", "123123");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AU");
+        loginPageapp.login(user.getUsername(),user.getPassword());
         if (homePageApp.isMenuDisplayedCorrectly(HomeMenu.getExpectedMenus(UserRole.AU, PlatformType.APP))) {
             System.out.println("Đăng nhập thành công!");
         } else {
@@ -58,7 +66,9 @@ public class LoginTestApp extends BaseTestApp {
 
     @Test(priority = 5)
     public void testSuccessfulLoginUser() {
-        loginPageapp.login("userkn", "123456");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("USER");
+        loginPageapp.login(user.getUsername(),user.getPassword());
         if (homePageApp.isMenuDisplayedCorrectly(HomeMenu.getExpectedMenus(UserRole.USER, PlatformType.APP))) {
             System.out.println("Đăng nhập thành công!");
         } else {

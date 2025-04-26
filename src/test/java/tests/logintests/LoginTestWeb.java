@@ -4,6 +4,8 @@ package tests.logintests;
 import base.BaseTestWeb;
 import drivers.DriverManager;
 import model.HomeMenu;
+import model.User;
+import model.UsersRole;
 import model.enums.PlatformType;
 import model.enums.UserRole;
 import org.testng.Assert;
@@ -21,9 +23,10 @@ public class LoginTestWeb extends BaseTestWeb {
         homePageWeb = new HomePageWeb(DriverManager.getWebDriver());
         // Điều hướng đến trang đăng nhập
         loginPageWeb.navigateToLoginPage();
-
+        UsersRole Users = null;
+        User user = Users.getUserByRole("ORG");
         // Thực hiện đăng nhập với thông tin hợp lệ
-        loginPageWeb.login("bvdka", "123456");
+        loginPageWeb.login(user.getUsername(),user.getPassword());
         try {
             Thread.sleep(4000);
         } catch (InterruptedException e) {
@@ -40,9 +43,10 @@ public class LoginTestWeb extends BaseTestWeb {
         homePageWeb = new HomePageWeb(DriverManager.getWebDriver());
         // Điều hướng đến trang đăng nhập
         loginPageWeb.navigateToLoginPage();
-
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
         // Thực hiện đăng nhập với thông tin hợp lệ
-        loginPageWeb.login("pvt1", "123456");
+        loginPageWeb.login(user.getUsername(),user.getPassword());
         try {
             Thread.sleep(4000);
         } catch (InterruptedException e) {
@@ -59,9 +63,10 @@ public class LoginTestWeb extends BaseTestWeb {
         homePageWeb = new HomePageWeb(DriverManager.getWebDriver());
         // Điều hướng đến trang đăng nhập
         loginPageWeb.navigateToLoginPage();
-
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AU");
         // Thực hiện đăng nhập với thông tin hợp lệ
-        loginPageWeb.login("audemo", "123123");
+        loginPageWeb.login(user.getUsername(),user.getPassword());
         try {
             Thread.sleep(4000);
         } catch (InterruptedException e) {
@@ -80,9 +85,10 @@ public class LoginTestWeb extends BaseTestWeb {
         homePageWeb = new HomePageWeb(DriverManager.getWebDriver());
         // Điều hướng đến trang đăng nhập
         loginPageWeb.navigateToLoginPage();
-
+        UsersRole Users = null;
+        User user = Users.getUserByRole("USER");
         // Thực hiện đăng nhập với thông tin hợp lệ
-        loginPageWeb.login("userkn", "123456");
+        loginPageWeb.login(user.getUsername(),user.getPassword());
         try {
             Thread.sleep(4000);
         } catch (InterruptedException e) {

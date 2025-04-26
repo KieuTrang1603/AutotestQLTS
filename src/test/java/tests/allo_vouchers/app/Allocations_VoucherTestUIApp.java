@@ -4,6 +4,8 @@ import base.BaseTestApp;
 import drivers.DriverManager;
 import helpers.AllocationHelper;
 import model.Allocation;
+import model.User;
+import model.UsersRole;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -36,7 +38,9 @@ public class Allocations_VoucherTestUIApp extends BaseTestApp {
 
     @Test
     public void soSanhCapPhatGiuaAppVaWebORG() {
-        loginPageapp.login("bvdka", "123456");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("ORG");
+        loginPageapp.login(user.getUsername(), user.getPassword());
         homePageApp.navigationtoAllocation();
         all_app = new All_VoucherPageApp(DriverManager.getAppiumDriver());
         all_web = new All_VoucherPageWeb(DriverManager.getWebDriver());
@@ -46,7 +50,7 @@ public class Allocations_VoucherTestUIApp extends BaseTestApp {
         rawMobile = all_app.layDanhSachContentDesc();
 
         // Lấy danh sách trên web
-        all_web.navigateToAllocation_VoucherPage("bvdka","123456");
+        all_web.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         all_web.closeMenu();
         List<Allocation> webRecords = all_web.getAllocationRecord();
         Assert.assertTrue(AllocationHelper.soSanhCapPhatGiuaAppVaWeb(rawMobile,webRecords), "Không khớp bản ghi trên App ");
@@ -56,7 +60,9 @@ public class Allocations_VoucherTestUIApp extends BaseTestApp {
 
     @Test
     public void soSanhCapPhatGiuaAppVaWebAM() {
-        loginPageapp.login("pvt1", "123456");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        loginPageapp.login(user.getUsername(), user.getPassword());
         homePageApp.navigationtoAllocation();
         all_app = new All_VoucherPageApp(DriverManager.getAppiumDriver());
         all_web = new All_VoucherPageWeb(DriverManager.getWebDriver());
@@ -66,7 +72,7 @@ public class Allocations_VoucherTestUIApp extends BaseTestApp {
         rawMobile = all_app.layDanhSachContentDesc();
 
         // Lấy danh sách trên web
-        all_web.navigateToAllocation_VoucherPage("pvt1","123456");
+        all_web.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         all_web.closeMenu();
         List<Allocation> webRecords = all_web.getAllocationRecord();
         Assert.assertTrue(AllocationHelper.soSanhCapPhatGiuaAppVaWeb(rawMobile,webRecords), "Không khớp bản ghi trên App ");
@@ -76,7 +82,9 @@ public class Allocations_VoucherTestUIApp extends BaseTestApp {
 
     @Test
     public void soSanhCapPhatGiuaAppVaWebAU() {
-        loginPageapp.login("audemo", "123123");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AU");
+        loginPageapp.login(user.getUsername(), user.getPassword());
         homePageApp.navigationtoAllocation();
         all_app = new All_VoucherPageApp(DriverManager.getAppiumDriver());
         all_web = new All_VoucherPageWeb(DriverManager.getWebDriver());
@@ -86,7 +94,7 @@ public class Allocations_VoucherTestUIApp extends BaseTestApp {
         rawMobile = all_app.layDanhSachContentDesc();
 
         // Lấy danh sách trên web
-        all_web.navigateToAllocation_VoucherPage("audemo","123123");
+        all_web.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         all_web.closeMenu();
         List<Allocation> webRecords = all_web.getAllocationRecord();
         Assert.assertTrue(AllocationHelper.soSanhCapPhatGiuaAppVaWeb(rawMobile,webRecords), "Không khớp bản ghi trên App ");

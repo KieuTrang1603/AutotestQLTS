@@ -1,5 +1,7 @@
 package tests.allo_vouchers.web;
 
+import model.User;
+import model.UsersRole;
 import pagesweb.DS_TSCD_Dialog;
 import base.BaseMultiTestWeb;
 import drivers.DriverManager;
@@ -26,7 +28,9 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
         ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         all_vou.closeMenu();
         all_vou.All_Btn_click();
         all.clearNgayChungTu();
@@ -53,7 +57,9 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
         ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         all_vou.closeMenu();
         all_vou.All_Btn_click();
         all.setNgayChungTuInput(MyUtil.getNgaychungtu());
@@ -80,7 +86,9 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
         ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         all_vou.closeMenu();
         all_vou.All_Btn_click();
         all.setNgayChungTuInput(MyUtil.getNgaychungtu());
@@ -106,7 +114,9 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
         ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         all_vou.closeMenu();
         all_vou.All_Btn_click();
         all.setNgayChungTuInput(MyUtil.getNgaychungtu());
@@ -132,7 +142,9 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
     public void testCreateAllocation_emptyChonTS(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         all_vou.closeMenu();
         all_vou.All_Btn_click();
         all.setNgayChungTuInput(MyUtil.getNgaychungtu());
@@ -156,7 +168,9 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
         ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         all_vou.closeMenu();
         all_vou.All_Btn_click();
         all.setNgayChungTuInput(MyUtil.getNgaychungtu());
@@ -185,7 +199,9 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
         ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         all_vou.closeMenu();
         all_vou.All_Btn_click();
         all.setNgayChungTuInput(MyUtil.getFutureDate(1));
@@ -214,7 +230,9 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
         ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         all_vou.closeMenu();
         all_vou.All_Btn_click();
         all.chonNguoiBanGiaoInput();
@@ -239,7 +257,9 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
         ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         all_vou.closeMenu();
         all_vou.All_Btn_click();
         all.setNgayChungTuInput(MyUtil.getNgaychungtu());
@@ -265,7 +285,9 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
         ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         all_vou.closeMenu();
         all_vou.All_Btn_click();
         all.setNgayChungTuInput(MyUtil.getNgaychungtu());
@@ -291,7 +313,9 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
         ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         all_vou.closeMenu();
         all_vou.All_Btn_click();
         all.setNgayChungTuInput(MyUtil.getNgaychungtu());
