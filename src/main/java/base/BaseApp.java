@@ -1,5 +1,6 @@
 package base;
 
+import drivers.DriverManager;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
@@ -30,7 +31,7 @@ public class BaseApp {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
-    protected void scrollDown(WebElement scrollView) {
+    public static void scrollDown(WebElement scrollView) {
         try {
             // Sử dụng tọa độ của scrollView để thực hiện thao tác vuốt
             Dimension size = scrollView.getSize();
@@ -46,10 +47,10 @@ public class BaseApp {
 
             swipe.addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), centerX, startY));
             swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
-            swipe.addAction(finger.createPointerMove(Duration.ofMillis(700), PointerInput.Origin.viewport(), centerX, endY));
+            swipe.addAction(finger.createPointerMove(Duration.ofMillis(500), PointerInput.Origin.viewport(), centerX, endY));
             swipe.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
 
-            driver.perform(Collections.singletonList(swipe));
+            DriverManager.getAppiumDriver().perform(Collections.singletonList(swipe));
 
             Thread.sleep(800);
         } catch (Exception e) {
@@ -77,7 +78,7 @@ public class BaseApp {
             swipe.addAction(finger.createPointerMove(Duration.ofMillis(700), PointerInput.Origin.viewport(), centerX, endY));
             swipe.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
 
-            driver.perform(Collections.singletonList(swipe));
+            DriverManager.getAppiumDriver().perform(Collections.singletonList(swipe));
 
             // Đợi UI ổn định
             Thread.sleep(800);

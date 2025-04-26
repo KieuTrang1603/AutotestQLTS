@@ -1,7 +1,7 @@
 package pagesweb;
 
 import drivers.DriverManager;
-import model.AllocationRecord;
+import model.Allocation;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -140,13 +140,13 @@ public class All_VoucherPageWeb {
         }
     }
 
-    public List<AllocationRecord> getAllocationRecord(){
+    public List<Allocation> getAllocationRecord(){
 
         WebElement firstTable = driver.findElement(
                 By.xpath("(//table[contains(@class, 'MuiTable-root')])[1]")
         );
         List<WebElement> rows = firstTable.findElements(By.xpath(".//tbody/tr"));
-        List<AllocationRecord> list = new ArrayList<>();
+        List<Allocation> list = new ArrayList<>();
 
         for (WebElement row : rows) {
             String ngay = row.findElement(By.xpath("./td[3]")).getText().trim();
@@ -156,13 +156,13 @@ public class All_VoucherPageWeb {
             String phongNhan = row.findElement(By.xpath("./td[7]")).getText().trim();
             String nguoiNhan = row.findElement(By.xpath("./td[8]")).getText().trim();
 
-            AllocationRecord p = new AllocationRecord("", "", "", "", "", "");
-            p.ngay = ngay;
-            p.trangThai = trangThai;
-            p.phongGiao = phongGiao;
-            p.nguoiGiao = nguoiGiao;
-            p.phongNhan = phongNhan;
-            p.nguoiNhan = nguoiNhan;
+            Allocation p = new Allocation("", "", "", "", "", "");
+            p.setNgay(ngay);
+            p.setTrangThai(trangThai);
+            p.setPhongGiao(phongGiao);
+            p.setNguoiGiao(nguoiGiao);
+            p.setPhongNhan(phongNhan);
+            p.setNguoiNhan(nguoiNhan);
             list.add(p);
         }
         return list;

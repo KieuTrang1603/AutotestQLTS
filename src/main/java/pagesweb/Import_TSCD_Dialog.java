@@ -1,7 +1,7 @@
 package pagesweb;
 
 import org.openqa.selenium.NoSuchElementException;
-import utils.FileHelper;
+import helpers.FileHelper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

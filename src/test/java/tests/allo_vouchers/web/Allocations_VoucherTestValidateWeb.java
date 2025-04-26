@@ -58,7 +58,7 @@ public class Allocations_VoucherTestValidateWeb extends BaseTestWeb {
     }
 
     @Test(priority = 4)
-    public void testPhongBanGiao() {
+    public void testPhongBanGiaoDataAndReadonly() {
         All_VoucherCreatePageWeb all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
         String maPBG= "1.8.PVT";
         try {

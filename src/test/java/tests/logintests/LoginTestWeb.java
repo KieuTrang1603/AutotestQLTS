@@ -3,11 +3,13 @@ package tests.logintests;
 
 import base.BaseTestWeb;
 import drivers.DriverManager;
+import model.HomeMenu;
+import model.enums.PlatformType;
+import model.enums.UserRole;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pagesweb.HomePageWeb;
 import pagesweb.LoginPageWeb;
-import utils.MyUtil;
 
 public class LoginTestWeb extends BaseTestWeb {
     private LoginPageWeb loginPageWeb;
@@ -27,7 +29,7 @@ public class LoginTestWeb extends BaseTestWeb {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusORG()), "Không hiển thị đúng menu role ORG");
+        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(HomeMenu.getExpectedMenus(UserRole.ORG, PlatformType.WEB)), "Không hiển thị đúng menu role ORG");
         // Kiểm tra xem đã chuyển sang trang khác sau khi đăng nhập chưa
         Assert.assertFalse(loginPageWeb.isLoginPageDisplayed(), "Đăng nhập không thành công, vẫn ở trang đăng nhập");
     }
@@ -46,7 +48,7 @@ public class LoginTestWeb extends BaseTestWeb {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusAM()), "Không hiển thị đúng menu role ORG");
+        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(HomeMenu.getExpectedMenus(UserRole.AM, PlatformType.WEB)), "Không hiển thị đúng menu role ORG");
         // Kiểm tra xem đã chuyển sang trang khác sau khi đăng nhập chưa
         Assert.assertFalse(loginPageWeb.isLoginPageDisplayed(), "Đăng nhập không thành công, vẫn ở trang đăng nhập");
     }
@@ -65,7 +67,7 @@ public class LoginTestWeb extends BaseTestWeb {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusAU()),
+        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(HomeMenu.getExpectedMenus(UserRole.AU, PlatformType.WEB)),
                 "Không hiển thị đúng menu role ORG");
         // Kiểm tra xem đã chuyển sang trang khác sau khi đăng nhập chưa
         Assert.assertFalse(loginPageWeb.isLoginPageDisplayed(),
@@ -86,7 +88,7 @@ public class LoginTestWeb extends BaseTestWeb {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusUser()),
+        Assert.assertTrue(homePageWeb.isMenuDisplayedCorrectly(HomeMenu.getExpectedMenus(UserRole.USER, PlatformType.WEB)),
                 "Không hiển thị đúng menu role ORG");
         // Kiểm tra xem đã chuyển sang trang khác sau khi đăng nhập chưa
         Assert.assertFalse(loginPageWeb.isLoginPageDisplayed(),

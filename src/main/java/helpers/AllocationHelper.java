@@ -1,6 +1,6 @@
 package helpers;
 
-import model.AllocationRecord;
+import model.Allocation;
 import utils.DataBaseUtils;
 import utils.MyUtil;
 
@@ -19,7 +19,7 @@ public class AllocationHelper {
         String maPBTN = DataBaseUtils.getCodePhongBan().get(0);
 
         // Lấy danh sách tài sản
-        List<String> taisan = DataBaseUtils.getAssetsAvailable(department_id, status_allocations);
+        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(department_id, status_allocations, true);
 
         // Chỉnh sửa dữ liệu theo test case
         if (taisan.size() > 1) {
@@ -36,13 +36,13 @@ public class AllocationHelper {
 
     public static List<String> prepareEmptyMaPBTNData() throws IOException, SQLException, ParseException {
         // Lấy danh sách tài sản
-        List<String> taisan = DataBaseUtils.getAssetsAvailable(department_id, status_allocations);
+        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(department_id, status_allocations, true);
         return taisan;
     }
 
     public static List<String> isCorrectMaPBTNData() throws IOException, SQLException, ParseException {
         // Lấy danh sách tài sản
-        List<String> taisan = DataBaseUtils.getAssetsAvailable(department_id, status_allocations);
+        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(department_id, status_allocations, true);
         if (taisan.size() > 4) {
             taisan.add(4, "29/02/2025");  // Thêm mã phòng ban tại vị trí cụ thể
         } else {
@@ -54,7 +54,7 @@ public class AllocationHelper {
     public static List<String> isCorrectData(int a) throws IOException, SQLException, ParseException {
         String maPBTN = DataBaseUtils.getCodePhongBan().get(0);
         // Lấy danh sách tài sản
-        List<String> taisan = DataBaseUtils.getAssetsAvailable(department_id, status_allocations);
+        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(department_id, status_allocations, true);
         if (taisan.size() > 4) {
             taisan.add(4, maPBTN);  // Thêm mã phòng ban tại vị trí cụ thể
         } else {
@@ -73,7 +73,7 @@ public class AllocationHelper {
     public static List<String> isCorrectNguoiDungData() throws IOException, SQLException, ParseException {
         String maPBTN = DataBaseUtils.getCodePhongBan().get(0);
         // Lấy danh sách tài sản
-        List<String> taisan = DataBaseUtils.getAssetsAvailable(department_id, status_allocations);
+        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(department_id, status_allocations, true);
         if (taisan.size() > 4) {
             taisan.add(4, maPBTN);  // Thêm mã phòng ban tại vị trí cụ thể
         } else {
@@ -92,7 +92,7 @@ public class AllocationHelper {
     public static List<String> isCorrectNgayCapPhatData() throws IOException, SQLException, ParseException {
         String maPBTN = DataBaseUtils.getCodePhongBan().get(0);
         // Lấy danh sách tài sản
-        List<String> taisan = DataBaseUtils.getAssetsAvailable(department_id, status_allocations);
+        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(department_id, status_allocations, true);
         if (taisan.size() > 4) {
             taisan.add(4, maPBTN);  // Thêm mã phòng ban tại vị trí cụ thể
         } else {
@@ -106,7 +106,7 @@ public class AllocationHelper {
     public static List<String> CorrectData() throws IOException, SQLException, ParseException {
         String maPBTN = DataBaseUtils.getCodePhongBan().get(0);
         // Lấy danh sách tài sản
-        List<String> taisan = DataBaseUtils.getAssetsAvailable(department_id, status_allocations);
+        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(department_id, status_allocations, true);
         if (taisan.size() > 4) {
             taisan.add(4, maPBTN);  // Thêm mã phòng ban tại vị trí cụ thể
         } else {
@@ -115,26 +115,26 @@ public class AllocationHelper {
         return taisan;
     }
 
-    public static List<AllocationRecord> getAllocationMobile(List<String> list){
-        List<AllocationRecord> mobileRecords;
+    public static List<Allocation> getAllocationMobile(List<String> list){
+        List<Allocation> mobileRecords;
         mobileRecords = list.stream()
-                .map(AllocationRecord::new)
+                .map(Allocation::new)
                 .collect(Collectors.toList());
         System.out.println(mobileRecords);
         return mobileRecords;
     }
 
-    public static boolean soSanhCapPhatGiuaAppVaWeb(List<String> list, List<AllocationRecord> list1){
+    public static boolean soSanhCapPhatGiuaAppVaWeb(List<String> list, List<Allocation> list1){
         boolean match = false;
         list1 = getAllocationMobile(list);
-        for (AllocationRecord pApp : list1) {
+        for (Allocation pApp : list1) {
             match = list1.stream().anyMatch(pWeb ->
-                    pWeb.ngay.equals(pApp.ngay) &&
-                            pWeb.trangThai.equalsIgnoreCase(pApp.trangThai) &&
-                            pWeb.phongGiao.equalsIgnoreCase(pApp.phongGiao) &&
-                            pWeb.nguoiGiao.equalsIgnoreCase(pApp.nguoiGiao) &&
-                            pWeb.phongNhan.equalsIgnoreCase(pApp.phongNhan) &&
-                            pWeb.nguoiNhan.equalsIgnoreCase(pApp.nguoiNhan)
+                    pWeb.getNgay().equals(pApp.getNgay()) &&
+                            pWeb.getTrangThai().equalsIgnoreCase(pApp.getTrangThai()) &&
+                            pWeb.getPhongGiao().equalsIgnoreCase(pApp.getPhongGiao()) &&
+                            pWeb.getNguoiGiao().equalsIgnoreCase(pApp.getNguoiGiao()) &&
+                            pWeb.getPhongNhan().equalsIgnoreCase(pApp.getPhongNhan()) &&
+                            pWeb.getNguoiNhan().equalsIgnoreCase(pApp.getNguoiNhan())
             );
             System.out.println(pApp);
         }

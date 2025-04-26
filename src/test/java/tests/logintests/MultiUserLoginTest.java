@@ -1,14 +1,15 @@
 package tests.logintests;
 
 import base.BaseMultiTestWeb;
-import base.BaseTestWeb;
 import drivers.DriverManager;
+import model.HomeMenu;
+import model.enums.PlatformType;
+import model.enums.UserRole;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pagesweb.HomePageWeb;
 import pagesweb.LoginPageWeb;
-import utils.MyUtil;
 
 import java.util.List;
 
@@ -16,10 +17,10 @@ public class MultiUserLoginTest extends BaseMultiTestWeb {
     @DataProvider(name = "userData", parallel = true)
     public Object[][] getUsers() {
         return new Object[][] {
-                {"bvdka", "123456", MyUtil.getExpectedMenusORG()},
-                {"pvt1", "123456", MyUtil.getExpectedMenusAM()},
-                {"audemo", "123123", MyUtil.getExpectedMenusAU()},
-                {"userkn", "123456", MyUtil.getExpectedMenusUser()}
+                {"bvdka", "123456", HomeMenu.getExpectedMenus(UserRole.ORG, PlatformType.WEB)},
+                {"pvt1", "123456", HomeMenu.getExpectedMenus(UserRole.AM, PlatformType.WEB)},
+                {"audemo", "123123", HomeMenu.getExpectedMenus(UserRole.AU, PlatformType.WEB)},
+                {"userkn", "123456", HomeMenu.getExpectedMenus(UserRole.USER, PlatformType.WEB)}
         };
     }
 

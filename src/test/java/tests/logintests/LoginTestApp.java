@@ -1,12 +1,14 @@
 package tests.logintests;
 import drivers.DriverManager;
+import model.HomeMenu;
+import model.enums.PlatformType;
+import model.enums.UserRole;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pagesapp.HomePageApp;
 import pagesapp.LoginPageApp;
 import base.BaseTestApp;
-import utils.MyUtil;
 
 public class LoginTestApp extends BaseTestApp {
     LoginPageApp loginPageapp;
@@ -20,7 +22,7 @@ public class LoginTestApp extends BaseTestApp {
     @Test(priority = 8)
     public void testSuccessfulLoginORG() {
         loginPageapp.login("bvdka", "123456");
-        if (homePageApp.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusORGApp()) && loginPageapp.isLoginSuccessful()) {
+        if (homePageApp.isMenuDisplayedCorrectly(HomeMenu.getExpectedMenus(UserRole.ORG, PlatformType.APP)) && loginPageapp.isLoginSuccessful()) {
             System.out.println("Đăng nhập thành công!");
         } else {
             System.out.println("Đăng nhập thất bại!");
@@ -32,7 +34,7 @@ public class LoginTestApp extends BaseTestApp {
     @Test(priority = 7)
     public void testSuccessfulLoginAM() {
         loginPageapp.login("pvt1", "123456");
-        if (homePageApp.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusAMApp())) {
+        if (homePageApp.isMenuDisplayedCorrectly(HomeMenu.getExpectedMenus(UserRole.AM, PlatformType.APP))) {
             System.out.println("Đăng nhập thành công!");
         } else {
             System.out.println("Đăng nhập thất bại!");
@@ -45,7 +47,7 @@ public class LoginTestApp extends BaseTestApp {
     @Test(priority = 6)
     public void testSuccessfulLoginAU() {
         loginPageapp.login("audemo", "123123");
-        if (homePageApp.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusAUApp())) {
+        if (homePageApp.isMenuDisplayedCorrectly(HomeMenu.getExpectedMenus(UserRole.AU, PlatformType.APP))) {
             System.out.println("Đăng nhập thành công!");
         } else {
             System.out.println("Đăng nhập thất bại!");
@@ -57,7 +59,7 @@ public class LoginTestApp extends BaseTestApp {
     @Test(priority = 5)
     public void testSuccessfulLoginUser() {
         loginPageapp.login("userkn", "123456");
-        if (homePageApp.isMenuDisplayedCorrectly(MyUtil.getExpectedMenusUserApp())) {
+        if (homePageApp.isMenuDisplayedCorrectly(HomeMenu.getExpectedMenus(UserRole.USER, PlatformType.APP))) {
             System.out.println("Đăng nhập thành công!");
         } else {
             System.out.println("Đăng nhập thất bại!");

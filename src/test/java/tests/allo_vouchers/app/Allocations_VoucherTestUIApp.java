@@ -3,13 +3,11 @@ package tests.allo_vouchers.app;
 import base.BaseTestApp;
 import drivers.DriverManager;
 import helpers.AllocationHelper;
-import model.AllocationRecord;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
+import model.Allocation;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pagesapp.All_VoucherPageApp;
@@ -18,7 +16,6 @@ import pagesapp.LoginPageApp;
 import pagesweb.All_VoucherPageWeb;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Allocations_VoucherTestUIApp extends BaseTestApp {
     LoginPageApp loginPageapp;
@@ -51,7 +48,7 @@ public class Allocations_VoucherTestUIApp extends BaseTestApp {
         // Lấy danh sách trên web
         all_web.navigateToAllocation_VoucherPage("bvdka","123456");
         all_web.closeMenu();
-        List<AllocationRecord> webRecords = all_web.getAllocationRecord();
+        List<Allocation> webRecords = all_web.getAllocationRecord();
         Assert.assertTrue(AllocationHelper.soSanhCapPhatGiuaAppVaWeb(rawMobile,webRecords), "Không khớp bản ghi trên App ");
         all_app.returnHomeApp();
         homePageApp.setLogOutORG();
@@ -71,7 +68,7 @@ public class Allocations_VoucherTestUIApp extends BaseTestApp {
         // Lấy danh sách trên web
         all_web.navigateToAllocation_VoucherPage("pvt1","123456");
         all_web.closeMenu();
-        List<AllocationRecord> webRecords = all_web.getAllocationRecord();
+        List<Allocation> webRecords = all_web.getAllocationRecord();
         Assert.assertTrue(AllocationHelper.soSanhCapPhatGiuaAppVaWeb(rawMobile,webRecords), "Không khớp bản ghi trên App ");
         all_app.returnHomeApp();
         homePageApp.setLogOutAM();
@@ -91,7 +88,7 @@ public class Allocations_VoucherTestUIApp extends BaseTestApp {
         // Lấy danh sách trên web
         all_web.navigateToAllocation_VoucherPage("audemo","123123");
         all_web.closeMenu();
-        List<AllocationRecord> webRecords = all_web.getAllocationRecord();
+        List<Allocation> webRecords = all_web.getAllocationRecord();
         Assert.assertTrue(AllocationHelper.soSanhCapPhatGiuaAppVaWeb(rawMobile,webRecords), "Không khớp bản ghi trên App ");
         all_app.returnHomeApp();
         homePageApp.setLogOutAU();

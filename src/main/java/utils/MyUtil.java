@@ -1,10 +1,13 @@
 package utils;
 
+import model.Asset;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -16,50 +19,11 @@ public class MyUtil {
     public static final String FILE_PATH = "D:\\Tester\\Auto\\Selenium\\Login\\File\\Mẫu nhập tài sản đã cấp phát.xlsx";
     public static final String FILE_PATH1 = "D:\\Tester\\Auto\\Selenium\\Login\\File\\Mẫu nhập tài sản đã cấp phát (1).xlsx";
     public static final String FILE_NAME = "D:\\Tester\\Auto\\Selenium\\Login\\File\\Mẫu nhập tài sản đã cấp phát";
-    public static List<String> getExpectedMenusORG() {
-        return Arrays.asList("Trang chủ", "Yêu cầu trình duyệt", "Quản lý", "Báo cáo tổng hợp", "Danh mục", "Hệ thống");
-    }
-
-    public static List<String> getExpectedMenusORGApp() {
-        return Arrays.asList("Kiểm kê", "Sửa chữa", "Cấp phát", "Điều chuyển", "Thanh lý", "Chuyển đi", "Thu hồi", "Bảo trì", "In QR", "Ghi chú");
-    }
-
-    public static List<String> getExpectedMenusAM() {
-        return Arrays.asList("Trang chủ", "Yêu cầu trình duyệt", "Quản lý", "Báo cáo tổng hợp", "Danh mục");
-    }
-
-    public static List<String> getExpectedMenusAMApp() {
-        return Arrays.asList("Kiểm kê", "Sửa chữa", "Cấp phát", "Điều chuyển", "Thanh lý", "Chuyển đi", "Thu hồi", "Bảo trì", "In QR", "Ghi chú");
-    }
-
-    public static List<String> getExpectedMenusAU() {
-        return Arrays.asList("Trang chủ", "Quản lý");
-    }
-
-    public static List<String> getExpectedMenusAUApp() {
-        return Arrays.asList("Sửa chữa", "Cấp phát", "Điều chuyển","Thu hồi", "Bảo trì", "In QR", "Ghi chú", "DS tài sản");
-    }
-
-    public static List<String> getExpectedMenusUser() {
-        return Arrays.asList("Trang chủ", "Danh sách TSCĐ", "Danh sách CCDC", "Quản lý");
-    }
-
-    public static List<String> getExpectedMenusUserApp() {
-        return Arrays.asList("In QR", "DS tài sản");
-    }
 
     public static List<String> normalizeList(List<String> list) {
         return list.stream()
                 .map(s -> s.trim())        // Bỏ khoảng trắng đầu/cuối
                 .collect(Collectors.toList());
-    }
-
-    public static List<String> getButtonORG() {
-        return Arrays.asList("Cấp phát TSCĐ", "Nhập Excel", "Xuất Excel", "Tìm kiếm nâng cao");
-    }
-
-    public static List<String> getButtonAU() {
-        return Arrays.asList("Xuất Excel", "Tìm kiếm nâng cao");
     }
 
     public static List<String> getTrangThaiPhieuAllocations() {
@@ -117,5 +81,20 @@ public class MyUtil {
 
         Date date = inputFormat.parse(dateStr);
         return outputFormat.format(date);
+    }
+
+    public static List<Asset> parseUiAssets(List<String> uiStrings) {
+        List<Asset> assets = new ArrayList<>();
+
+        for (String item : uiStrings) {
+            String[] parts = item.split("\n", 2);
+            String code = parts[0].trim();
+            String name = parts.length > 1 ? parts[1].trim() : "";
+            Asset taisan = new Asset();
+            taisan.setCode(code);
+            taisan.setName(name);
+            assets.add(taisan);
+        }
+        return assets;
     }
 }

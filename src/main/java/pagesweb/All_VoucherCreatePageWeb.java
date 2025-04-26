@@ -106,7 +106,7 @@ public class All_VoucherCreatePageWeb {
     }
 
     public boolean checkPhongBanBanGiao(String data){
-        if(data == getPhongBanBanGiao()){
+        if(data.equals(getPhongBanBanGiao())){
             return true;
         }
         else
