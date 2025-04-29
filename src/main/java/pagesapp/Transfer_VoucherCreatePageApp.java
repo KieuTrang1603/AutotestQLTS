@@ -19,27 +19,26 @@ import java.text.ParseException;
 import java.time.Duration;
 import java.util.*;
 
-public class All_VoucherCreatePageApp {
+public class Transfer_VoucherCreatePageApp {
     private final AndroidDriver driver;
     private final WebDriverWait wait ;
 
-    @FindBy(xpath = "//android.view.View[contains(@content-desc, 'Phiếu cấp phát')]")
-    private WebElement phieuCP_label;
-
+    @FindBy(xpath = "//android.view.View[contains(@content-desc, 'Phiếu điều chuyển')]")
+    private WebElement phieuDC_label;
     @FindBy(xpath = "//android.view.View[contains(@content-desc, 'Ngày chứng từ')]/following-sibling::android.view.View[1]")
     private WebElement ngayTaoPhieuInput;
 
     @FindBy(xpath = "//android.view.View[contains(@content-desc, 'Ngày chứng từ')]/following-sibling::android.view.View[2]")
     private WebElement ngayChungTuInput;
 
-    @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[1]/android.view.View[1]/android.view.View")
-    private WebElement phongBanBanGiaoInput;
+    @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[1]")
+    private WebElement trangThaiPhieuInput;
 
     @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[2]")
-    private WebElement nguoiBanGiaoInput;
+    private WebElement phongBanBanGiaoInput;
 
     @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[3]")
-    private WebElement trangThaiPhieuInput;
+    private WebElement nguoiBanGiaoInput;
 
     @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[4]")
     private WebElement phongBanTiepNhanInput;
@@ -47,17 +46,17 @@ public class All_VoucherCreatePageApp {
     @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[5]")
     private WebElement nguoiTiepNhanInput;
 
-    @FindBy(xpath = "//android.widget.Button[contains(@content-desc, 'Chọn tài sản cấp phát')]")
+    @FindBy(xpath = "//android.widget.Button[contains(@content-desc, 'Chọn tài sản')]")
     private WebElement chonTS;
 
     @FindBy(xpath = "//android.widget.Button[contains(@content-desc, 'Chọn')]")
     private WebElement chon_btn;
 
-    @FindBy(xpath = "//android.widget.Button[contains(@content-desc, 'Lưu')]")
+    @FindBy(xpath = "//android.view.View[contains(@content-desc, 'Lưu')]")
     private WebElement luu_btn;
 
     // Khởi tạo các phần tử giao diện bằng Page Factory
-    public All_VoucherCreatePageApp(AndroidDriver driver) {
+    public Transfer_VoucherCreatePageApp(AndroidDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
@@ -76,78 +75,6 @@ public class All_VoucherCreatePageApp {
 
     public boolean isNgayChungTuEdit(){
         return PageAppUtil.isEdit(ngayChungTuInput);
-    }
-
-    public boolean isPhongBanGiaoAble(){
-        return PageAppUtil.isEdit(phongBanBanGiaoInput);
-    }
-    public String getPhongBanBanGiao() {
-        return PageAppUtil.getValueContent(phongBanBanGiaoInput);
-    }
-
-    public boolean checkPhongBanBanGiao(String data){
-        if(data.equals(getPhongBanBanGiao())){
-            return true;
-        }
-        else
-            return false;
-    }
-    public void openDropdownNguoiBanGiao() {
-        PageUtil.clickElement(nguoiBanGiaoInput);
-    }
-    public List<WebElement> getAllElementOptionsNguoiBanGiao() {
-        openDropdownNguoiBanGiao();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        WebElement scrollView = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//android.widget.ScrollView")
-        ));
-        List<WebElement> elements = scrollView.findElements(By.xpath(".//android.view.View[@content-desc]"));
-        return elements;
-    }
-    public List<String> getAllContentDescNguoiBanGiao() {
-        openDropdownNguoiBanGiao();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        WebElement scrollView = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//android.widget.ScrollView")
-        ));
-
-        Set<String> contentDescs = new LinkedHashSet<>();
-        int scrollCount = 0;
-        int maxScroll = 100;
-
-        while (scrollCount < maxScroll) {
-            List<WebElement> visibleElements = scrollView.findElements(By.xpath(".//android.view.View[@content-desc]"));
-            int before = contentDescs.size();
-
-            for (WebElement el : visibleElements) {
-                contentDescs.add(el.getAttribute("content-desc"));
-            }
-
-            if (contentDescs.size() == before) {
-                break;
-            }
-
-            BaseApp.scrollDown(scrollView);
-            scrollCount++;
-        }
-
-        return new ArrayList<>(contentDescs);
-    }
-
-    public void chonNguoiBanGiaoInput(){
-        getAllElementOptionsNguoiBanGiao().get(1).click();
-    }
-
-    public boolean checkNguoiBanGiao(List<String> data){
-        return MyUtil.sosanh2chuoi(data,getAllContentDescNguoiBanGiao());
-    }
-
-    public void clearNguoiBanGiao(){
-        driver.findElements(By.xpath("//android.widget.ScrollView/android.widget.Button[2]/android.view.View[2]"))
-                .stream()
-                .filter(WebElement::isDisplayed)
-                .findFirst()
-                .ifPresent(WebElement::click);
     }
 
     public void openDropdownTrangThaiPhieu(){
@@ -187,23 +114,42 @@ public class All_VoucherCreatePageApp {
     }
 
     public boolean checkTrangThaiPhieu(List<String> data){
-       return MyUtil.sosanh2chuoi(data,getAllDropdownOptionsTrangThaiPhieu());
+        return MyUtil.sosanh2chuoi(data,getAllDropdownOptionsTrangThaiPhieu());
     }
 
     public void clearTrangThaiPhieu(){
-        driver.findElements(By.xpath("//android.widget.ScrollView/android.widget.Button[3]/android.view.View[2]"))
+        driver.findElements(By.xpath("//android.widget.ScrollView/android.widget.Button[1]/android.view.View[2]"))
                 .stream()
                 .filter(WebElement::isDisplayed)
                 .findFirst()
                 .ifPresent(WebElement::click);
     }
 
-    public void openDropdownPhongBanTiepNhan() {
-        PageUtil.clickElement(phongBanTiepNhanInput);
+    public boolean isPhongBanGiaoAble(){
+        return PageAppUtil.isEdit(phongBanBanGiaoInput);
     }
 
-    public List<String> getAllContentDescPhongTiepNhan() {
-        openDropdownPhongBanTiepNhan();
+    public String getPhongBanBanGiao() {
+        WebElement phongBanBanGiaotext = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//android.widget.ScrollView/android.widget.Button[2]/android.view.View[1]/android.view.View")
+        ));
+        return PageAppUtil.getValueContent(phongBanBanGiaotext);
+    }
+
+    public boolean checkPhongBanBanGiaoFirstly(String data){
+        if(data.equals(getPhongBanBanGiao())){
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public void openDropdownPhongBanBanGiao() {
+        phongBanBanGiaoInput.click();
+    }
+
+    public List<String> getAllContentDescPhongBanGiao() {
+        openDropdownPhongBanBanGiao();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         WebElement scrollView = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//android.widget.ScrollView")
@@ -232,14 +178,153 @@ public class All_VoucherCreatePageApp {
         return new ArrayList<>(contentDescs);
     }
 
-    public List<WebElement> getAllElementOptionsPhongBanTiepNhan() {
-        openDropdownPhongBanTiepNhan();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+    public boolean checkPhongBanBanGiao(List<String> data){
+        List<String> danhsach = getAllContentDescPhongBanGiao();
+        System.out.println("DB: " + data.size());
+        System.out.println("APP: " + danhsach.size());
+        if(data.size() == (danhsach.size())){
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public void chonPhongBanBanGiaoInput(int a){
+        openDropdownPhongBanBanGiao();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement scrollView = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View[1]")
+        ));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        WebElement editText = scrollView.findElement(By.xpath(".//android.widget.EditText"));
+        editText.click();
+        if(a == 2){
+            editText.sendKeys(Department.DEPARTMENT_NAME_AU1);}
+        else
+            editText.sendKeys(Department.DEPARTMENT_NAME_AM);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        List<WebElement> elements = scrollView.findElements(By.xpath(".//android.view.View[@content-desc]"));
+        elements.getFirst().click();
+    }
+
+    public void clearPhongBanBanGiao(){
+        driver.findElements(By.xpath("//android.widget.ScrollView/android.widget.Button[2]/android.view.View[2]"))
+                .stream()
+                .filter(WebElement::isDisplayed)
+                .findFirst()
+                .ifPresent(WebElement::click);
+    }
+
+    public boolean isNguoiBanGiaoAble(){
+        return PageAppUtil.isEdit(nguoiBanGiaoInput);
+    }
+
+    public void openDropdownNguoiBanGiao() {
+        nguoiBanGiaoInput.click();
+    }
+
+    public List<WebElement> getAllElementOptionsNguoiBanGiao() {
+        openDropdownNguoiBanGiao();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         WebElement scrollView = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//android.widget.ScrollView")
         ));
         List<WebElement> elements = scrollView.findElements(By.xpath(".//android.view.View[@content-desc]"));
         return elements;
+    }
+
+    public List<String> getAllContentDescNguoiBanGiao() {
+        openDropdownNguoiBanGiao();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement scrollView = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//android.widget.ScrollView")
+        ));
+
+        Set<String> contentDescs = new LinkedHashSet<>();
+        int scrollCount = 0;
+        int maxScroll = 100;
+
+        while (scrollCount < maxScroll) {
+            List<WebElement> visibleElements = scrollView.findElements(By.xpath(".//android.view.View[@content-desc]"));
+            int before = contentDescs.size();
+
+            for (WebElement el : visibleElements) {
+                contentDescs.add(el.getAttribute("content-desc"));
+            }
+
+            if (contentDescs.size() == before) {
+                break;
+            }
+
+            BaseApp.scrollDown(scrollView);
+            scrollCount++;
+        }
+
+        return new ArrayList<>(contentDescs);
+    }
+
+    public void chonNguoiBanGiaoInput(){
+        getAllElementOptionsNguoiBanGiao().get(1).click();
+    }
+
+    public boolean checkNguoiBanGiao(List<String> data){
+        return MyUtil.sosanh2chuoi(data,getAllContentDescNguoiBanGiao());
+    }
+
+    public void clearNguoiBanGiao(){
+        driver.findElements(By.xpath("//android.widget.ScrollView/android.widget.Button[3]/android.view.View[2]"))
+                .stream()
+                .filter(WebElement::isDisplayed)
+                .findFirst()
+                .ifPresent(WebElement::click);
+    }
+
+    public String getPhongBanTiepNhan() {
+        WebElement phongBanTiepNhantext = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//android.widget.ScrollView/android.widget.Button[4]/android.view.View[1]/android.view.View")
+        ));
+        return PageAppUtil.getValueContent(phongBanTiepNhantext);
+    }
+    public void openDropdownPhongBanTiepNhan() {
+        PageUtil.clickElement(phongBanTiepNhanInput);
+    }
+
+    public List<String> getAllContentDescPhongTiepNhan() {
+        openDropdownPhongBanTiepNhan();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement scrollView = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//android.widget.ScrollView")
+        ));
+
+        Set<String> contentDescs = new LinkedHashSet<>();
+        int scrollCount = 0;
+        int maxScroll = 100;
+
+        while (scrollCount < maxScroll) {
+            List<WebElement> visibleElements = scrollView.findElements(By.xpath(".//android.view.View[@content-desc]"));
+            int before = contentDescs.size();
+
+            for (WebElement el : visibleElements) {
+                contentDescs.add(el.getAttribute("content-desc"));
+            }
+
+            if (contentDescs.size() == before) {
+                break;
+            }
+
+            BaseApp.scrollDown(scrollView);
+            scrollCount++;
+        }
+
+        return new ArrayList<>(contentDescs);
     }
 
     public boolean checkPhongBanTiepNhan(List<String> data){
@@ -259,7 +344,26 @@ public class All_VoucherCreatePageApp {
     }
 
     public void chonPhongBanTiepNhanInput(){
-        getAllElementOptionsPhongBanTiepNhan().get(1).click();
+        openDropdownPhongBanTiepNhan();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement scrollView = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View[1]")
+        ));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        WebElement editText = scrollView.findElement(By.xpath(".//android.widget.EditText"));
+        editText.click();
+        editText.sendKeys(Department.DEPARTMENT_NAME_AU1);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        List<WebElement> elements = scrollView.findElements(By.xpath(".//android.view.View[@content-desc]"));
+        elements.getFirst().click();
     }
 
     public void clearPhongBanTiepNhan(){
@@ -279,17 +383,10 @@ public class All_VoucherCreatePageApp {
 
     public List<String> getAllContentDescNguoiTiepNhan() {
         openDropdownNguoiTiepNhan();
-        List<WebElement> scrollViews;
-        WebElement scrollView = null;
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        scrollViews = driver.findElements(By.xpath("//android.widget.ScrollView"));
-        if(!scrollViews.isEmpty()) {
-            scrollView = scrollViews.get(0);
-        }else {
-            scrollView = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                    By.xpath("//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View")
-            ));
-        }
+        WebElement scrollView = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//android.widget.ScrollView")
+        ));
 
         Set<String> contentDescs = new LinkedHashSet<>();
         int scrollCount = 0;
@@ -316,27 +413,20 @@ public class All_VoucherCreatePageApp {
 
     public List<WebElement> getAllElementOptionsNguoiTiepNhan() {
         openDropdownNguoiTiepNhan();
-//        List<WebElement> scrollViews;
-//        WebElement scrollView = null;
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-//        scrollViews = driver.findElements(By.xpath("//android.widget.ScrollView"));
-//        if(!scrollViews.isEmpty()) {
-//                scrollView = scrollViews.get(0);
-//        }else {
-//            scrollView = wait.until(ExpectedConditions.visibilityOfElementLocated(
-//                    By.xpath("//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View")
-//                    ));
-//        }
-
         WebElement scrollView = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View")
         ));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         List<WebElement> elements = scrollView.findElements(By.xpath(".//android.view.View[@content-desc]"));
         return elements;
     }
 
     public boolean checkNguoiTiepNhan(List<String> data){
-        return MyUtil.sosanh2chuoi(data,getAllContentDescNguoiTiepNhan());
+       return MyUtil.sosanh2chuoi(data,getAllContentDescNguoiTiepNhan());
     }
 
     public String getNguoiTiepNhanInput() {
@@ -357,10 +447,9 @@ public class All_VoucherCreatePageApp {
     public void openDialogChonTS() {
         chonTS.click();
     }
-
     public List<String> getAllDanhsachTSCD() {
         openDialogChonTS();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement scrollView = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//android.widget.ScrollView")
         ));
@@ -383,9 +472,9 @@ public class All_VoucherCreatePageApp {
         return elements;
     }
 
-    public boolean checkDS() throws SQLException, ParseException {
+    public boolean checkDS(String data) throws SQLException, ParseException {
         List<String> danhsach= getAllDanhsachTSCD();
-        List<Asset> data1 = DataBaseUtils.getSomeAssetsAvailableCP(Department.DEPARTMENT_ID_AM,Allocation.STATUS_ALLOCATION_CTN,danhsach.size());
+        List<Asset> data1 = DataBaseUtils.getSomeAssetsAvailableDC(data,danhsach.size());
         System.out.println(data1);
         List<Asset> data2 = MyUtil.parseUiAssets(danhsach);
         System.out.println(data2);
@@ -396,12 +485,45 @@ public class All_VoucherCreatePageApp {
             return false;
     }
 
+    public boolean checkDSHanhChinh() throws SQLException, ParseException {
+        openDialogChonTS();
+        WebElement droplist = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//android.view.View[@content-desc='Phòng ban quản lý']/following-sibling::android.widget.Button[1]")
+        ));
+        droplist.click();
+        WebElement scrollView = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View[1]")
+        ));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        WebElement editText = scrollView.findElement(By.xpath(".//android.widget.EditText"));
+        editText.click();
+        editText.sendKeys("hành chính");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        List<WebElement> elements = scrollView.findElements(By.xpath(".//android.view.View[@content-desc]"));
+        elements.getFirst().click();
+        List<WebElement> taisan = Collections.singletonList(wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//android.view.View[@content-desc='Không tìm thấy tài sản']")
+        )));
+        if(taisan.isEmpty()){
+            return false;
+        } else
+            return true;
+    }
+
     public void chonTS(){
         List<WebElement> danhsach = getAllElementOptionsDanhsachTS();
-        WebElement checkbox = danhsach.get(2).findElement(By.xpath(".//android.widget.CheckBox"));
+        WebElement checkbox = danhsach.get(0).findElement(By.xpath(".//android.widget.CheckBox"));
         String checkedAttribute = checkbox.getAttribute("checked");
         if(checkedAttribute.equals("false")){
-            danhsach.get(2).click();
+            danhsach.get(0).click();
         }
         chon_btn.click();
     }
@@ -419,15 +541,14 @@ public class All_VoucherCreatePageApp {
     public void setLuu_btn(){
         luu_btn.click();
     }
-
-    public boolean isAllocatonDialogDisplayed() {
+    public boolean isTransferDialogDisplayed() {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         try {
-            return phieuCP_label.isDisplayed();
+            return phieuDC_label.isDisplayed();
         } catch (NoSuchElementException e) {
             return false;
         }

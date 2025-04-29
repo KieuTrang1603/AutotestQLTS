@@ -2,15 +2,14 @@ package tests.allo_vouchers.app;
 
 import base.BaseTestApp;
 import drivers.DriverManager;
+import model.Department;
 import model.User;
 import model.UsersRole;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pagesapp.All_VoucherCreatePageApp;
-import pagesapp.All_VoucherPageApp;
-import pagesapp.HomePageApp;
-import pagesapp.LoginPageApp;
+import pagesapp.*;
 import pagesweb.All_VoucherCreatePageWeb;
 import pagesweb.All_VoucherPageWeb;
 import pagesweb.DS_TSCD_Dialog;
@@ -71,6 +70,8 @@ public class Allocations_VoucherTestValidateApp extends BaseTestApp {
             System.out.println("Data from database: " + departmentName);
             Assert.assertTrue(all.checkPhongBanBanGiao(departmentName),
                     "Trường 'Phòng ban bàn giao' không hiển thị đúng!");
+            boolean able = all.isPhongBanGiaoAble();
+            Assert.assertTrue(!able, "Trường 'Phòng bàn giao' không disable");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -79,30 +80,27 @@ public class Allocations_VoucherTestValidateApp extends BaseTestApp {
     @Test(priority = 4)
     public void testNguoiBanGiao(){
         All_VoucherCreatePageApp all = new All_VoucherCreatePageApp(DriverManager.getAppiumDriver());
-        String department_id = "9484b376-8470-4d06-b1a0-e59179f93ca6";
         try {
-            List<String> displayNames = DataBaseUtils.getUserByDepartmentId(department_id);
+            List<String> displayNames = DataBaseUtils.getUserByDepartmentId(Department.DEPARTMENT_ID_AM);
             System.out.println("Data from database: " + displayNames);
             Assert.assertTrue(all.checkNguoiBanGiao(displayNames),
                     "Danh sách 'Người bàn giao' chưa hiển thị đúng!");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        DriverManager.getAppiumDriver().navigate().back();
     }
 
     @Test(priority = 5)
     public void testTrangThaiPhieu(){
         All_VoucherCreatePageApp all = new All_VoucherCreatePageApp(DriverManager.getAppiumDriver());
         Assert.assertTrue(all.checkTrangThaiPhieu(MyUtil.getTrangThaiPhieuAllocations()), "Danh sách 'Trạng thái phiếu' chưa hiển thị đúng!");
-        DriverManager.getAppiumDriver().navigate().back();
     }
 
     @Test(priority = 6)
     public void testNguoiTiepNhanFirstly(){
         All_VoucherCreatePageApp all = new All_VoucherCreatePageApp(DriverManager.getAppiumDriver());
         boolean able = all.isNguoiTiepNhanAble();
-        Assert.assertTrue(!able, "Trường 'Người tiếp nhận' không disable khi chưa chọn phòng ban giao");
+        Assert.assertTrue(!able, "Trường 'Người tiếp nhận' không disable khi chưa chọn phòng ban tiếp nhận");
     }
 
     @Test(priority = 7)
@@ -115,14 +113,13 @@ public class Allocations_VoucherTestValidateApp extends BaseTestApp {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        DriverManager.getAppiumDriver().navigate().back();
     }
 
     @Test(priority = 8)
     public void testNguoiTiepNhan(){
         All_VoucherCreatePageApp all = new All_VoucherCreatePageApp(DriverManager.getAppiumDriver());
         all.chonPhongBanTiepNhanInput();
-        String maPTN = MyUtil.getMaPhongTiepNhan(all.getPhongBanTiepNhanInput());
+        String maPTN = MyUtil.getMaPhong(all.getPhongBanTiepNhanInput());
         try {
             String department_id = DataBaseUtils.getDepartmentIdByCode(maPTN);
             System.out.println("Data from DB: " + department_id);
@@ -130,7 +127,6 @@ public class Allocations_VoucherTestValidateApp extends BaseTestApp {
             System.out.println("Data from database: " + displayNames);
             Assert.assertTrue(all.checkNguoiTiepNhan(displayNames),
                     "Danh sách 'Người tiếp nhận' chưa hiển thị đúng!");
-            DriverManager.getAppiumDriver().navigate().back();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -148,6 +144,17 @@ public class Allocations_VoucherTestValidateApp extends BaseTestApp {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @AfterMethod
+    public void resetToAddNewScreen() {
         DriverManager.getAppiumDriver().navigate().back();
+        All_VoucherCreatePageApp all = new All_VoucherCreatePageApp(DriverManager.getAppiumDriver());
+        All_VoucherPageApp allVoucherPage = new All_VoucherPageApp(DriverManager.getAppiumDriver());
+
+        // Nếu form thêm mới bị ẩn (không còn), thì click lại "Thêm mới" để reset màn hình
+        if (!all.isAllocatonDialogDisplayed()) {
+            allVoucherPage.clickThemmoi();
+        }
     }
 }

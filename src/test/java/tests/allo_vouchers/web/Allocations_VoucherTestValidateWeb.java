@@ -119,7 +119,7 @@ public class Allocations_VoucherTestValidateWeb extends BaseTestWeb {
         All_VoucherCreatePageWeb all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
         all.openDropdownPhongBanTiepNhan();
         all.chonPhongBanTiepNhanInput();
-        String maPTN = MyUtil.getMaPhongTiepNhan(all.getPhongBanTiepNhanInput());
+        String maPTN = MyUtil.getMaPhong(all.getPhongBanTiepNhanInput());
         try {
             String department_id = DataBaseUtils.getDepartmentIdByCode(maPTN);
             System.out.println("Data from DB: " + department_id);

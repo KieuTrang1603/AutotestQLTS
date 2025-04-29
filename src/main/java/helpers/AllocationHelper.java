@@ -126,8 +126,8 @@ public class AllocationHelper {
 
     public static boolean soSanhCapPhatGiuaAppVaWeb(List<String> list, List<Allocation> list1){
         boolean match = false;
-        list1 = getAllocationMobile(list);
-        for (Allocation pApp : list1) {
+        List<Allocation> list2 = getAllocationMobile(list);
+        for (Allocation pApp : list2) {
             match = list1.stream().anyMatch(pWeb ->
                     pWeb.getNgay().equals(pApp.getNgay()) &&
                             pWeb.getTrangThai().equalsIgnoreCase(pApp.getTrangThai()) &&

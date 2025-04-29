@@ -1,6 +1,7 @@
 package utils;
 
 import model.Asset;
+import model.Department;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -99,6 +100,20 @@ public class DataBaseUtils {
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, ORG_ID);
         statement.setString(2, maPTN);
+
+        ResultSet rs = statement.executeQuery();
+        if (rs.next()) {
+            return rs.getString("id");
+        }
+        return null;
+    }
+
+    public static String getDepartmentIdByTen(String tenPTN) throws SQLException {
+        String query = "SELECT id FROM tbl_department WHERE org_id = ? AND name = ?";
+        Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, ORG_ID);
+        statement.setString(2, tenPTN);
 
         ResultSet rs = statement.executeQuery();
         if (rs.next()) {
@@ -254,7 +269,7 @@ public class DataBaseUtils {
         return result;
     }
 
-    public static List<Asset> getSomeAssetsAvailable(String departmentId, String allocationStatusId, int a) throws SQLException, ParseException {
+    public static List<Asset> getSomeAssetsAvailableCP(String departmentId, String allocationStatusId, int a) throws SQLException, ParseException {
         String query = "SELECT a.code AS asset_code, a.name AS asset_name " +
                 "FROM tbl_asset a " +
                 "LEFT JOIN tbl_store t ON a.store_id = t.id " +
@@ -291,6 +306,37 @@ public class DataBaseUtils {
             taisan.setName(assetName);
             result.add(taisan);
             }
+        return result;
+    }
+
+    public static List<Asset> getSomeAssetsAvailableDC(String departmentId, int a) throws SQLException, ParseException {
+        String query = "SELECT a.code AS asset_code, a.name AS asset_name " +
+                "FROM tbl_asset a " +
+                "WHERE a.org_id = ? " +
+                "AND a.asset_class = 1 " +
+                "AND a.management_department_id = ? " +
+                "AND a.use_department_id = ? " +
+                "ORDER BY a.date_of_reception DESC, " +
+                "a.code DESC " +
+                "LIMIT ?";
+
+        Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, ORG_ID);
+        statement.setString(2, Department.DEPARTMENT_ID_AM);
+        statement.setString(3, departmentId);
+        statement.setInt(4, a);
+
+        List<Asset> result = new ArrayList<>();
+        ResultSet rs = statement.executeQuery();
+        while (rs.next()) {
+            String assetCode = rs.getString("asset_code");
+            String assetName = rs.getString("asset_name");
+            Asset taisan = new Asset();
+            taisan.setCode(assetCode);
+            taisan.setName(assetName);
+            result.add(taisan);
+        }
         return result;
     }
 

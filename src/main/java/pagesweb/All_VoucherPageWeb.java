@@ -27,8 +27,6 @@ public class All_VoucherPageWeb {
     @FindBy(css=(".Toastify__toast--success"))
     private WebElement toastMessage;
 
-    String file_capphat ="D:\\Tester\\Auto\\Selenium\\Login\\File";
-
     // Constructor
     public All_VoucherPageWeb(WebDriver driver) {
         this.driver = driver;

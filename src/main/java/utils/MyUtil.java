@@ -30,7 +30,11 @@ public class MyUtil {
         return Arrays.asList("Mới tạo", "Đã cấp phát", "Chờ tiếp nhận");
     }
 
-    public static String getMaPhongTiepNhan(String department){
+    public static List<String> getTrangThaiPhieuTransfers() {
+        return Arrays.asList("Chờ xác nhận", "Đã xác nhận", "Đã điều chuyển");
+    }
+
+    public static String getMaPhong(String department){
         String[] parts = department.split(" - ");
         String result = parts[1].trim();
         return result;
@@ -96,5 +100,17 @@ public class MyUtil {
             assets.add(taisan);
         }
         return assets;
+    }
+
+    public static boolean sosanh2chuoi(List<String> data, List<String> data1){
+        List<String> data2 = MyUtil.normalizeList(data);
+        System.out.println(data2);
+        List<String> data3 = MyUtil.normalizeList(data1);
+        System.out.println(data3);
+        if(data2.equals(data3)){
+            return true;
+        }
+        else
+            return false;
     }
 }

@@ -24,6 +24,15 @@ public class HomePageApp {
     @FindBy(xpath = "//android.view.View[contains(@content-desc,'Cấp phát')]")
     private WebElement all_voucher;
 
+    @FindBy(xpath = "//android.view.View[contains(@content-desc,'Điều chuyển')]")
+    private WebElement transf_voucher;
+
+    @FindBy(xpath = "//android.widget.ScrollView/android.view.View[3]")
+    private WebElement scanQR;
+    //máy thật
+//    @FindBy(xpath = "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View[3]")
+//    private WebElement scanQR;
+
     // Khởi tạo các phần tử giao diện bằng Page Factory
     public HomePageApp(AndroidDriver driver) {
         this.driver = driver;
@@ -63,6 +72,11 @@ public class HomePageApp {
         WebElement logOutElement = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ScrollView/android.view.View[4]"))
         );
+
+        //máy thật
+//        WebElement logOutElement = wait.until(
+//                ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View[4]"))
+//        );
         logOutElement.click();
         LogOutPageApp logOutPageApp = new LogOutPageApp(driver);
         logOutPageApp.tapLogOutView();
@@ -87,7 +101,29 @@ public class HomePageApp {
         logOutPageApp.tapLogOutView();
     }
 
+    public void setLogOut(int a){
+        switch (a){
+            case 0:
+                setLogOutORG();
+                break;
+            case 1:
+                setLogOutAM();
+                break;
+            case 2,3:
+                setLogOutAU();
+                break;
+        }
+    }
+
     public void navigationtoAllocation(){
         all_voucher.click();
+    }
+
+    public void navigationtoTransfer(){
+        transf_voucher.click();
+    }
+
+    public void navigationtoScanQR(){
+        scanQR.click();
     }
 }
