@@ -5,7 +5,7 @@ run_ui_tests:
   stage: test
   script:
     - echo "Chạy UI tests với TestNG"
-    - mvn -DsuiteXmlFile=testng.xml clean test
+    - cmd /c "mvn clean test -DsuiteXmlFile=testng.xml"
   tags:
     - shell  # hoặc 'Windows'
   artifacts:
