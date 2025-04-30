@@ -1,11 +1,18 @@
 stages:
   - test
 
-check_runner:
+run_ui_tests:
   stage: test
   script:
-    - echo "Test GitLab Runner đang hoạt động"
-    - java -version
-    - mvn -version
+    - echo "Chạy UI tests với TestNG"
+    - mvn clean test -DsuiteXmlFile=testng.xml
   tags:
-    - shell  # Hoặc dùng "Windows" tùy runner bạn tag gì
+    - shell  # hoặc 'Windows' tùy runner bạn tag
+  artifacts:
+    when: always
+    paths:
+      - test-output/
+      - target/surefire-reports/
+    expire_in: 1 week
+  reports:
+    junit: target/surefire-reports/TEST-*.xml  # Cho phép GitLab hiển thị kết quả test
