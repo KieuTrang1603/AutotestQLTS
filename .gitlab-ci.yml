@@ -4,7 +4,7 @@ stages:
 run_ui_tests:
   stage: test
   script:
-    - echo "Chạy UI tests với TestNG"
+    - echo "Chạy Login tests với TestNG"
     - cmd /c "mvn clean test -DsuiteXmlFile=testng.xml"
   tags:
     - shell  # hoặc 'Windows'
