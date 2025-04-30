@@ -5,7 +5,8 @@ run_ui_tests:
   stage: test
   script:
     - echo "Chạy UI tests với TestNG"
-    - mvn clean test -DsuiteXmlFile=testng.xml
+    - export MAVEN_OPTS="-DsuiteXmlFile=testng.xml"
+    - mvn clean test
   tags:
     - shell  # hoặc 'Windows'
   artifacts:
