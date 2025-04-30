@@ -1,0 +1,11 @@
+stages:
+  - test
+
+check_runner:
+  stage: test
+  script:
+    - echo "GitLab Runner đang hoạt động tốt"
+    - java -version
+    - mvn -version
+  tags:
+    - shell  # Hoặc dùng "Windows" tùy runner bạn tag gì
