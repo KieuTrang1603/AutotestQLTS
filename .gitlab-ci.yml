@@ -4,7 +4,7 @@ stages:
 check_runner:
   stage: test
   script:
-    - echo "GitLab Runner đang hoạt động"
+    - echo "Test GitLab Runner đang hoạt động"
     - java -version
     - mvn -version
   tags:
