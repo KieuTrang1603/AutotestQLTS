@@ -26,6 +26,13 @@ public class BaseTestWeb {
         ChromeOptions options = new ChromeOptions();
         options.setBinary("C:\\Tools\\Chrome114\\chrome-win64\\chrome.exe"); // Đường dẫn đến Chrome 114
 
+        // Thêm headless nếu chạy trên runner CI/CD
+        if (System.getenv("CI") != null) {
+            options.addArguments("--headless=new");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+        }
+
         WebDriver driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get("https://asvn.oceantech.com.vn/session/signin");
