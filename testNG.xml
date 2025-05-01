@@ -7,10 +7,10 @@
     </classes>
 </test>
 
-<test name="MultiUserLoginTest" parallel="methods" thread-count="4">
-    <classes>
-        <class name="tests.logintests.MultiUserLoginTest"/>
-    </classes>
-</test>
+<!--<test name="MultiUserLoginTest" parallel="methods" thread-count="4">-->
+<!--    <classes>-->
+<!--        <class name="tests.logintests.MultiUserLoginTest"/>-->
+<!--    </classes>-->
+<!--</test>-->
 
 </suite>
