@@ -3,6 +3,7 @@ package base;
 import drivers.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
@@ -12,8 +13,18 @@ import java.util.List;
 public class BaseMultiTestWeb {
     @BeforeMethod
     public void setUp() {
-        WebDriver driver;
-        driver = new ChromeDriver();
+//        WebDriver driver;
+//        driver = new ChromeDriver();
+//        driver.manage().window().maximize();
+//        driver.get("https://asvn.oceantech.com.vn/session/signin");
+//        DriverManager.setWebDriver(driver);
+
+        System.setProperty("webdriver.chrome.driver", "C:\\Tools\\ChromeDriver114\\chromedriver.exe");
+
+        ChromeOptions options = new ChromeOptions();
+        options.setBinary("C:\\Tools\\Chrome114\\chrome-win64\\chrome.exe"); // Đường dẫn đến Chrome 114
+
+        WebDriver driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get("https://asvn.oceantech.com.vn/session/signin");
         DriverManager.setWebDriver(driver);

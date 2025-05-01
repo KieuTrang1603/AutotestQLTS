@@ -27,11 +27,11 @@ public class HomePageApp {
     @FindBy(xpath = "//android.view.View[contains(@content-desc,'Điều chuyển')]")
     private WebElement transf_voucher;
 
-    @FindBy(xpath = "//android.widget.ScrollView/android.view.View[3]")
-    private WebElement scanQR;
-    //máy thật
-//    @FindBy(xpath = "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View[3]")
+//    @FindBy(xpath = "//android.widget.ScrollView/android.view.View[3]")
 //    private WebElement scanQR;
+    //máy thật
+    @FindBy(xpath = "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View[3]")
+    private WebElement scanQR;
 
     // Khởi tạo các phần tử giao diện bằng Page Factory
     public HomePageApp(AndroidDriver driver) {

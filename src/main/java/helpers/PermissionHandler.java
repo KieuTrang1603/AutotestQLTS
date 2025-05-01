@@ -2,12 +2,12 @@ package helpers;
 
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,14 +25,28 @@ public class PermissionHandler {
      * Xử lý popup xin quyền hệ thống Android (Allow/Deny)
      */
     public void handleSystemPermissionPopup() {
+//        try {
+//            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+//            wait.until(ExpectedConditions.alertIsPresent());
+//            driver.switchTo().alert().accept();
+//            System.out.println("Đã ấn 'Allow' hệ thống.");
+//        } catch (NoAlertPresentException e) {
+//            System.out.println("Không có alert hệ thống.");
+//        } catch (WebDriverException e) {
+//            System.out.println("WebDriverException: " + e.getMessage());
+//        }
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-            wait.until(ExpectedConditions.alertIsPresent());
 
-            driver.switchTo().alert().accept();
-            System.out.println("Đã ấn 'Allow' hệ thống.");
-        } catch (NoAlertPresentException e) {
-            System.out.println("Không có alert hệ thống.");
+            // Đợi 1 trong các button hiển thị
+            WebElement allowButton = wait.until(ExpectedConditions.presenceOfElementLocated(
+                    By.xpath("//*[@text='While using the app']")));
+
+            allowButton.click();
+            System.out.println("Đã chọn 'While using the app' để cấp quyền.");
+
+        } catch (TimeoutException e) {
+            System.out.println("Không thấy popup xin quyền.");
         } catch (WebDriverException e) {
             System.out.println("WebDriverException: " + e.getMessage());
         }
@@ -109,11 +123,35 @@ public class PermissionHandler {
         }
     }
     public void injectQRCodeImage(String adbPath, String emulatorName, String imagePath) {
+//        try {
+//            String command = adbPath + " -s " + emulatorName + " emu camera inject-image " + imagePath;
+//            Process process = Runtime.getRuntime().exec(command);
+//            process.waitFor();
+//            System.out.println("Inject QR image done!");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         try {
             String command = adbPath + " -s " + emulatorName + " emu camera inject-image " + imagePath;
             Process process = Runtime.getRuntime().exec(command);
-            process.waitFor();
-            System.out.println("Inject QR image done!");
+
+            BufferedReader stdOut = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader stdErr = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+
+            String line;
+            while ((line = stdOut.readLine()) != null) {
+                System.out.println("[stdout] " + line);
+            }
+            while ((line = stdErr.readLine()) != null) {
+                System.err.println("[stderr] " + line);
+            }
+
+            int exitCode = process.waitFor();
+            if (exitCode == 0) {
+                System.out.println("Inject QR image done!");
+            } else {
+                System.err.println("Inject failed with exit code: " + exitCode);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -45,6 +45,11 @@ public class ScanQR_WebToApp extends BaseTestApp {
         loginPageapp.login(user.getUsername(),user.getPassword());
         homePageApp.navigationtoScanQR();
         scanQR.Chupmanhinh();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         SnackbarScreenshot snackbar = new SnackbarScreenshot(DriverManager.getAppiumDriver());
         Assert.assertTrue(snackbar.verifySnackbarContainsText("Không thể xác định tài sản"),
                 "Thông báo lỗi hiển thị sai!");
