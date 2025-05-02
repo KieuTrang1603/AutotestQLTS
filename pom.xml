@@ -85,6 +85,13 @@
             <artifactId>tess4j</artifactId>
             <version>5.8.0</version>
         </dependency>
+
+        <!-- ExtentReports core -->
+        <dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>5.1.1</version>
+        </dependency>
     </dependencies>
 
 </project>

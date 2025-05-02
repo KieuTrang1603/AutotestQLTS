@@ -54,6 +54,11 @@ public class HomePageWeb {
     }
 
     public void Allocation_voucher_ui(){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         manager.click();
         manager_tscd.click();
         allocation_voucher_tscd.click();

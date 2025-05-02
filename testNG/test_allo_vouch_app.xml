@@ -1,0 +1,21 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Allocation Voucher APP Test">
+    <listeners>
+        <listener class-name="helpers.TestListener"/>
+    </listeners>
+    <test name="AllocationsVoucherAPPUITests">
+        <classes>
+            <class name="tests.allo_vouchers.app.Allocations_VoucherTestUIApp"/>
+        </classes>
+    </test>
+    <test name="AllocationsVoucherAPPValidateTests">
+        <classes>
+            <class name="tests.allo_vouchers.app.Allocations_VoucherTestValidateApp"/>
+        </classes>
+    </test>
+    <test name="AllocationsVoucherAPPCreateTests">
+        <classes>
+            <class name="tests.allo_vouchers.app.Allocations_VoucherTestCreateFunApp"/>
+        </classes>
+    </test>
+</suite>

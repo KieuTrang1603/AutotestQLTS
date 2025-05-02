@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Login Test App">
+
+    <listeners>
+        <listener class-name="helpers.TestListener"/>
+    </listeners>
+    <test name="SingleUserLoginTest">
+        <classes>
+            <class name="tests.logintests.LoginTestApp"/>
+        </classes>
+    </test>
+</suite>

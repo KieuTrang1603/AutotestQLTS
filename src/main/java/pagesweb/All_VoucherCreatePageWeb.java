@@ -40,8 +40,8 @@ public class All_VoucherCreatePageWeb {
     @FindBy(xpath = "//button//span[text()='Chọn tài sản cấp phát']")
     private WebElement chonts;
 
-    @FindBy(xpath = "//button//span[text()='Lưu']")
-    private WebElement luu_btn;
+//    @FindBy(xpath = "//button//span[text()='Lưu']")
+//    private WebElement luu_btn;
 
     @FindBy(xpath=("//p[text()='Trường này là bắt buộc']"))
     private WebElement errorMessage;
@@ -164,6 +164,11 @@ public class All_VoucherCreatePageWeb {
     }
 
     public void openDropdownTrangThaiPhieu(){
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         trangThaiPhieuInput.click();
     }
 
@@ -342,6 +347,8 @@ public class All_VoucherCreatePageWeb {
     }
 
     public void setLuu_btn(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebElement luu_btn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button//span[text()='Lưu']")));
         luu_btn.click();
         try {
             Thread.sleep(1000);

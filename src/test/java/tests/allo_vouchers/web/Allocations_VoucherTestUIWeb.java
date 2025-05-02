@@ -17,7 +17,7 @@ import java.sql.SQLException;
 
 public class Allocations_VoucherTestUIWeb extends BaseMultiTestWeb {
     All_VoucherPageWeb all_vou;
-    @Test
+    @Test (priority = 2)
     public void UI_AllocationAM(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
@@ -25,7 +25,7 @@ public class Allocations_VoucherTestUIWeb extends BaseMultiTestWeb {
                 "Không hiển thị đúng menu role ORG");
     }
 
-    @Test
+    @Test (priority = 1)
     public void UI_AllocationORG(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all_vou.navigateToAllocation_VoucherPage("bvdka", "123456");
@@ -33,7 +33,7 @@ public class Allocations_VoucherTestUIWeb extends BaseMultiTestWeb {
                 "Không hiển thị đúng menu role ORG");
     }
 
-    @Test
+    @Test (priority = 3)
     public void UI_AllocationAU(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all_vou.navigateToAllocation_VoucherPage("audemo", "123123");
@@ -41,7 +41,7 @@ public class Allocations_VoucherTestUIWeb extends BaseMultiTestWeb {
                 "Không hiển thị đúng menu role ORG");
     }
 
-    @Test
+    @Test (priority = 4)
     public void TotalRecord_AllocationORG(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all_vou.navigateToAllocation_VoucherPage("bvdka", "123456");
@@ -56,7 +56,7 @@ public class Allocations_VoucherTestUIWeb extends BaseMultiTestWeb {
         }
     }
 
-    @Test
+    @Test (priority = 5)
     public void TotalRecord_AllocationAM(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
@@ -71,7 +71,7 @@ public class Allocations_VoucherTestUIWeb extends BaseMultiTestWeb {
         }
     }
 
-    @Test
+    @Test (priority = 6)
     public void TotalRecord_AllocationAU(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all_vou.navigateToAllocation_VoucherPage("phs21", "123456");

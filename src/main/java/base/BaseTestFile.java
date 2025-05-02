@@ -15,7 +15,11 @@ public class BaseTestFile {
 
     @BeforeClass
     public void setUp() {
+        System.setProperty("webdriver.chrome.driver", "C:\\Tools\\ChromeDriver114\\chromedriver.exe");
+
         ChromeOptions options = new ChromeOptions();
+        options.setBinary("C:\\Tools\\Chrome114\\chrome-win64\\chrome.exe"); // Đường dẫn đến Chrome 114
+//        ChromeOptions options = new ChromeOptions();
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("download.default_directory", MyUtil.DOWNLOAD_PATH);
         prefs.put("download.prompt_for_download", false);
