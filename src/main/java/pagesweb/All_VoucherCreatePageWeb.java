@@ -376,6 +376,11 @@ public class All_VoucherCreatePageWeb {
     }
 
     public String getToastMessageText() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return toastMessage.getText().trim();
     }
 

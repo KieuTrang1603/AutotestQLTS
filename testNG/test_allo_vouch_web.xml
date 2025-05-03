@@ -10,13 +10,13 @@
         </classes>
     </test>
 
-    <test name="AllocationsVoucherImportTests">
+    <test name="AllocationsVoucherCreateTests">
         <classes>
             <class name="tests.allo_vouchers.web.Allocations_VoucherTestCreateFunWeb"/>
         </classes>
     </test>
 
-    <test name="AllocationsVoucherCreateTests">
+    <test name="AllocationsVoucherImportTests">
         <classes>
             <class name="tests.allo_vouchers.web.Allocations_VoucherTestImportExcel"/>
         </classes>
