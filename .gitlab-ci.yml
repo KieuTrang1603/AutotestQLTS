@@ -4,8 +4,10 @@ stages:
 run_ui_tests:
   stage: test
   script:
-    - echo "Chạy Login tests với TestNG"
+    - echo "Chạy Login tests Web với TestNG"
     - cmd /c "mvn clean test -Dsurefire.suiteXmlFiles=testNG/test_login_web.xml"
+    - echo "Chạy Login tests App với TestNG"
+    - cmd /c "mvn clean test -Dsurefire.suiteXmlFiles=testNG/test_login_app.xml"
   tags:
     - shell  # hoặc 'Windows'
   artifacts:
