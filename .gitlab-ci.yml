@@ -6,8 +6,11 @@ run_ui_tests:
   script:
     - echo "Chạy Login tests Web với TestNG"
     - cmd /c "mvn clean test -Dsurefire.suiteXmlFiles=testNG/test_login_web.xml"
-    - echo "Chạy Login tests App với TestNG"
-    - cmd /c "mvn clean test -Dsurefire.suiteXmlFiles=testNG/test_login_app.xml"
+#    - echo "Chạy Login tests App với TestNG"
+#    - cmd /c "mvn clean test -Dsurefire.suiteXmlFiles=testNG/test_login_app.xml"
+#    - echo %ANDROID_HOME%
+#    - where adb
+#    - where node
   tags:
     - shell  # hoặc 'Windows'
   artifacts:

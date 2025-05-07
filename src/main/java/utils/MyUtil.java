@@ -1,6 +1,7 @@
 package utils;
 
 import model.Asset;
+import model.enums.AllocationStatus;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,7 +15,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MyUtil {
-    //final static String ngaychungtu = "13/04/2025";
     public static final String DOWNLOAD_PATH = "D:\\Tester\\Auto\\Selenium\\Login\\File";
     public static final String FILE_PATH = "D:\\Tester\\Auto\\Selenium\\Login\\File\\Mẫu nhập tài sản đã cấp phát.xlsx";
     public static final String FILE_PATH1 = "D:\\Tester\\Auto\\Selenium\\Login\\File\\Mẫu nhập tài sản đã cấp phát (1).xlsx";
@@ -27,7 +27,9 @@ public class MyUtil {
     }
 
     public static List<String> getTrangThaiPhieuAllocations() {
-        return Arrays.asList("Mới tạo", "Đã cấp phát", "Chờ tiếp nhận");
+        return Arrays.asList(AllocationStatus.NEW_CREATE.getDescription(),
+                AllocationStatus.ISSUED.getDescription(),
+                AllocationStatus.WAIT_RECEPT.getDescription());
     }
 
     public static List<String> getTrangThaiPhieuTransfers() {

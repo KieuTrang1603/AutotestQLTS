@@ -1,5 +1,6 @@
 package pagesweb;
 
+import model.Department;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -272,6 +273,19 @@ public class All_VoucherCreatePageWeb {
         getAllElementOptionsPhongBanTiepNhan().get(1).click();
     }
 
+    public void chonPhongBanTiepNhanMacDinh(){
+        phongBanTiepNhanInput.click();
+        phongBanTiepNhanInput.sendKeys(Department.DEPARTMENT_NAME_AU1);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        // Đợi dropdown hiển thị (thường là thẻ ul > li với class Autocomplete-option)
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.id("asynchronous-demo-popup")
+        ));
+
+        // Lấy toàn bộ li
+        List<WebElement> optionElements = driver.findElements(By.cssSelector("#asynchronous-demo-popup li"));
+        optionElements.getFirst().click();
+    }
     public boolean checkPhongBanTiepNhan(List<String> data){
 //        List<String> data1 = MyUtil.normalizeList(data);
 //        List<String> data2 = MyUtil.normalizeList(getAllDropdownOptionsPhongBanTiepNhan());

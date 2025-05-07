@@ -74,9 +74,9 @@ public class Allocations_VoucherTestUIWeb extends BaseMultiTestWeb {
     @Test (priority = 6)
     public void TotalRecord_AllocationAU(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("phs21", "123456");
+        all_vou.navigateToAllocation_VoucherPage("audemo", "123123");
         try {
-            Integer sobanghi = DataBaseUtils.countAllcationAU(Department.DEPARTMENT_ID_AU);
+            Integer sobanghi = DataBaseUtils.countAllcationAU(Department.DEPARTMENT_ID_AU1);
             System.out.printf("Data from database: %d%n", sobanghi);
             Assert.assertTrue(all_vou.checkSobanghi(sobanghi),
                     "Số lượng bản ghi chưa chưa hiển thị đúng!");

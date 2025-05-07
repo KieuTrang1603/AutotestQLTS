@@ -63,12 +63,20 @@ public class FileHelper {
                     System.out.println("Hiển thị thông báo chính xác");
                     result= true;
                 }
+                else {
+                    System.out.println("Thông báo hiện tại là : " + errorRow);
+                    System.out.println("Hiển thị thông báo chưa chính xác");
+                }
                 break;
             case 2:
                 if (errorRow.contains("mã tài sản") && errorRow.contains("trống")) {
                     System.out.println("Thông báo hiện tại là : " + errorRow);
                     System.out.println("Hiển thị thông báo chính xác");
                     result= true;
+                }
+                else {
+                    System.out.println("Thông báo hiện tại là : " + errorRow);
+                    System.out.println("Hiển thị thông báo chưa chính xác");
                 }
                 break;
             case 3:
@@ -77,12 +85,20 @@ public class FileHelper {
                     System.out.println("Hiển thị thông báo chính xác");
                     result= true;
                 }
+                else {
+                    System.out.println("Thông báo hiện tại là : " + errorRow);
+                    System.out.println("Hiển thị thông báo chưa chính xác");
+                }
                 break;
             case 4:
                 if (errorRow.contains("mã phòng ban tiếp nhận") && errorRow.contains("trống")) {
                     System.out.println("Thông báo hiện tại là : " + errorRow);
                     System.out.println("Hiển thị thông báo chính xác");
                     result= true;
+                }
+                else {
+                    System.out.println("Thông báo hiện tại là : " + errorRow);
+                    System.out.println("Hiển thị thông báo chưa chính xác");
                 }
                 break;
             case 5:
@@ -91,12 +107,20 @@ public class FileHelper {
                     System.out.println("Hiển thị thông báo chính xác");
                     result= true;
                 }
+                else {
+                    System.out.println("Thông báo hiện tại là : " + errorRow);
+                    System.out.println("Hiển thị thông báo chưa chính xác");
+                }
                 break;
             case 6:
                 if (errorRow.contains("mã tài sản") && errorRow.contains("không tồn tại")) {
                     System.out.println("Thông báo hiện tại là : " + errorRow);
                     System.out.println("Hiển thị thông báo chính xác");
                     result= true;
+                }
+                else {
+                    System.out.println("Thông báo hiện tại là : " + errorRow);
+                    System.out.println("Hiển thị thông báo chưa chính xác");
                 }
                 break;
             case 7:
@@ -105,12 +129,20 @@ public class FileHelper {
                     System.out.println("Hiển thị thông báo chính xác");
                     result= true;
                 }
+                else {
+                    System.out.println("Thông báo hiện tại là : " + errorRow);
+                    System.out.println("Hiển thị thông báo chưa chính xác");
+                }
                 break;
             case 8:
                 if (errorRow.contains("mã phòng ban tiếp nhận") && errorRow.contains("không khớp với dữ liệu")) {
                     System.out.println("Thông báo hiện tại là : " + errorRow);
                     System.out.println("Hiển thị thông báo chính xác");
                     result= true;
+                }
+                else {
+                    System.out.println("Thông báo hiện tại là : " + errorRow);
+                    System.out.println("Hiển thị thông báo chưa chính xác");
                 }
                 break;
             case 9:
@@ -119,12 +151,20 @@ public class FileHelper {
                     System.out.println("Hiển thị thông báo chính xác");
                     result= true;
                 }
+                else {
+                    System.out.println("Thông báo hiện tại là : " + errorRow);
+                    System.out.println("Hiển thị thông báo chưa chính xác");
+                }
                 break;
             case 10:
                 if (errorRow.contains("người dùng") && errorRow.contains("không thuộc phòng ban")) {
                     System.out.println("Thông báo hiện tại là : " + errorRow);
                     System.out.println("Hiển thị thông báo chính xác");
                     result= true;
+                }
+                else {
+                    System.out.println("Thông báo hiện tại là : " + errorRow);
+                    System.out.println("Hiển thị thông báo chưa chính xác");
                 }
                 break;
             case 11:
@@ -133,12 +173,20 @@ public class FileHelper {
                     System.out.println("Hiển thị thông báo chính xác");
                     result= true;
                 }
+                else {
+                    System.out.println("Thông báo hiện tại là : " + errorRow);
+                    System.out.println("Hiển thị thông báo chưa chính xác");
+                }
                 break;
             case 12:
                 if (errorRow.contains(" ngày cấp phát") && errorRow.contains("trước ngày tiếp nhận")) {
                     System.out.println("Thông báo hiện tại là : " + errorRow);
                     System.out.println("Hiển thị thông báo chính xác");
                     result= true;
+                }
+                else {
+                    System.out.println("Thông báo hiện tại là : " + errorRow);
+                    System.out.println("Hiển thị thông báo chưa chính xác");
                 }
                 break;
         }

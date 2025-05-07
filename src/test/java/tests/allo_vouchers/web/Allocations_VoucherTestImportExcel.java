@@ -1,7 +1,10 @@
 package tests.allo_vouchers.web;
 
+import model.Asset;
 import model.User;
 import model.UsersRole;
+import org.testng.annotations.AfterMethod;
+import pagesweb.Assets_Page;
 import pagesweb.Import_TSCD_Dialog;
 import base.BaseTestFile;
 import drivers.DriverManager;
@@ -13,6 +16,7 @@ import org.testng.annotations.Test;
 import pagesweb.All_VoucherCreatePageWeb;
 import pagesweb.All_VoucherPageWeb;
 import helpers.FileHelper;
+import utils.DataBaseUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -23,6 +27,7 @@ public class Allocations_VoucherTestImportExcel extends BaseTestFile {
     All_VoucherPageWeb all_vou;
     All_VoucherCreatePageWeb all;
     Import_TSCD_Dialog imp;
+    Assets_Page as;
 
     @BeforeClass
     public void prepareImportExcelDialog(){
@@ -169,9 +174,18 @@ public class Allocations_VoucherTestImportExcel extends BaseTestFile {
     @Test(priority = 14)
     public void testCreateAllocation_TrangThaiDaCapPhat() throws IOException, SQLException, ParseException {
         List<String> taisan = AllocationHelper.CorrectData();
+        Asset asset = new Asset();
+        asset.setCode(taisan.get(2));
+        String tenPBSD = DataBaseUtils.getDepartmentNameByCode(taisan.get(4));
+        asset.setUse_department(tenPBSD);
         FileHelper.insert_empty(taisan);
         imp.uploadFile();
         String toastText = all_vou.getToastMessageText();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         //Kiêm tra hiển thị thông báo
         Assert.assertEquals(toastText, "Nhập excel thành công",
                 "Toast không hiển thị hoặc sai nội dung.");
@@ -179,5 +193,21 @@ public class Allocations_VoucherTestImportExcel extends BaseTestFile {
         // Kiểm tra xem về trang danh sách cấp phát
         Assert.assertFalse(all.isAllocatonDialogDisplayed(),
                 "Form chưa bị ẩn sau khi click Lưu với dữ liệu chuẩn");
+        // Kiểm tra tài sản ở màn danh sách
+        as= new Assets_Page(DriverManager.getWebDriver());
+        as.navigateToAssetsPage();
+        as.closeMenu();
+        // Kiểm tra xem dữ liệu tài sản sau cấp phát
+        Assert.assertTrue(as.checkTSCapPhat(asset.getCode(), 3, asset.getUse_department()),
+                "Trạng thái Tài sản bị hiển thị sai");
+    }
+
+    @AfterMethod
+    public void reset(){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

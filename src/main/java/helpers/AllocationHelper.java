@@ -1,6 +1,9 @@
 package helpers;
 
 import model.Allocation;
+import model.Department;
+import model.enums.AllocationStatus;
+import model.enums.AssetStatus;
 import utils.DataBaseUtils;
 import utils.MyUtil;
 
@@ -11,15 +14,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AllocationHelper {
-    public static final String department_id = "9484b376-8470-4d06-b1a0-e59179f93ca6";
-    public static final String status_allocations = "71b6b0a1-d225-44db-95c5-b00a47c4789b";
+    public static AllocationStatus all_status = AllocationStatus.WAIT_RECEPT;
 
     public static List<String> prepareEmptyData(int a) throws IOException, SQLException, ParseException {
         // Lấy mã phòng ban
         String maPBTN = DataBaseUtils.getCodePhongBan().get(0);
 
         // Lấy danh sách tài sản
-        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(department_id, status_allocations, true);
+        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(Department.DEPARTMENT_ID_AM, all_status.getCode(), true);
 
         // Chỉnh sửa dữ liệu theo test case
         if (taisan.size() > 1) {
@@ -36,13 +38,13 @@ public class AllocationHelper {
 
     public static List<String> prepareEmptyMaPBTNData() throws IOException, SQLException, ParseException {
         // Lấy danh sách tài sản
-        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(department_id, status_allocations, true);
+        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(Department.DEPARTMENT_ID_AM, all_status.getCode(), true);
         return taisan;
     }
 
     public static List<String> isCorrectMaPBTNData() throws IOException, SQLException, ParseException {
         // Lấy danh sách tài sản
-        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(department_id, status_allocations, true);
+        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(Department.DEPARTMENT_ID_AM, all_status.getCode(), true);
         if (taisan.size() > 4) {
             taisan.add(4, "29/02/2025");  // Thêm mã phòng ban tại vị trí cụ thể
         } else {
@@ -54,18 +56,23 @@ public class AllocationHelper {
     public static List<String> isCorrectData(int a) throws IOException, SQLException, ParseException {
         String maPBTN = DataBaseUtils.getCodePhongBan().get(0);
         // Lấy danh sách tài sản
-        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(department_id, status_allocations, true);
-        if (taisan.size() > 4) {
-            taisan.add(4, maPBTN);  // Thêm mã phòng ban tại vị trí cụ thể
-        } else {
-            taisan.add(maPBTN); // Thêm cuối nếu chưa đủ 4 phần tử
+        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(Department.DEPARTMENT_ID_AM, all_status.getCode(), true);
+        // Đảm bảo list có đủ dữ liệu đến ít nhất index = 3 để set phòng ban
+        while (taisan.size() <= 4) {
+            taisan.add("");
         }
-        // Chỉnh sửa dữ liệu theo test case
-        if (taisan.size() > 1 && taisan.size() <=4) {
+
+        // Set lại phòng ban tại index = 3 (Mã phòng ban tiếp nhận)
+        taisan.set(4, maPBTN);
+
+        // Gán giá trị sai tại cột bạn mong muốn (columnIndex)
+        if (taisan.size() > a) {
             taisan.set(a, "29/02/2025");
-        }
-        else {
-            taisan.add(a,"29/02/2025");
+        } else {
+            while (taisan.size() < a) {
+                taisan.add(""); // thêm phần tử trống cho đủ
+            }
+            taisan.add("29/02/2025"); // thêm phần tử sai đúng vị trí
         }
         return taisan;
     }
@@ -73,7 +80,7 @@ public class AllocationHelper {
     public static List<String> isCorrectNguoiDungData() throws IOException, SQLException, ParseException {
         String maPBTN = DataBaseUtils.getCodePhongBan().get(0);
         // Lấy danh sách tài sản
-        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(department_id, status_allocations, true);
+        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(Department.DEPARTMENT_ID_AM, all_status.getCode(), true);
         if (taisan.size() > 4) {
             taisan.add(4, maPBTN);  // Thêm mã phòng ban tại vị trí cụ thể
         } else {
@@ -92,7 +99,7 @@ public class AllocationHelper {
     public static List<String> isCorrectNgayCapPhatData() throws IOException, SQLException, ParseException {
         String maPBTN = DataBaseUtils.getCodePhongBan().get(0);
         // Lấy danh sách tài sản
-        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(department_id, status_allocations, true);
+        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(Department.DEPARTMENT_ID_AM, all_status.getCode(), true);
         if (taisan.size() > 4) {
             taisan.add(4, maPBTN);  // Thêm mã phòng ban tại vị trí cụ thể
         } else {
@@ -106,7 +113,7 @@ public class AllocationHelper {
     public static List<String> CorrectData() throws IOException, SQLException, ParseException {
         String maPBTN = DataBaseUtils.getCodePhongBan().get(0);
         // Lấy danh sách tài sản
-        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(department_id, status_allocations, true);
+        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(Department.DEPARTMENT_ID_AM, all_status.getCode(), true);
         if (taisan.size() > 4) {
             taisan.add(4, maPBTN);  // Thêm mã phòng ban tại vị trí cụ thể
         } else {

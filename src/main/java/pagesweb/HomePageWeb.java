@@ -28,6 +28,9 @@ public class HomePageWeb {
     @FindBy(xpath = "//button[text()='Điều chuyển TSCĐ']")
     private WebElement transfer_voucher_tscd;
 
+    @FindBy(xpath = "//button[text()='Danh sách TSCĐ']")
+    private WebElement assets_tscd;
+
     // Constructor
     public HomePageWeb(WebDriver driver) {
         this.driver = driver;
@@ -73,6 +76,17 @@ public class HomePageWeb {
         manager.click();
         manager_tscd.click();
         transfer_voucher_tscd.click();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void Assets_ui(){
+        manager.click();
+        manager_tscd.click();
+        assets_tscd.click();
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {

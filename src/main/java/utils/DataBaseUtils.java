@@ -2,6 +2,8 @@ package utils;
 
 import model.Asset;
 import model.Department;
+import model.enums.AllocationStatus;
+import model.enums.AssetStatus;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -13,8 +15,6 @@ public class DataBaseUtils {
     private static final String USER = "root";
     private static final String PASSWORD = "kFviK&1466FT@Oct";
     private static final String ORG_ID = "6af1ff18-f0bd-44ce-bf98-69492806016c";
-    private static final String status_luu_kho = "44e7ed1b-435d-469b-b8e4-e5291aa39f79";
-    private static final String status_nhap_kho = "74044507-9a34-4e5e-86c5-6f70e7510663";
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
@@ -141,6 +141,8 @@ public class DataBaseUtils {
     }
 
     public static int countAssetsAvailable(String departmentId, String allocationStatusId) throws SQLException {
+        AssetStatus status1 = AssetStatus.NEW_IN_STORAGE;
+        AssetStatus status2 = AssetStatus.RETURNED_TO_STORAGE;
         String query = "SELECT COUNT(*) FROM tbl_asset " +
                 "WHERE org_id = ? " +
                 "AND asset_class = 1 " +
@@ -157,8 +159,8 @@ public class DataBaseUtils {
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, ORG_ID);
         statement.setString(2, departmentId);
-        statement.setString(3, status_luu_kho);
-        statement.setString(4, status_nhap_kho);
+        statement.setString(3, status1.getCode());
+        statement.setString(4, status2.getCode());
         statement.setString(5, allocationStatusId);
 
         ResultSet rs = statement.executeQuery();
@@ -169,10 +171,13 @@ public class DataBaseUtils {
     }
 
     public static int countAllcationORG() throws SQLException {
-        String query = "SELECT COUNT(*) FROM tbl_voucher " +
-                "WHERE org_id = ? " +
-                "AND asset_class = 1 " +
-                "AND type = 2 ";
+        String query = "SELECT COUNT(DISTINCT vc.id) " +
+                "FROM tbl_voucher vc " +
+                "JOIN tbl_asset_voucher av ON vc.id = av.voucher_id " +
+                "JOIN tbl_asset a ON a.id = av.asset_id " +
+                "WHERE vc.org_id = ? " +
+                "  AND vc.asset_class = 1 " +
+                "  AND vc.type = 2;";
 
         Connection connection = getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
@@ -204,16 +209,27 @@ public class DataBaseUtils {
     }
 
     public static int countAllcationAU(String departmentId) throws SQLException {
-        String query = "SELECT COUNT(*) FROM tbl_voucher " +
-                "WHERE org_id = ? " +
-                "AND asset_class = 1 " +
-                "AND type = 2 " +
-                "AND receiver_department_id = ? ";
+        String query = "SELECT COUNT(DISTINCT vc.id) " +
+                "FROM tbl_voucher vc " +
+                "JOIN tbl_asset_voucher av ON vc.id = av.voucher_id " +
+                "JOIN tbl_asset a ON a.id = av.asset_id " +
+                "WHERE vc.org_id = ? " +
+                "  AND vc.asset_class = 1 " +
+                "  AND vc.type = 2 " +
+                "  AND (vc.allocation_status_id = ? OR vc.allocation_status_id = ?) " +
+                "  AND vc.receiver_department_id IN ( " +
+                "    SELECT id FROM tbl_department WHERE parent_id = ? " +
+                "    UNION " +
+                "    SELECT ? " +
+                ") ";
 
         Connection connection = getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, ORG_ID);
-        statement.setString(2, departmentId);
+        statement.setString(2, AllocationStatus.WAIT_RECEPT.getCode());
+        statement.setString(3, AllocationStatus.ISSUED.getCode());
+        statement.setString(4, departmentId);
+        statement.setString(5, departmentId);
 
         ResultSet rs = statement.executeQuery();
         if (rs.next()) {
@@ -223,6 +239,8 @@ public class DataBaseUtils {
     }
 
     public static List<String> getOneAssetsAvailable(String departmentId, String allocationStatusId, boolean fullInfo) throws SQLException, ParseException {
+        AssetStatus status1 = AssetStatus.NEW_IN_STORAGE;
+        AssetStatus status2 = AssetStatus.RETURNED_TO_STORAGE;
         String query = "SELECT a.code AS asset_code, a.date_of_reception, t.code AS store_code, a.name AS asset_name " +
                 "FROM tbl_asset a " +
                 "LEFT JOIN tbl_store t ON a.store_id = t.id " +
@@ -243,8 +261,8 @@ public class DataBaseUtils {
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, ORG_ID);
         statement.setString(2, departmentId);
-        statement.setString(3, status_luu_kho);
-        statement.setString(4, status_nhap_kho);
+        statement.setString(3, status1.getCode());
+        statement.setString(4, status2.getCode());
         statement.setString(5, allocationStatusId);
 
         List<String> result = new ArrayList<>();
@@ -270,6 +288,8 @@ public class DataBaseUtils {
     }
 
     public static List<Asset> getSomeAssetsAvailableCP(String departmentId, String allocationStatusId, int a) throws SQLException, ParseException {
+        AssetStatus status1 = AssetStatus.NEW_IN_STORAGE;
+        AssetStatus status2 = AssetStatus.RETURNED_TO_STORAGE;
         String query = "SELECT a.code AS asset_code, a.name AS asset_name " +
                 "FROM tbl_asset a " +
                 "LEFT JOIN tbl_store t ON a.store_id = t.id " +
@@ -291,8 +311,8 @@ public class DataBaseUtils {
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, ORG_ID);
         statement.setString(2, departmentId);
-        statement.setString(3, status_luu_kho);
-        statement.setString(4, status_nhap_kho);
+        statement.setString(3, status1.getCode());
+        statement.setString(4, status2.getCode());
         statement.setString(5, allocationStatusId);
         statement.setInt(6, a);
 

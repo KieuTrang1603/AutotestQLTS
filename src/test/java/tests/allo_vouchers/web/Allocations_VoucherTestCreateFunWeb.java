@@ -1,7 +1,12 @@
 package tests.allo_vouchers.web;
 
+import model.Asset;
+import model.Department;
 import model.User;
 import model.UsersRole;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import pagesweb.Assets_Page;
 import pagesweb.DS_TSCD_Dialog;
 import base.BaseMultiTestWeb;
 import drivers.DriverManager;
@@ -15,24 +20,20 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
     All_VoucherPageWeb all_vou;
     All_VoucherCreatePageWeb all;
     DS_TSCD_Dialog ds;
-//    @BeforeMethod
-//    public void prepareVoucherCreatePage(){
-//        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-//        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-//        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
-//        all_vou.closeMenu();
-//        all_vou.All_Btn_click();
-//    }
-    @Test(priority = 1)
-    public void testCreateAllocation_emptyNgayChungTu(){
+    Assets_Page as;
+    User user;
+    @BeforeMethod
+    public void prepareVoucherCreatePage(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
         ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        UsersRole Users = null;
-        User user = Users.getUserByRole("AM");
+        user = UsersRole.getUserByRole("AM");
         all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         all_vou.closeMenu();
         all_vou.All_Btn_click();
+    }
+    @Test(priority = 1)
+    public void testCreateAllocation_emptyNgayChungTu(){
         all.clearNgayChungTu();
         all.chonNguoiBanGiaoInput();
         all.chonPhongBanTiepNhanInput();
@@ -54,14 +55,6 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
 
     @Test(priority = 2)
     public void testCreateAllocation_emptyNguoiBanGiao(){
-        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        UsersRole Users = null;
-        User user = Users.getUserByRole("AM");
-        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
-        all_vou.closeMenu();
-        all_vou.All_Btn_click();
         all.setNgayChungTuInput(MyUtil.getNgaychungtu());
         all.clearNguoiBanGiao();
         all.chonPhongBanTiepNhanInput();
@@ -83,14 +76,6 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
 
     @Test(priority = 3)
     public void testCreateAllocation_emptyPhongBanTiepNhan(){
-        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        UsersRole Users = null;
-        User user = Users.getUserByRole("AM");
-        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
-        all_vou.closeMenu();
-        all_vou.All_Btn_click();
         all.setNgayChungTuInput(MyUtil.getNgaychungtu());
         all.chonNguoiBanGiaoInput();
         all.clearPhongBanTiepNhan();
@@ -111,14 +96,6 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
 
     @Test(priority = 4)
     public void testCreateAllocation_emptyNguoiTiepNhan(){
-        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        UsersRole Users = null;
-        User user = Users.getUserByRole("AM");
-        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
-        all_vou.closeMenu();
-        all_vou.All_Btn_click();
         all.setNgayChungTuInput(MyUtil.getNgaychungtu());
         all.chonNguoiBanGiaoInput();
         all.chonPhongBanTiepNhanInput();
@@ -140,13 +117,6 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
 
     @Test(priority = 5)
     public void testCreateAllocation_emptyChonTS(){
-        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        UsersRole Users = null;
-        User user = Users.getUserByRole("AM");
-        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
-        all_vou.closeMenu();
-        all_vou.All_Btn_click();
         all.setNgayChungTuInput(MyUtil.getNgaychungtu());
         all.chonNguoiBanGiaoInput();
         all.chonPhongBanTiepNhanInput();
@@ -165,14 +135,6 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
 
     @Test(priority = 6)
     public void testCreateAllocation_emptyTrangThaiPhieu(){
-        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        UsersRole Users = null;
-        User user = Users.getUserByRole("AM");
-        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
-        all_vou.closeMenu();
-        all_vou.All_Btn_click();
         all.setNgayChungTuInput(MyUtil.getNgaychungtu());
         all.chonNguoiBanGiaoInput();
         all.chonPhongBanTiepNhanInput();
@@ -196,14 +158,6 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
 
     @Test(priority = 7)
     public void testCreateAllocation_NgayChungTuFutureDate(){
-        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        UsersRole Users = null;
-        User user = Users.getUserByRole("AM");
-        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
-        all_vou.closeMenu();
-        all_vou.All_Btn_click();
         all.setNgayChungTuInput(MyUtil.getFutureDate(1));
         all.chonNguoiBanGiaoInput();
         all.chonPhongBanTiepNhanInput();
@@ -227,14 +181,6 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
 
     @Test(priority = 8)
     public void testCreateAllocation_NgayChungTuLessNgayTiepNhan(){
-        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        UsersRole Users = null;
-        User user = Users.getUserByRole("AM");
-        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
-        all_vou.closeMenu();
-        all_vou.All_Btn_click();
         all.chonNguoiBanGiaoInput();
         all.chonPhongBanTiepNhanInput();
         all.chonNguoiTiepNhanInput();
@@ -254,19 +200,13 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
 
     @Test(priority = 9)
     public void testCreateAllocation_TrangThaiMoiTao(){
-        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        UsersRole Users = null;
-        User user = Users.getUserByRole("AM");
-        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
-        all_vou.closeMenu();
-        all_vou.All_Btn_click();
         all.setNgayChungTuInput(MyUtil.getNgaychungtu());
         all.chonNguoiBanGiaoInput();
-        all.chonPhongBanTiepNhanInput();
+        all.chonPhongBanTiepNhanMacDinh();
         all.chonNguoiTiepNhanInput();
-        ds.chonTSCD();
+        Asset taisan = new Asset();
+        taisan.setCode(ds.chonVaLayTSTuDialog());
+        ds.ChosenTS();
         all.chonTrangThaiPhieu(1);
         all.setLuu_btn();
         String toastText = all_vou.getToastMessageText();
@@ -278,23 +218,25 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
         // Kiểm tra xem về trang danh sách cấp phát
         Assert.assertFalse(all.isAllocatonDialogDisplayed(),
                 "Form chưa bị ẩn sau khi click Lưu với dữ liệu chuẩn");
+
+        // Kiểm tra tài sản ở màn danh sách
+        as= new Assets_Page(DriverManager.getWebDriver());
+        as.navigateToAssetsPage();
+        as.closeMenu();
+        // Kiểm tra xem dữ liệu tài sản sau cấp phát
+        Assert.assertTrue(as.checkTSCapPhat(taisan.getCode(), 1, Department.DEPARTMENT_NAME_AU1),
+                "Trạng thái Tài sản bị hiển thị sai");
     }
 
     @Test(priority = 10)
     public void testCreateAllocation_TrangThaiChoTiepNhan(){
-        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        UsersRole Users = null;
-        User user = Users.getUserByRole("AM");
-        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
-        all_vou.closeMenu();
-        all_vou.All_Btn_click();
         all.setNgayChungTuInput(MyUtil.getNgaychungtu());
         all.chonNguoiBanGiaoInput();
-        all.chonPhongBanTiepNhanInput();
+        all.chonPhongBanTiepNhanMacDinh();
         all.chonNguoiTiepNhanInput();
-        ds.chonTSCD();
+        Asset taisan = new Asset();
+        taisan.setCode(ds.chonVaLayTSTuDialog());
+        ds.ChosenTS();
         all.chonTrangThaiPhieu(3);
         all.setLuu_btn();
         String toastText = all_vou.getToastMessageText();
@@ -306,23 +248,25 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
         // Kiểm tra xem về trang danh sách cấp phát
         Assert.assertFalse(all.isAllocatonDialogDisplayed(),
                 "Form chưa bị ẩn sau khi click Lưu với dữ liệu chuẩn");
+
+        // Kiểm tra tài sản ở màn danh sách
+        as= new Assets_Page(DriverManager.getWebDriver());
+        as.navigateToAssetsPage();
+        as.closeMenu();
+        // Kiểm tra xem dữ liệu tài sản sau cấp phát
+        Assert.assertTrue(as.checkTSCapPhat(taisan.getCode(), 2, Department.DEPARTMENT_NAME_AU1),
+                "Trạng thái Tài sản bị hiển thị sai");
     }
 
     @Test(priority = 11)
     public void testCreateAllocation_TrangThaiDaCapPhat(){
-        all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-        all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
-        UsersRole Users = null;
-        User user = Users.getUserByRole("AM");
-        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
-        all_vou.closeMenu();
-        all_vou.All_Btn_click();
         all.setNgayChungTuInput(MyUtil.getNgaychungtu());
         all.chonNguoiBanGiaoInput();
-        all.chonPhongBanTiepNhanInput();
+        all.chonPhongBanTiepNhanMacDinh();
         all.chonNguoiTiepNhanInput();
-        ds.chonTSCD();
+        Asset taisan = new Asset();
+        taisan.setCode(ds.chonVaLayTSTuDialog());
+        ds.ChosenTS();
         all.chonTrangThaiPhieu(2);
         all.setLuu_btn();
         String toastText = all_vou.getToastMessageText();
@@ -334,5 +278,31 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
         // Kiểm tra xem về trang danh sách cấp phát
         Assert.assertFalse(all.isAllocatonDialogDisplayed(),
                 "Form chưa bị ẩn sau khi click Lưu với dữ liệu chuẩn");
+
+        // Kiểm tra tài sản ở màn danh sách role AM
+        as= new Assets_Page(DriverManager.getWebDriver());
+        as.navigateToAssetsPage();
+        as.closeMenu();
+        // Kiểm tra xem dữ liệu tài sản sau cấp phát
+        Assert.assertTrue(as.checkTSCapPhat(taisan.getCode(), 3, Department.DEPARTMENT_NAME_AU1),
+                "Trạng thái Tài sản bị hiển thị sai");
+
+        // Kiểm tra tài sản ở màn danh sách role AU
+        as= new Assets_Page(DriverManager.getWebDriver());
+        user = UsersRole.getUserByRole("AU");
+        as.navigateToAssetsPageAU(user.getUsername(), user.getPassword());
+        as.closeMenu();
+        // Kiểm tra xem dữ liệu tài sản sau cấp phát
+        Assert.assertTrue(as.checkTSCapPhat(taisan.getCode(), 3, Department.DEPARTMENT_NAME_AU1),
+                "Trạng thái Tài sản bị hiển thị sai");
+    }
+
+    @AfterMethod
+    public void reset(){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

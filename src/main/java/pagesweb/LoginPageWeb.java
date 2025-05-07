@@ -19,6 +19,7 @@ public class LoginPageWeb {
 
     // URL của trang đăng nhập
     private static final String LOGIN_URL = "https://asvn.oceantech.com.vn/session/signin";
+//    private static final String LOGIN_URL = "http://qltsdemo.xhis.vn/session/signin";
 
     // Định nghĩa các element trên trang đăng nhập
     @FindBy(name = "email")

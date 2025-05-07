@@ -34,6 +34,7 @@ public class BaseMultiTestWeb {
         WebDriver driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get("https://asvn.oceantech.com.vn/session/signin");
+//        driver.get("http://qltsdemo.xhis.vn/session/signin");
         DriverManager.setWebDriver(driver);
     }
 

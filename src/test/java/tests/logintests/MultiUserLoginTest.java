@@ -3,6 +3,8 @@ package tests.logintests;
 import base.BaseMultiTestWeb;
 import drivers.DriverManager;
 import model.HomeMenu;
+import model.User;
+import model.UsersRole;
 import model.enums.PlatformType;
 import model.enums.UserRole;
 import org.testng.Assert;
@@ -14,13 +16,18 @@ import pagesweb.LoginPageWeb;
 import java.util.List;
 
 public class MultiUserLoginTest extends BaseMultiTestWeb {
+    UsersRole Users;
+    User user1 = Users.getUserByRole("ORG");
+    User user2 = Users.getUserByRole("AM");
+    User user3 = Users.getUserByRole("AU");
+        User user4 = Users.getUserByRole("USER");
     @DataProvider(name = "userData", parallel = true)
     public Object[][] getUsers() {
         return new Object[][] {
-                {"bvdka", "123456", HomeMenu.getExpectedMenus(UserRole.ORG, PlatformType.WEB)},
-                {"pvt1", "123456", HomeMenu.getExpectedMenus(UserRole.AM, PlatformType.WEB)},
-                {"audemo", "123123", HomeMenu.getExpectedMenus(UserRole.AU, PlatformType.WEB)},
-                {"userkn", "123456", HomeMenu.getExpectedMenus(UserRole.USER, PlatformType.WEB)}
+                {user1.getUsername(), user1.getPassword(), HomeMenu.getExpectedMenus(UserRole.ORG, PlatformType.WEB)},
+                {user2.getUsername(), user2.getPassword(), HomeMenu.getExpectedMenus(UserRole.AM, PlatformType.WEB)},
+                {user3.getUsername(), user3.getPassword(), HomeMenu.getExpectedMenus(UserRole.AU, PlatformType.WEB)},
+                {user4.getUsername(), user4.getPassword(), HomeMenu.getExpectedMenus(UserRole.USER, PlatformType.WEB)}
         };
     }
 

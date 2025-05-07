@@ -1,11 +1,14 @@
 package pagesweb;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import utils.MyUtil;
 
 import java.time.Duration;
@@ -83,6 +86,62 @@ public class DS_TSCD_Dialog {
         for (int i = 0; i < Math.min(2, paginationTextElement.size()); i++) {
             paginationTextElement.get(i).click();
         }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        chon_btn.click();
+    }
+
+    public String chonVaLayTSTuDialog(){
+        WebElement dialog = openDialogChonTS();
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(
+                ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[type='checkbox']"))
+        );
+        List<WebElement> paginationTextElement = dialog.findElements(
+                By.cssSelector("input[type='checkbox']"));
+
+        if (!paginationTextElement.isEmpty()) {
+            paginationTextElement.get(0).click();
+        } else {
+            throw new NoSuchElementException("Không tìm thấy checkbox nào trong dialog chọn TS.");
+        }
+        WebElement table = dialog.findElement(By.cssSelector("table.MuiTable-root"));
+        // Lấy dòng tiêu đề để tìm vị trí cột
+        WebElement headerRow = table.findElement(By.cssSelector("thead tr"));
+        List<WebElement> headers = headerRow.findElements(By.tagName("th"));
+
+        // Tìm index của cột "Ma tai san"
+        int maTaiSanIndex = -1;
+        for (int i = 0; i < headers.size(); i++) {
+            String headerText = headers.get(i).getText().trim();
+            if (headerText.equalsIgnoreCase("Mã tài sản")) {
+                maTaiSanIndex = i;
+                break;
+            }
+        }
+
+        // Nếu không tìm thấy thì báo lỗi
+        if (maTaiSanIndex == -1) {
+            throw new NoSuchElementException("Không tìm thấy cột 'Mã tài sản'");
+        }
+
+        // Lấy tất cả các dòng trong tbody
+        List<WebElement> rows = table.findElements(By.cssSelector("tbody tr"));
+        if (rows.isEmpty()) {
+            throw new NoSuchElementException("Không có dòng nào trong bảng.");
+        }
+
+        // Lấy dòng đầu tiên trong tbody
+        WebElement firstRow = rows.get(0);
+        List<WebElement> cells = firstRow.findElements(By.tagName("td"));
+
+        // Trả về giá trị trong ô ở cột "Ngày tiếp nhận"
+        return cells.get(maTaiSanIndex).getText().trim();
+    }
+
+    public void ChosenTS(){
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
