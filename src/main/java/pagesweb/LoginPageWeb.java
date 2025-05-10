@@ -1,9 +1,7 @@
 package pagesweb;
 
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import base.BaseTestWeb;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -15,11 +13,6 @@ import java.time.Duration;
 public class LoginPageWeb {
     private final WebDriver driver;
     private final WebDriverWait wait;
-
-
-    // URL của trang đăng nhập
-    private static final String LOGIN_URL = "https://asvn.oceantech.com.vn/session/signin";
-//    private static final String LOGIN_URL = "http://qltsdemo.xhis.vn/session/signin";
 
     // Định nghĩa các element trên trang đăng nhập
     @FindBy(name = "email")
@@ -43,7 +36,7 @@ public class LoginPageWeb {
 
     // Các hành động trên trang đăng nhập
     public void navigateToLoginPage() {
-        driver.get(LOGIN_URL);
+        driver.get(BaseTestWeb.LOGIN_URL);
     }
 
     public void enterUsername(String username) {
@@ -143,5 +136,19 @@ public class LoginPageWeb {
         } catch (TimeoutException e) {
             return false;
         }
+    }
+
+    // Method to test SQL injection attempts
+    public void attemptSqlInjection(String injectionString) {
+        enterUsername(injectionString);
+        enterPassword(injectionString);
+        clickLoginButton();
+    }
+
+    // Method to test XSS vulnerabilities
+    public void attemptXssAttack(String xssScript) {
+        enterUsername(xssScript);
+        enterPassword("123456");
+        clickLoginButton();
     }
 }

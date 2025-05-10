@@ -2,9 +2,7 @@ package tests.allo_vouchers.web;
 
 import base.BaseMultiTestWeb;
 import drivers.DriverManager;
-import model.AllocationMenu;
-import model.Department;
-import model.HomeMenu;
+import model.*;
 import model.enums.PlatformType;
 import model.enums.UserRole;
 import org.testng.Assert;
@@ -17,10 +15,13 @@ import java.sql.SQLException;
 
 public class Allocations_VoucherTestUIWeb extends BaseMultiTestWeb {
     All_VoucherPageWeb all_vou;
+    UsersRole Users;
+    User user;
     @Test (priority = 2)
     public void UI_AllocationAM(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        user= Users.getUserByRole("AM");
+        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         Assert.assertTrue(all_vou.isMenuDisplayedCorrectly(AllocationMenu.getExpectedMenus(UserRole.AM, PlatformType.WEB)),
                 "Không hiển thị đúng menu role ORG");
     }
@@ -28,7 +29,8 @@ public class Allocations_VoucherTestUIWeb extends BaseMultiTestWeb {
     @Test (priority = 1)
     public void UI_AllocationORG(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("bvdka", "123456");
+        user= Users.getUserByRole("ORG");
+        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         Assert.assertTrue(all_vou.isMenuDisplayedCorrectly(AllocationMenu.getExpectedMenus(UserRole.ORG, PlatformType.WEB)),
                 "Không hiển thị đúng menu role ORG");
     }
@@ -36,7 +38,8 @@ public class Allocations_VoucherTestUIWeb extends BaseMultiTestWeb {
     @Test (priority = 3)
     public void UI_AllocationAU(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("audemo", "123123");
+        user= Users.getUserByRole("AU");
+        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         Assert.assertTrue(all_vou.isMenuDisplayedCorrectly(AllocationMenu.getExpectedMenus(UserRole.AU, PlatformType.WEB)),
                 "Không hiển thị đúng menu role ORG");
     }
@@ -44,7 +47,8 @@ public class Allocations_VoucherTestUIWeb extends BaseMultiTestWeb {
     @Test (priority = 4)
     public void TotalRecord_AllocationORG(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("bvdka", "123456");
+        user= Users.getUserByRole("ORG");
+        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         try {
             Integer sobanghi = DataBaseUtils.countAllcationORG();
             System.out.printf("Data from database: %d%n", sobanghi);
@@ -59,7 +63,8 @@ public class Allocations_VoucherTestUIWeb extends BaseMultiTestWeb {
     @Test (priority = 5)
     public void TotalRecord_AllocationAM(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("pvt1", "123456");
+        user= Users.getUserByRole("AM");
+        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         try {
             Integer sobanghi = DataBaseUtils.countAllcationAM(Department.DEPARTMENT_ID_AM);
             System.out.printf("Data from database: %d%n", sobanghi);
@@ -74,9 +79,10 @@ public class Allocations_VoucherTestUIWeb extends BaseMultiTestWeb {
     @Test (priority = 6)
     public void TotalRecord_AllocationAU(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
-        all_vou.navigateToAllocation_VoucherPage("audemo", "123123");
+        user= Users.getUserByRole("AU");
+        all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         try {
-            Integer sobanghi = DataBaseUtils.countAllcationAU(Department.DEPARTMENT_ID_AU1);
+            Integer sobanghi = DataBaseUtils.countAllcationAU(Department.DEPARTMENT_ID_AU);
             System.out.printf("Data from database: %d%n", sobanghi);
             Assert.assertTrue(all_vou.checkSobanghi(sobanghi),
                     "Số lượng bản ghi chưa chưa hiển thị đúng!");

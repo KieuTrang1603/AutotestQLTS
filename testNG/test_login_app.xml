@@ -6,7 +6,7 @@
     </listeners>
     <test name="SingleUserLoginTest">
         <classes>
-            <class name="tests.logintests.LoginTestApp"/>
+            <class name="tests.logins.LoginTestApp"/>
         </classes>
     </test>
 </suite>

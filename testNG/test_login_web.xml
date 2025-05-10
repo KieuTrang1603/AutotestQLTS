@@ -6,13 +6,19 @@
     </listeners>
     <test name="SingleUserLoginTest">
         <classes>
-            <class name="tests.logintests.LoginTestWeb"/>
+            <class name="tests.logins.LoginTestWeb"/>
         </classes>
     </test>
 
     <test name="MultiUserLoginTest" parallel="methods" thread-count="4">
         <classes>
-            <class name="tests.logintests.MultiUserLoginTest"/>
+            <class name="tests.logins.MultiUserLoginTest"/>
+        </classes>
+    </test>
+
+    <test name="SecurityLoginTest">
+        <classes>
+            <class name="tests.logins.LoginSecurityTest"/>
         </classes>
     </test>
 </suite>

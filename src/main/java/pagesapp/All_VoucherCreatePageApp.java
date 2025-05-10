@@ -5,6 +5,7 @@ import io.appium.java_client.android.AndroidDriver;
 import model.Allocation;
 import model.Asset;
 import model.Department;
+import model.enums.AllocationStatus;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -31,6 +32,9 @@ public class All_VoucherCreatePageApp {
 
     @FindBy(xpath = "//android.view.View[contains(@content-desc, 'Ngày chứng từ')]/following-sibling::android.view.View[2]")
     private WebElement ngayChungTuInput;
+
+    @FindBy(xpath = "//android.view.View[contains(@content-desc, 'Chọn ngày')]")
+    private WebElement chonNgayChungTu;
 
     @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[1]/android.view.View[1]/android.view.View")
     private WebElement phongBanBanGiaoInput;
@@ -67,7 +71,11 @@ public class All_VoucherCreatePageApp {
         return PageUtil.getValueText(ngayTaoPhieuInput);
     }
     public boolean isNgayTaoPhieuReadonly(){
-        return PageAppUtil.isNgayTaoPhieuReadonly(ngayTaoPhieuInput);
+//        return PageAppUtil.isNgayTaoPhieuReadonly(ngayTaoPhieuInput);
+        ngayTaoPhieuInput.click();
+        boolean isDatePickerVisible = driver.findElements(By.xpath("//android.view.View[contains(@content-desc, 'Chọn ngày')]")).size() > 0;
+        System.out.println("Date Picker visible: " + isDatePickerVisible);
+        return isDatePickerVisible;
     }
 
     public String getNgayChungTuValue() {
@@ -75,7 +83,10 @@ public class All_VoucherCreatePageApp {
     }
 
     public boolean isNgayChungTuEdit(){
-        return PageAppUtil.isEdit(ngayChungTuInput);
+        ngayChungTuInput.click();
+        boolean isDatePickerVisible = driver.findElements(By.xpath("//android.view.View[contains(@content-desc, 'Chọn ngày')]")).size() > 0;
+        System.out.println("Date Picker visible: " + isDatePickerVisible);
+        return isDatePickerVisible;
     }
 
     public boolean isPhongBanGiaoAble(){
@@ -262,6 +273,29 @@ public class All_VoucherCreatePageApp {
         getAllElementOptionsPhongBanTiepNhan().get(1).click();
     }
 
+    public void chonPhongBanTiepNhanInputCP(){
+        openDropdownPhongBanTiepNhan();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement scrollView = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View[1]")
+        ));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        WebElement editText = scrollView.findElement(By.xpath(".//android.widget.EditText"));
+        editText.click();
+        editText.sendKeys(Department.DEPARTMENT_NAME_AU1);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        List<WebElement> elements = scrollView.findElements(By.xpath(".//android.view.View[@content-desc]"));
+        elements.getFirst().click();
+    }
+
     public void clearPhongBanTiepNhan(){
         driver.findElements(By.xpath("//android.widget.ScrollView/android.widget.Button[4]/android.view.View[2]"))
                 .stream()
@@ -385,7 +419,7 @@ public class All_VoucherCreatePageApp {
 
     public boolean checkDS() throws SQLException, ParseException {
         List<String> danhsach= getAllDanhsachTSCD();
-        List<Asset> data1 = DataBaseUtils.getSomeAssetsAvailableCP(Department.DEPARTMENT_ID_AM,Allocation.STATUS_ALLOCATION_CTN,danhsach.size());
+        List<Asset> data1 = DataBaseUtils.getSomeAssetsAvailableCP(Department.DEPARTMENT_ID_AM, AllocationStatus.WAIT_RECEPT.getCode(),danhsach.size());
         System.out.println(data1);
         List<Asset> data2 = MyUtil.parseUiAssets(danhsach);
         System.out.println(data2);
@@ -404,6 +438,20 @@ public class All_VoucherCreatePageApp {
             danhsach.get(2).click();
         }
         chon_btn.click();
+    }
+
+    public String chonTSCP(){
+        String maTS;
+        List<WebElement> danhsach = getAllElementOptionsDanhsachTS();
+        WebElement checkbox = danhsach.get(2).findElement(By.xpath(".//android.widget.CheckBox"));
+        String checkedAttribute = checkbox.getAttribute("checked");
+        if(checkedAttribute.equals("false")){
+            danhsach.get(2).click();
+            maTS = danhsach.get(2).getAttribute("content-desc");
+        }else
+            maTS = danhsach.get(2).getAttribute("content-desc");
+        chon_btn.click();
+        return maTS;
     }
 
     public void clearTS(){

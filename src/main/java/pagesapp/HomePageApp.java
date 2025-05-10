@@ -27,6 +27,9 @@ public class HomePageApp {
     @FindBy(xpath = "//android.view.View[contains(@content-desc,'Điều chuyển')]")
     private WebElement transf_voucher;
 
+    @FindBy(xpath = "//android.view.View[contains(@content-desc,'Sửa chữa')]")
+    private WebElement main_tain;
+
 //    @FindBy(xpath = "//android.widget.ScrollView/android.view.View[3]")
 //    private WebElement scanQR;
     //máy thật
@@ -125,5 +128,9 @@ public class HomePageApp {
 
     public void navigationtoScanQR(){
         scanQR.click();
+    }
+
+    public void navigationtoMaintain(){
+        main_tain.click();
     }
 }

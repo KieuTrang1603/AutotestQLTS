@@ -1,8 +1,6 @@
 package pagesweb;
 
-import jdk.jshell.Snippet;
 import model.Asset;
-import model.Department;
 import model.enums.AssetStatus;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -32,7 +30,7 @@ public class Assets_Page {
         homePageWeb.Assets_ui();
     }
 
-    public void navigateToAssetsPageAU(String user, String password){
+    public void navigateToAssetsPagetoLogin(String user, String password){
         LoginPageWeb loginPageWeb = new LoginPageWeb(driver);
         HomePageWeb homePageWeb = new HomePageWeb(driver);
         loginPageWeb.navigateToLoginPage();

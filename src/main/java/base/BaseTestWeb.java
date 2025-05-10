@@ -13,6 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BaseTestWeb {
+    //    private static final String LOGIN_URL = "https://asvn.oceantech.com.vn/session/signin";
+    public static final String LOGIN_URL = "http://qltsdemo.xhis.vn/session/signin";
 
     @BeforeClass
     public void setUp() {
@@ -35,8 +37,7 @@ public class BaseTestWeb {
 
         WebDriver driver = new ChromeDriver(options);
         driver.manage().window().maximize();
-        driver.get("https://asvn.oceantech.com.vn/session/signin");
-//        driver.get("http://qltsdemo.xhis.vn/session/signin");
+        driver.get(LOGIN_URL);
         DriverManager.setWebDriver(driver);
     }
 

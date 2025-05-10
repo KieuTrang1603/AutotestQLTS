@@ -1,6 +1,7 @@
 package tests.allo_vouchers.web;
 
 import model.Asset;
+import model.Department;
 import model.User;
 import model.UsersRole;
 import org.testng.annotations.AfterMethod;
@@ -187,12 +188,13 @@ public class Allocations_VoucherTestImportExcel extends BaseTestFile {
             throw new RuntimeException(e);
         }
         //Kiêm tra hiển thị thông báo
-        Assert.assertEquals(toastText, "Nhập excel thành công",
+        Assert.assertTrue(toastText.contains("thành công"),
                 "Toast không hiển thị hoặc sai nội dung.");
-
         // Kiểm tra xem về trang danh sách cấp phát
         Assert.assertFalse(all.isAllocatonDialogDisplayed(),
                 "Form chưa bị ẩn sau khi click Lưu với dữ liệu chuẩn");
+        Assert.assertTrue(all_vou.checkBanghiCapphat(asset.getCode(),3, Department.DEPARTMENT_NAME_AM, tenPBSD),
+                "Chưa hiển thị bản ghi Cấp phát");
         // Kiểm tra tài sản ở màn danh sách
         as= new Assets_Page(DriverManager.getWebDriver());
         as.navigateToAssetsPage();

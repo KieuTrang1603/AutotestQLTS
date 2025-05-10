@@ -1,5 +1,7 @@
 package pagesweb;
 
+import model.Allocation;
+import model.Asset;
 import model.Department;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
@@ -15,7 +17,7 @@ import java.util.List;
 public class All_VoucherCreatePageWeb {
     private final WebDriver driver;
     private final WebDriverWait wait;
-    String soluong;
+    Allocation allocation;
     // Constructor
     @FindBy(id = "mui-pickers-date")
     private WebElement ngayTaoPhieuInput;
@@ -41,8 +43,8 @@ public class All_VoucherCreatePageWeb {
     @FindBy(xpath = "//button//span[text()='Chọn tài sản cấp phát']")
     private WebElement chonts;
 
-//    @FindBy(xpath = "//button//span[text()='Lưu']")
-//    private WebElement luu_btn;
+    @FindBy(xpath = "//button//span[text()='Tìm kiếm nâng cao']")
+    private WebElement searchhigh;
 
     @FindBy(xpath=("//p[text()='Trường này là bắt buộc']"))
     private WebElement errorMessage;

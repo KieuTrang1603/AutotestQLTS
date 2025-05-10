@@ -1,4 +1,4 @@
-package tests.logintests;
+package tests.logins;
 
 
 import base.BaseTestWeb;
@@ -191,6 +191,33 @@ public class LoginTestWeb extends BaseTestWeb {
         // Kiểm tra hiển thị dưới thông báo
         Assert.assertTrue(loginPageWeb.emptypassword(),
                 "Thông báo lỗi không nằm ngay bên dưới ô mật khẩu!");
+
+        // Kiểm tra xem vẫn còn ở trang đăng nhập
+        Assert.assertTrue(loginPageWeb.isLoginPageDisplayed(),
+                "Không ở trang đăng nhập sau khi đăng nhập không hợp lệ");
+    }
+
+    //TH đăng nhập với tài khoản chưa kích hoạt
+    @Test
+    public void testInvalidLogin_accountnotkichhoat() {
+        loginPageWeb = new LoginPageWeb(DriverManager.getWebDriver());
+        // Điều hướng đến trang đăng nhập
+        loginPageWeb.navigateToLoginPage();
+
+        // Thực hiện đăng nhập với thông tin không hợp lệ
+        loginPageWeb.login("kieutrangtestCKH", "123456");
+
+        // Đợi alert xuất hiện
+        Assert.assertTrue(loginPageWeb.waitForAlert(5),
+                "Alert không xuất hiện sau khi đăng nhập không hợp lệ");
+
+        // Kiểm tra nội dung alert
+        String alertText = loginPageWeb.getAlertText();
+        Assert.assertTrue(alertText.contains("Tài khoản hoặc mật khẩu không đúng"),
+                "Nội dung alert không chứa thông báo lỗi mong đợi");
+
+        // Chấp nhận alert
+        loginPageWeb.acceptAlert();
 
         // Kiểm tra xem vẫn còn ở trang đăng nhập
         Assert.assertTrue(loginPageWeb.isLoginPageDisplayed(),

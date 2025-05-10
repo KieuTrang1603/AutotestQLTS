@@ -1,6 +1,7 @@
 package tests.allo_vouchers.app;
 
 import base.BaseTestApp;
+import base.BaseTestWeb;
 import drivers.DriverManager;
 import helpers.AllocationHelper;
 import model.Allocation;
@@ -8,6 +9,7 @@ import model.User;
 import model.UsersRole;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -29,10 +31,13 @@ public class Allocations_VoucherTestUIApp extends BaseTestApp {
 
     @BeforeMethod
     public void creatsetup(){
-        WebDriver driver;
-        driver = new ChromeDriver();
+        System.setProperty("webdriver.chrome.driver", "C:\\Tools\\ChromeDriver114\\chromedriver.exe");
+
+        ChromeOptions options = new ChromeOptions();
+        options.setBinary("C:\\Tools\\Chrome114\\chrome-win64\\chrome.exe");
+        WebDriver driver = new ChromeDriver(options);
         driver.manage().window().maximize();
-        driver.get("https://asvn.oceantech.com.vn/session/signin");
+        driver.get(BaseTestWeb.LOGIN_URL);
         DriverManager.setWebDriver(driver);
         loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
         homePageApp = new HomePageApp(DriverManager.getAppiumDriver());

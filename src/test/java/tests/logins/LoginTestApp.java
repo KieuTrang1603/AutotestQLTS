@@ -1,4 +1,4 @@
-package tests.logintests;
+package tests.logins;
 import drivers.DriverManager;
 import model.HomeMenu;
 import model.User;
@@ -21,7 +21,7 @@ public class LoginTestApp extends BaseTestApp {
         loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
         homePageApp = new HomePageApp(DriverManager.getAppiumDriver());
     }
-    @Test(priority = 8)
+    @Test(priority = 9)
     public void testSuccessfulLoginORG() {
         UsersRole Users = null;
         User user = Users.getUserByRole("ORG");
@@ -35,7 +35,7 @@ public class LoginTestApp extends BaseTestApp {
         homePageApp.setLogOutORG();
     }
 
-    @Test(priority = 7)
+    @Test(priority = 8)
     public void testSuccessfulLoginAM() {
         UsersRole Users = null;
         User user = Users.getUserByRole("AM");
@@ -50,7 +50,7 @@ public class LoginTestApp extends BaseTestApp {
         homePageApp.setLogOutAM();
     }
 
-    @Test(priority = 6)
+    @Test(priority = 7)
     public void testSuccessfulLoginAU() {
         UsersRole Users = null;
         User user = Users.getUserByRole("AU");
@@ -64,7 +64,7 @@ public class LoginTestApp extends BaseTestApp {
         homePageApp.setLogOutAU();
     }
 
-    @Test(priority = 5)
+    @Test(priority = 6)
     public void testSuccessfulLoginUser() {
         UsersRole Users = null;
         User user = Users.getUserByRole("USER");
@@ -102,6 +102,13 @@ public class LoginTestApp extends BaseTestApp {
     @Test(priority = 2)
     public void testInvalidLogin_emptypassword() {
         loginPageapp.login("pvt1", "");
+        // Kiểm tra vẫn ở màn đăng nhap khong
+        Assert.assertTrue(loginPageapp.isLoginPageDisplayed(), "Không còn ở màn đăng nhập");
+    }
+
+    @Test(priority = 5)
+    public void testInvalidLogin_accountnotkichhoat() {
+        loginPageapp.login("kieutrangtestCKH", "123456");
         // Kiểm tra vẫn ở màn đăng nhap khong
         Assert.assertTrue(loginPageapp.isLoginPageDisplayed(), "Không còn ở màn đăng nhập");
     }

@@ -9,6 +9,9 @@ public class Allocation {
     private String phongNhan;
     private String nguoiNhan;
 
+    public Allocation() {
+    }
+
     public Allocation(String ngay, String trangThai, String phongGiao, String nguoiGiao, String phongNhan, String nguoiNhan) {
         this.ngay = ngay;
         this.trangThai = trangThai;

@@ -2,6 +2,7 @@ package pagesweb;
 
 import drivers.DriverManager;
 import model.Allocation;
+import model.Department;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -17,6 +18,7 @@ import java.util.List;
 public class All_VoucherPageWeb {
     private final WebDriver driver;
     private final WebDriverWait wait;
+    Allocation allocation;
 
     @FindBy(xpath = "//button//span[@class='MuiButton-label']")
     private List<WebElement> menuButtons;
@@ -26,6 +28,9 @@ public class All_VoucherPageWeb {
 
     @FindBy(css=(".Toastify__toast--success"))
     private WebElement toastMessage;
+
+    @FindBy(xpath = "//button//span[text()='Tìm kiếm nâng cao']")
+    private WebElement searchhigh;
 
     // Constructor
     public All_VoucherPageWeb(WebDriver driver) {
@@ -166,4 +171,108 @@ public class All_VoucherPageWeb {
         return list;
     }
 
+    public void searchAsset(String ma){
+        WebElement inputSearch = driver.findElement(By.id("search_box")); // hoặc sửa thành id thực tế nếu khác
+        inputSearch.clear();
+        inputSearch.sendKeys(ma);
+        inputSearch.sendKeys(Keys.ENTER);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void searchHigh(int a, String tenPTN){
+        searchhigh.click();
+        WebElement trangThai = searchhigh.findElement(By.xpath("//label[.//text()[contains(.,'Trạng thái')]]/following::input[1]"));
+        trangThai.click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[contains(@id, '-popup')]")));
+        List<WebElement> trangThaiItems = trangThai.findElements(By.xpath("//ul[contains(@id, '-popup')]/li"));
+        switch (a){
+            case 1:
+                trangThaiItems.get(0).click();
+                break;
+            case 2:
+                trangThaiItems.get(3).click();
+                break;
+            case 3:
+                trangThaiItems.get(1).click();
+                break;
+        }
+        WebElement phongTN = searchhigh.findElement(By.xpath("//label[.//text()[contains(.,'Phòng ban tiếp nhận')]]/following::input[1]"));
+        phongTN.click();
+        phongTN.sendKeys(tenPTN);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[contains(@id, '-popup')]")));
+        List<WebElement> phongTNItems = trangThai.findElements(By.xpath("//ul[contains(@id, '-popup')]/li"));
+        phongTNItems.get(0).click();
+        WebElement denNgay = searchhigh.findElement(By.xpath("//label[.//text()[contains(.,'Đến ngày')]]/following::input[1]"));
+        denNgay.click();
+        denNgay.sendKeys(MyUtil.currentDate);
+    }
+
+    public Allocation getDuLieuCP(){
+        WebElement table = driver.findElement(By.cssSelector("table.MuiTable-root"));
+
+        // Lấy dòng tiêu đề để tìm vị trí cột
+        WebElement headerRow = table.findElement(By.cssSelector("thead tr"));
+        List<WebElement> headers = headerRow.findElements(By.tagName("th"));
+
+        // Tìm index của cột "Phòng bàn giao"
+        int phongBanGiaoIndex = -1;
+        for (int i = 0; i < headers.size(); i++) {
+            String headerText = headers.get(i).getText().trim();
+            if (headerText.equalsIgnoreCase("Phòng ban bàn giao")) {
+                phongBanGiaoIndex = i;
+                break;
+            }
+        }
+        // Nếu không tìm thấy thì báo lỗi
+        if (phongBanGiaoIndex == -1) {
+            throw new NoSuchElementException("Không tìm thấy cột 'Phòng ban bàn giao'");
+        }
+
+        // Tìm index của cột "Phòng tiếp nhận"
+        int phongSuDungIndex = -1;
+        for (int i = 0; i < headers.size(); i++) {
+            String headerText = headers.get(i).getText().trim();
+            if (headerText.equalsIgnoreCase("Phòng ban tiếp nhận")) {
+                phongSuDungIndex = i;
+                break;
+            }
+        }
+        // Nếu không tìm thấy thì báo lỗi
+        if (phongSuDungIndex == -1) {
+            throw new NoSuchElementException("Không tìm thấy cột 'Phòng ban tiêp nhận'");
+        }
+
+        // Lấy tất cả các dòng trong tbody
+        List<WebElement> rows = table.findElements(By.cssSelector("tbody tr"));
+        if (rows.isEmpty()) {
+            throw new NoSuchElementException("Không có dòng nào trong bảng.");
+        }
+        // Lấy dòng đầu tiên trong tbody
+        WebElement firstRow = rows.get(0);
+        List<WebElement> cells = firstRow.findElements(By.tagName("td"));
+        allocation = new Allocation();
+        allocation.setPhongGiao(cells.get(phongBanGiaoIndex).getText());
+        allocation.setPhongNhan(cells.get(phongSuDungIndex).getText());
+        return allocation;
+    }
+    public boolean checkBanghiCapphat(String ma, int a, String PBBG, String PBTN){
+        searchAsset(ma);
+        searchHigh(a,PBTN);
+        getDuLieuCP();
+        boolean check = false;
+        if(allocation.getPhongGiao().contains(PBBG) && allocation.getPhongNhan().contains(PBTN)){
+            check =true;
+            return check;
+        } else
+            return check;
+    }
+    public String getSessionIdCookie() {
+        Cookie jsessionid = driver.manage().getCookieNamed("JSESSIONID");
+        return jsessionid != null ? "JSESSIONID=" + jsessionid.getValue() : "";
+    }
 }

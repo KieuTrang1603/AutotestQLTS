@@ -11,7 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataBaseUtils {
-    private static final String URL = "jdbc:mysql://localhost:3306/assetvn_net";
+    //asvn
+//    private static final String URL = "jdbc:mysql://localhost:3306/assetvn_net";
+    //qltsdemo
+    private static final String URL = "jdbc:mysql://localhost:3306/assetvn_bv199";
     private static final String USER = "root";
     private static final String PASSWORD = "kFviK&1466FT@Oct";
     private static final String ORG_ID = "6af1ff18-f0bd-44ce-bf98-69492806016c";
@@ -216,7 +219,7 @@ public class DataBaseUtils {
                 "WHERE vc.org_id = ? " +
                 "  AND vc.asset_class = 1 " +
                 "  AND vc.type = 2 " +
-                "  AND (vc.allocation_status_id = ? OR vc.allocation_status_id = ?) " +
+                "  AND (vc.allocation_status_id = ? OR vc.allocation_status_id = ? OR vc.allocation_status_id = ?) " +
                 "  AND vc.receiver_department_id IN ( " +
                 "    SELECT id FROM tbl_department WHERE parent_id = ? " +
                 "    UNION " +
@@ -228,8 +231,9 @@ public class DataBaseUtils {
         statement.setString(1, ORG_ID);
         statement.setString(2, AllocationStatus.WAIT_RECEPT.getCode());
         statement.setString(3, AllocationStatus.ISSUED.getCode());
-        statement.setString(4, departmentId);
+        statement.setString(4, AllocationStatus.RETURNED.getCode());
         statement.setString(5, departmentId);
+        statement.setString(6, departmentId);
 
         ResultSet rs = statement.executeQuery();
         if (rs.next()) {

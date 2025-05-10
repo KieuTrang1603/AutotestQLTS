@@ -20,6 +20,8 @@ public class MyUtil {
     public static final String FILE_PATH1 = "D:\\Tester\\Auto\\Selenium\\Login\\File\\Mẫu nhập tài sản đã cấp phát (1).xlsx";
     public static final String FILE_NAME = "D:\\Tester\\Auto\\Selenium\\Login\\File\\Mẫu nhập tài sản đã cấp phát";
 
+    public static final String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
     public static List<String> normalizeList(List<String> list) {
         return list.stream()
                 .map(s -> s.trim())        // Bỏ khoảng trắng đầu/cuối
@@ -102,6 +104,16 @@ public class MyUtil {
             assets.add(taisan);
         }
         return assets;
+    }
+
+    public static Asset parseAsset(String uiStrings) {
+        Asset taisan = new Asset();
+        String[] parts = uiStrings.split("\n", 2);
+        String code = parts[0].trim();
+        String name = parts.length > 1 ? parts[1].trim() : "";
+        taisan.setCode(code);
+        taisan.setName(name);
+        return taisan;
     }
 
     public static boolean sosanh2chuoi(List<String> data, List<String> data1){

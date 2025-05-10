@@ -1,9 +1,16 @@
 package tests.allo_vouchers.app;
 
 import base.BaseTestApp;
+import base.BaseTestWeb;
 import drivers.DriverManager;
+import model.Asset;
+import model.Department;
 import model.User;
 import model.UsersRole;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -14,6 +21,7 @@ import pagesapp.HomePageApp;
 import pagesapp.LoginPageApp;
 import pagesweb.All_VoucherCreatePageWeb;
 import pagesweb.All_VoucherPageWeb;
+import pagesweb.Assets_Page;
 import pagesweb.DS_TSCD_Dialog;
 import utils.MyUtil;
 import utils.SnackbarScreenshot;
@@ -22,6 +30,7 @@ public class Allocations_VoucherTestCreateFunApp extends BaseTestApp {
     All_VoucherPageApp all_vou;
     LoginPageApp loginPageapp;
     HomePageApp homePageApp;
+    Assets_Page as;
     @BeforeClass
     public void prepareVoucherCreatePage(){
         loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
@@ -32,6 +41,14 @@ public class Allocations_VoucherTestCreateFunApp extends BaseTestApp {
         loginPageapp.login(user.getUsername(), user.getPassword());
         homePageApp.navigationtoAllocation();
         all_vou.clickThemmoi();
+        System.setProperty("webdriver.chrome.driver", "C:\\Tools\\ChromeDriver114\\chromedriver.exe");
+
+        ChromeOptions options = new ChromeOptions();
+        options.setBinary("C:\\Tools\\Chrome114\\chrome-win64\\chrome.exe");
+        WebDriver driver = new ChromeDriver(options);
+        driver.manage().window().maximize();
+        driver.get(BaseTestWeb.LOGIN_URL);
+        DriverManager.setWebDriver(driver);
     }
 
     @Test(priority = 1)
@@ -128,9 +145,10 @@ public class Allocations_VoucherTestCreateFunApp extends BaseTestApp {
         All_VoucherCreatePageApp all = new All_VoucherCreatePageApp(DriverManager.getAppiumDriver());
         all.chonNguoiBanGiaoInput();
         all.chonTrangThaiPhieuInput(1);
-        all.chonPhongBanTiepNhanInput();
+        all.chonPhongBanTiepNhanInputCP();
         all.chonNguoiTiepNhanInput();
-        all.chonTS();
+        Asset taisan = new Asset();
+        taisan.setCode(MyUtil.parseAsset(all.chonTSCP()).getCode());
         all.setLuu_btn();
         SnackbarScreenshot snackbar = new SnackbarScreenshot(DriverManager.getAppiumDriver());
         try {
@@ -138,11 +156,22 @@ public class Allocations_VoucherTestCreateFunApp extends BaseTestApp {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        Assert.assertTrue(snackbar.verifySnackbarContainsText("Cấp phát thành công"),
-                "Thông báo lỗi hiển thị sai!");
         // Kiểm tra xem về trang danh sách cấp phát
         Assert.assertFalse(all.isAllocatonDialogDisplayed(),
                 "Form chưa bị ẩn sau khi click Lưu với dữ liệu chuẩn");
+        Assert.assertTrue(all_vou.checkBanghiCapphat(taisan.getCode(),1,Department.DEPARTMENT_NAME_AM, Department.DEPARTMENT_NAME_AU1),
+                "Chưa hiển thị bản ghi Cấp phát");
+        // Kiểm tra tài sản ở màn danh sách
+        loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
+        homePageApp = new HomePageApp(DriverManager.getAppiumDriver());
+        as= new Assets_Page(DriverManager.getWebDriver());
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        as.navigateToAssetsPagetoLogin(user.getUsername(), user.getPassword());
+        as.closeMenu();
+        // Kiểm tra xem dữ liệu tài sản sau cấp phát
+        Assert.assertTrue(as.checkTSCapPhat(taisan.getCode(), 1, Department.DEPARTMENT_NAME_AU1),
+                "Trạng thái Tài sản bị hiển thị sai");
     }
 
     @Test(priority = 7)
@@ -150,9 +179,10 @@ public class Allocations_VoucherTestCreateFunApp extends BaseTestApp {
         All_VoucherCreatePageApp all = new All_VoucherCreatePageApp(DriverManager.getAppiumDriver());
         all.chonNguoiBanGiaoInput();
         all.chonTrangThaiPhieuInput(3);
-        all.chonPhongBanTiepNhanInput();
+        all.chonPhongBanTiepNhanInputCP();
         all.chonNguoiTiepNhanInput();
-        all.chonTS();
+        Asset taisan = new Asset();
+        taisan.setCode(MyUtil.parseAsset(all.chonTSCP()).getCode());
         all.setLuu_btn();
         SnackbarScreenshot snackbar = new SnackbarScreenshot(DriverManager.getAppiumDriver());
         try {
@@ -160,11 +190,22 @@ public class Allocations_VoucherTestCreateFunApp extends BaseTestApp {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        Assert.assertTrue(snackbar.verifySnackbarContainsText("Cấp phát thành công"),
-                "Thông báo lỗi hiển thị sai!");
         // Kiểm tra xem về trang danh sách cấp phát
         Assert.assertFalse(all.isAllocatonDialogDisplayed(),
                 "Form chưa bị ẩn sau khi click Lưu với dữ liệu chuẩn");
+        Assert.assertTrue(all_vou.checkBanghiCapphat(taisan.getCode(),2,Department.DEPARTMENT_NAME_AM, Department.DEPARTMENT_NAME_AU1),
+                "Chưa hiển thị bản ghi Cấp phát");
+        // Kiểm tra tài sản ở màn danh sách
+        loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
+        homePageApp = new HomePageApp(DriverManager.getAppiumDriver());
+        as= new Assets_Page(DriverManager.getWebDriver());
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        as.navigateToAssetsPagetoLogin(user.getUsername(), user.getPassword());
+        as.closeMenu();
+        // Kiểm tra xem dữ liệu tài sản sau cấp phát
+        Assert.assertTrue(as.checkTSCapPhat(taisan.getCode(), 2, Department.DEPARTMENT_NAME_AU1),
+                "Trạng thái Tài sản bị hiển thị sai");
     }
 
     @Test(priority = 8)
@@ -172,9 +213,10 @@ public class Allocations_VoucherTestCreateFunApp extends BaseTestApp {
         All_VoucherCreatePageApp all = new All_VoucherCreatePageApp(DriverManager.getAppiumDriver());
         all.chonNguoiBanGiaoInput();
         all.chonTrangThaiPhieuInput(2);
-        all.chonPhongBanTiepNhanInput();
+        all.chonPhongBanTiepNhanInputCP();
         all.chonNguoiTiepNhanInput();
-        all.chonTS();
+        Asset taisan = new Asset();
+        taisan.setCode(MyUtil.parseAsset(all.chonTSCP()).getCode());
         all.setLuu_btn();
         SnackbarScreenshot snackbar = new SnackbarScreenshot(DriverManager.getAppiumDriver());
         try {
@@ -182,21 +224,42 @@ public class Allocations_VoucherTestCreateFunApp extends BaseTestApp {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        Assert.assertTrue(snackbar.verifySnackbarContainsText("Cấp phát thành công"),
-                "Thông báo lỗi hiển thị sai!");
         // Kiểm tra xem về trang danh sách cấp phát
         Assert.assertFalse(all.isAllocatonDialogDisplayed(),
                 "Form chưa bị ẩn sau khi click Lưu với dữ liệu chuẩn");
+        Assert.assertTrue(all_vou.checkBanghiCapphat(taisan.getCode(),3,Department.DEPARTMENT_NAME_AM, Department.DEPARTMENT_NAME_AU1),
+                "Chưa hiển thị bản ghi Cấp phát");
+        // Kiểm tra tài sản ở màn danh sách
+        loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
+        homePageApp = new HomePageApp(DriverManager.getAppiumDriver());
+        as= new Assets_Page(DriverManager.getWebDriver());
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        as.navigateToAssetsPagetoLogin(user.getUsername(), user.getPassword());
+        as.closeMenu();
+        // Kiểm tra xem dữ liệu tài sản sau cấp phát
+        Assert.assertTrue(as.checkTSCapPhat(taisan.getCode(), 3, Department.DEPARTMENT_NAME_AU1),
+                "Trạng thái Tài sản bị hiển thị sai");
+        // Kiểm tra tài sản ở màn danh sách role AU
+        as= new Assets_Page(DriverManager.getWebDriver());
+        user = UsersRole.getUserByRole("AU");
+        as.navigateToAssetsPagetoLogin(user.getUsername(), user.getPassword());
+        as.closeMenu();
+        // Kiểm tra xem dữ liệu tài sản sau cấp phát
+        Assert.assertTrue(as.checkTSCapPhat(taisan.getCode(), 3, Department.DEPARTMENT_NAME_AU1),
+                "Trạng thái Tài sản bị hiển thị sai");
     }
 
     @AfterMethod
     public void resetToAddNewScreen() {
         All_VoucherCreatePageApp all = new All_VoucherCreatePageApp(DriverManager.getAppiumDriver());
         All_VoucherPageApp allVoucherPage = new All_VoucherPageApp(DriverManager.getAppiumDriver());
-
-        // Nếu form thêm mới bị ẩn (không còn), thì click lại "Thêm mới" để reset màn hình
-        if (!all.isAllocatonDialogDisplayed()) {
+        if (allVoucherPage.isAllocatonDialogDisplayed()) {
             allVoucherPage.clickThemmoi();
-        }
+        } else {
+        boolean isScrollVisible = DriverManager.getAppiumDriver().findElements(By.xpath("//android.widget.Button[contains(@content-desc, 'Chọn tài sản cấp phát')]")).size() > 0;
+        if(!isScrollVisible){
+            DriverManager.getAppiumDriver().navigate().back();
+        }}
     }
 }

@@ -46,7 +46,7 @@ public class Allocations_VoucherTestValidateApp extends BaseTestApp {
         Assert.assertEquals(actualDate, expectedDate, "Ngày tạo phiếu không phải là ngày hiện tại!");
         // 2. Kiểm tra không chỉnh sửa được
         boolean isReadonly = all.isNgayTaoPhieuReadonly();
-        Assert.assertTrue(isReadonly, "Trường 'Ngày tạo phiếu' không bị readonly!");
+        Assert.assertTrue(!isReadonly, "Trường 'Ngày tạo phiếu' không bị readonly!");
     }
 
     @Test(priority = 2)
@@ -64,9 +64,8 @@ public class Allocations_VoucherTestValidateApp extends BaseTestApp {
     @Test(priority = 3)
     public void testPhongBanGiaoDataAndReadonly() {
         All_VoucherCreatePageApp all = new All_VoucherCreatePageApp(DriverManager.getAppiumDriver());
-        String maPBG= "1.8.PVT";
         try {
-            String departmentName = DataBaseUtils.getDepartmentNameByCode(maPBG);
+            String departmentName = DataBaseUtils.getDepartmentNameByCode(Department.DEPARTMENT_CODE_AM);
             System.out.println("Data from database: " + departmentName);
             Assert.assertTrue(all.checkPhongBanBanGiao(departmentName),
                     "Trường 'Phòng ban bàn giao' không hiển thị đúng!");

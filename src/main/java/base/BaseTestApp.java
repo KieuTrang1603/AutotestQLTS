@@ -105,7 +105,8 @@ public class BaseTestApp {
                 System.out.println("Ô input vẫn trống, dùng adb shell để nhập text...");
                 driver.executeScript("mobile: shell", Map.of(
                         "command", "input",
-                        "args", List.of("text", "11111")
+//                        "args", List.of("text", "11111")
+                        "args", List.of("text", "00000")
                 ));
             } else {
                 System.out.println("Text đã nhập thành công bằng sendKeys!");

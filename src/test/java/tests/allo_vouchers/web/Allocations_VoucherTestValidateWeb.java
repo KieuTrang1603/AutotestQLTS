@@ -1,7 +1,9 @@
 package tests.allo_vouchers.web;
 
+import model.Department;
 import model.User;
 import model.UsersRole;
+import model.enums.AllocationStatus;
 import pagesweb.DS_TSCD_Dialog;
 import base.BaseTestWeb;
 import drivers.DriverManager;
@@ -64,9 +66,8 @@ public class Allocations_VoucherTestValidateWeb extends BaseTestWeb {
     @Test(priority = 4)
     public void testPhongBanGiaoDataAndReadonly() {
         All_VoucherCreatePageWeb all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        String maPBG= "1.8.PVT";
         try {
-            String departmentName = DataBaseUtils.getDepartmentNameByCode(maPBG);
+            String departmentName = DataBaseUtils.getDepartmentNameByCode(Department.DEPARTMENT_CODE_AM);
             System.out.println("Data from database: " + departmentName);
             Assert.assertTrue(all.checkPhongBanBanGiao(departmentName),
                     "Trường 'Phòng ban bàn giao' không hiển thị đúng!");
@@ -78,9 +79,8 @@ public class Allocations_VoucherTestValidateWeb extends BaseTestWeb {
     @Test(priority = 5)
     public void testNguoiBanGiao(){
         All_VoucherCreatePageWeb all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        String department_id = "9484b376-8470-4d06-b1a0-e59179f93ca6";
         try {
-            List<String> displayNames = DataBaseUtils.getUserByDepartmentId(department_id);
+            List<String> displayNames = DataBaseUtils.getUserByDepartmentId(Department.DEPARTMENT_ID_AM);
             System.out.println("Data from database: " + displayNames);
             Assert.assertTrue(all.checkNguoiBanGiao(displayNames),
                     "Danh sách 'Người bàn giao' chưa hiển thị đúng!");
@@ -138,10 +138,8 @@ public class Allocations_VoucherTestValidateWeb extends BaseTestWeb {
         All_VoucherCreatePageWeb all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
         DS_TSCD_Dialog ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
         ds.getPaginationText();
-        String department_id = "9484b376-8470-4d06-b1a0-e59179f93ca6";
-        String status_allocations = "71b6b0a1-d225-44db-95c5-b00a47c4789b"; //chờ tiếp nhận
         try {
-            Integer sobanghi = DataBaseUtils.countAssetsAvailable(department_id, status_allocations);
+            Integer sobanghi = DataBaseUtils.countAssetsAvailable(Department.DEPARTMENT_ID_AM, AllocationStatus.WAIT_RECEPT.getCode());
             System.out.printf("Data from database: %d%n", sobanghi);
             Assert.assertTrue(ds.checkSobanghi(sobanghi),
                     "Danh sách 'TSCĐ' chưa hiển thị đúng!");

@@ -1,4 +1,4 @@
-package tests.logintests;
+package tests.logins;
 
 import base.BaseMultiTestWeb;
 import drivers.DriverManager;
