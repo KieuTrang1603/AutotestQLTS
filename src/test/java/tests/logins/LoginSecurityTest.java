@@ -2,8 +2,11 @@ package tests.logins;
 
 import base.BaseTestWeb;
 import drivers.DriverManager;
+import model.User;
+import model.UsersRole;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -16,10 +19,13 @@ import pagesweb.LoginPageWeb;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class LoginSecurityTest extends BaseTestWeb {
     private LoginPageWeb loginPageWeb;
     private HomePageWeb homePageWeb;
+    UsersRole Users = null;
+    User user = Users.getUserByRole("AM");
     @BeforeMethod
     public void setupTest() {
         loginPageWeb = new LoginPageWeb(DriverManager.getWebDriver());
@@ -28,14 +34,43 @@ public class LoginSecurityTest extends BaseTestWeb {
     }
 
     @Test(description = "Test SQL Injection vulnerability")
-    public void testTraditionalSqlInjection() {
+    public void testTraditionalSqlInjectionLogic() {
         // Common SQL injection payloads
         String[] sqlInjections = {
                 "' OR '1'='1",
+                "' OR ''='"
+        };
+
+        for (String injection : sqlInjections) {
+            loginPageWeb.navigateToLoginPage();
+            loginPageWeb.attemptSqlInjection(injection);
+
+            // Verify that SQL injection doesn't result in successful login
+            // Đợi alert xuất hiện
+            Assert.assertTrue(loginPageWeb.waitForAlert(5),
+                    "Alert không xuất hiện sau khi đăng nhập không hợp lệ");
+
+            // Kiểm tra nội dung alert
+            String alertText = loginPageWeb.getAlertText();
+            Assert.assertTrue(alertText.contains("Tài khoản hoặc mật khẩu không đúng"),
+                    "Nội dung alert không chứa thông báo lỗi mong đợi");
+
+            // Chấp nhận alert
+            loginPageWeb.acceptAlert();
+
+            // Kiểm tra xem vẫn còn ở trang đăng nhập
+            Assert.assertTrue(loginPageWeb.isLoginPageDisplayed(),
+                    "SQL Injection might be successful with: " + injection);
+        }
+    }
+
+    @Test(description = "Test SQL Injection vulnerability")
+    public void testTraditionalSqlInjectionComment() {
+        // Common SQL injection payloads
+        String[] sqlInjections = {
                 "admin' --",
                 "admin' OR 1=1--",
                 "' UNION SELECT 1,username,password FROM users--",
-                "' OR ''='",
                 "admin'; DROP TABLE users; --",
                 "' OR 1=1 LIMIT 1; --",
                 "admin'/**/OR/**/1=1--"
@@ -68,13 +103,15 @@ public class LoginSecurityTest extends BaseTestWeb {
     public void testJsonBasedSqlInjection() {
         // JSON-based SQL injection payloads
         String[] jsonSqlInjections = {
-                "'->>'$.{\"test\" :\"x\"=\"x\"}--",  //trích xuất giá trị trong PostgreSQL
-                "' || JSON_EXTRACT('{\"x\":1}', '$.x') = 1 --",
-                "username' AND JSON_CONTAINS((SELECT CONCAT('[\"',GROUP_CONCAT(password),'\"]') FROM users), '\"admin\"') --",
-                "' OR JSON_VALUE('{\"x\":\"1\"}', '$.x') = '1' --",
-                "admin'->>'$.{\\'a\\':\\\'a\\\'=\\\'a\\'}--",
-                "' OR JSON_KEYS('{\"1\":\"1\"}') IS NOT NULL --",
-                "' || JSON_ARRAY_LENGTH('[1]') > 0 --"
+                "admin'->>'$.name' OR 1=1--",
+                "admin'->>'$' OR 1=1--", //trích xuất giá trị trong PostgreSQL
+                "' OR JSON_EXTRACT('{\"x\":1}', '$.x') = 1 --",
+                "' OR JSON_CONTAINS('{\"x\":1}', '1', '$.x') --",
+                "' OR JSON_KEYS('{\"1\":\"1\"}') IS NOT NULL --", //mysql
+                "' OR JSON_VALUE('{\"x\":\"1\"}', '$.x') = '1' --", //sql server
+                "' OR json_extract('{\"x\":1}', '$.x') = 1 --", //sql lite
+                "admin' AND JSON_CONTAINS((SELECT CONCAT('[\"',user(),'\"]')), '\"root\"') --", //TH đặc biệt
+                "' UNION SELECT JSON_OBJECT('username', username, 'password', password) FROM users --"
         };
         for (String injection : jsonSqlInjections) {
             loginPageWeb.navigateToLoginPage();
@@ -152,4 +189,46 @@ public class LoginSecurityTest extends BaseTestWeb {
         }
     }
 
+    @Test(description = "Test brute force protection")
+    public void testBruteForceProtection() {
+        // Try multiple failed login attempts to check for account lockout or CAPTCHA
+        loginPageWeb.attemptMultipleLogins("wronguser", "wrongpassword", 5);
+
+        // Check if there's any protection mechanism after multiple failed attempts
+        boolean hasProtection = DriverManager.getWebDriver().getPageSource().contains("account locked") ||
+                DriverManager.getWebDriver().getPageSource().contains("captcha") ||
+                DriverManager.getWebDriver().getPageSource().contains("too many attempts");
+
+        Assert.assertTrue(hasProtection,
+                "Brute force protection may be missing after multiple failed login attempts");
+    }
+
+    @Test(description = "Check that password field is secure in the UI (type and visibility)")
+    public void testSecurePasswordHandling() {
+        loginPageWeb.navigateToLoginPage();
+
+        // Nhập tên và mật khẩu
+        loginPageWeb.enterUsername("testuser");
+        loginPageWeb.enterPassword("TestPassword123");
+
+        // 1. Kiểm tra type="password"
+        String passwordType = loginPageWeb.getTypePassword();
+        Assert.assertEquals(passwordType, "password", "Password field should use type='password'");
+
+        // 2. Kiểm tra không lộ mật khẩu trong HTML source
+        String pageSource = DriverManager.getWebDriver().getPageSource();
+        Assert.assertFalse(pageSource.contains("TestPassword123"),
+                "Password should not be visible in page source (HTML)");
+    }
+
+    @Test(description = "Ensure password is not stored in cookies")
+    public void testPasswordNotInCookies() {
+        loginPageWeb.login(user.getUsername(), user.getPassword());
+        Set<Cookie> cookies = DriverManager.getWebDriver().manage().getCookies();
+        for (Cookie cookie : cookies) {
+            String cookieValue = cookie.getValue();
+            Assert.assertFalse(cookieValue.contains("123456"),
+                    "Mật khẩu bị lưu trong cookie: " + cookie.getName());
+        }
+    }
 }

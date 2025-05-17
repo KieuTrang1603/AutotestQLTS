@@ -189,6 +189,17 @@ public class FileHelper {
                     System.out.println("Hiển thị thông báo chưa chính xác");
                 }
                 break;
+            case 13:
+                if (errorRow.contains(" ngày cấp phát") && errorRow.contains("ngày hiện tại")) {
+                    System.out.println("Thông báo hiện tại là : " + errorRow);
+                    System.out.println("Hiển thị thông báo chính xác");
+                    result= true;
+                }
+                else {
+                    System.out.println("Thông báo hiện tại là : " + errorRow);
+                    System.out.println("Hiển thị thông báo chưa chính xác");
+                }
+                break;
         }
         return result;
     }

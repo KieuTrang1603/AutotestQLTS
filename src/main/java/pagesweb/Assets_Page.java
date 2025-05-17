@@ -118,7 +118,7 @@ public class Assets_Page {
         asset = new Asset();
         asset.setStore(cells.get(khoIndex).getText().trim());
         asset.setStatus(cells.get(trangThaiIndex).getText().trim());
-        asset.setUse_department(cells.get(phongSuDungIndex).getText().trim());
+        asset.setUse_department_id(cells.get(phongSuDungIndex).getText().trim());
         return asset;
     }
 
@@ -133,7 +133,7 @@ public class Assets_Page {
             case 1,2:
                 if(asset.getStatus().equals(status1.getDescription()) || asset.getStatus().equals(status2.getDescription())){
                     if(!asset.getStore().isEmpty()){
-                        if(asset.getUse_department().isEmpty()){
+                        if(asset.getUse_department_id().isEmpty()){
                             check =true;
                             return check;
                         }
@@ -144,7 +144,7 @@ public class Assets_Page {
             case 3:
                 if(asset.getStatus().equals(status3.getDescription())){
                     if(asset.getStore().isEmpty()){
-                        if(asset.getUse_department().contains(tenPBSD)){
+                        if(asset.getUse_department_id().contains(tenPBSD)){
                             check =true;
                             return check;
                         }

@@ -15,12 +15,12 @@ import pagesweb.LoginPageWeb;
 
 import java.util.List;
 
-public class MultiUserLoginTest extends BaseMultiTestWeb {
-    UsersRole Users;
+public class MultipleUsersLoginTest extends BaseMultiTestWeb {
+    private UsersRole Users;
     User user1 = Users.getUserByRole("ORG");
     User user2 = Users.getUserByRole("AM");
     User user3 = Users.getUserByRole("AU");
-        User user4 = Users.getUserByRole("USER");
+    User user4 = Users.getUserByRole("USER");
     @DataProvider(name = "userData", parallel = true)
     public Object[][] getUsers() {
         return new Object[][] {

@@ -4,20 +4,15 @@ import model.Asset;
 import model.Department;
 import model.User;
 import model.UsersRole;
-import org.apache.hc.client5.http.classic.HttpClient;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
-import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.*;
-import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
-import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import pagesweb.Assets_Page;
-import pagesweb.DS_TSCD_Dialog;
+import pagesweb.DS_TSCD_Allocation_Dialog;
 import base.BaseMultiTestWeb;
 import drivers.DriverManager;
 import org.testng.Assert;
@@ -27,20 +22,18 @@ import pagesweb.All_VoucherPageWeb;
 import utils.MyUtil;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
     All_VoucherPageWeb all_vou;
     All_VoucherCreatePageWeb all;
-    DS_TSCD_Dialog ds;
+    DS_TSCD_Allocation_Dialog ds;
     Assets_Page as;
     User user;
     @BeforeMethod
     public void prepareVoucherCreatePage(){
         all_vou = new All_VoucherPageWeb(DriverManager.getWebDriver());
         all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
+        ds = new DS_TSCD_Allocation_Dialog(DriverManager.getWebDriver());
         user = UsersRole.getUserByRole("AM");
         all_vou.navigateToAllocation_VoucherPage(user.getUsername(), user.getPassword());
         all_vou.closeMenu();
@@ -177,7 +170,6 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
         all.chonPhongBanTiepNhanInput();
         all.chonNguoiTiepNhanInput();
         ds.chonTSCD();
-        all.chonTrangThaiPhieu(1);
         all.setLuu_btn();
 
         // Kiểm tra xem thông báo lỗi có hiển thị không
@@ -199,7 +191,6 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
         all.chonPhongBanTiepNhanInput();
         all.chonNguoiTiepNhanInput();
         ds.chonTSCD();
-        all.chonTrangThaiPhieu(1);
         all.setNgayChungTuInput(all.lessNgayTiepNhan());
         all.setLuu_btn();
         String toastText = all.getToastMessageText();
@@ -221,7 +212,6 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
         Asset taisan = new Asset();
         taisan.setCode(ds.chonVaLayTSTuDialog());
         ds.ChosenTS();
-        all.chonTrangThaiPhieu(1);
         all.setLuu_btn();
         String toastText = all_vou.getToastMessageText();
 

@@ -8,13 +8,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import utils.MyUtil;
 
 import java.time.Duration;
 import java.util.List;
 
-public class DS_TSCD_Dialog {
+public class DS_TSCD_Allocation_Dialog {
     private final WebDriver driver;
     private final WebDriverWait wait;
     All_VoucherCreatePageWeb all;
@@ -24,7 +23,7 @@ public class DS_TSCD_Dialog {
     @FindBy(xpath = "//button//span[text()='Chọn']")
     private WebElement chon_btn;
 
-    public DS_TSCD_Dialog(WebDriver driver) {
+    public DS_TSCD_Allocation_Dialog(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);

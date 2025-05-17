@@ -1,18 +1,18 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Login Test">
+<suite name="Non Function Test">
 
     <listeners>
         <listener class-name="helpers.TestListener"/>
     </listeners>
-    <test name="SingleUserLoginTest">
+    <test name="SecurityLoginTest">
         <classes>
-            <class name="tests.logins.LoginTestWeb"/>
+            <class name="tests.logins.LoginSecurityTest"/>
         </classes>
     </test>
 
-    <test name="MultiUserLoginTest" parallel="methods" thread-count="4">
+    <test name="PerformanceLoginTest">
         <classes>
-            <class name="tests.logins.MultipleUsersLoginTest"/>
+            <class name="tests.logins.LoginPerformanceTest"/>
         </classes>
     </test>
 </suite>

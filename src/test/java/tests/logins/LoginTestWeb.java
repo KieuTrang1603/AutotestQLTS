@@ -8,10 +8,15 @@ import model.User;
 import model.UsersRole;
 import model.enums.PlatformType;
 import model.enums.UserRole;
+import org.apache.hc.client5.http.classic.HttpClient;
+import org.apache.hc.core5.http.HttpRequest;
+import org.apache.hc.core5.http.HttpResponse;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pagesweb.HomePageWeb;
 import pagesweb.LoginPageWeb;
+
+import java.net.URI;
 
 public class LoginTestWeb extends BaseTestWeb {
     private LoginPageWeb loginPageWeb;
@@ -222,5 +227,19 @@ public class LoginTestWeb extends BaseTestWeb {
         // Kiểm tra xem vẫn còn ở trang đăng nhập
         Assert.assertTrue(loginPageWeb.isLoginPageDisplayed(),
                 "Không ở trang đăng nhập sau khi đăng nhập không hợp lệ");
+    }
+
+    @Test
+    public void test1(){
+//        HttpClient client = HttpClient.newHttpClient();
+//        HttpRequest request = HttpRequest.newBuilder()
+//                .uri(URI.create("http://qltsdemo.xhis.vn/Home/Login"))
+//                .POST(java.net.http.HttpRequest.BodyPublishers.ofString("UserName=admin&Password=123456"))
+//                .header("Content-Type", "application/x-www-form-urlencoded")
+//                .build();
+//
+//        HttpResponse<String> response = client.send(request, java.net.http.HttpResponse.BodyHandlers.ofString());
+//        System.out.println(response.statusCode());
+//        System.out.println(response.body());
     }
 }

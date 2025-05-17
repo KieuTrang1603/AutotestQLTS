@@ -12,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -19,10 +20,7 @@ import pagesapp.All_VoucherCreatePageApp;
 import pagesapp.All_VoucherPageApp;
 import pagesapp.HomePageApp;
 import pagesapp.LoginPageApp;
-import pagesweb.All_VoucherCreatePageWeb;
-import pagesweb.All_VoucherPageWeb;
 import pagesweb.Assets_Page;
-import pagesweb.DS_TSCD_Dialog;
 import utils.MyUtil;
 import utils.SnackbarScreenshot;
 
@@ -162,8 +160,6 @@ public class Allocations_VoucherTestCreateFunApp extends BaseTestApp {
         Assert.assertTrue(all_vou.checkBanghiCapphat(taisan.getCode(),1,Department.DEPARTMENT_NAME_AM, Department.DEPARTMENT_NAME_AU1),
                 "Chưa hiển thị bản ghi Cấp phát");
         // Kiểm tra tài sản ở màn danh sách
-        loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
-        homePageApp = new HomePageApp(DriverManager.getAppiumDriver());
         as= new Assets_Page(DriverManager.getWebDriver());
         UsersRole Users = null;
         User user = Users.getUserByRole("AM");
@@ -196,8 +192,6 @@ public class Allocations_VoucherTestCreateFunApp extends BaseTestApp {
         Assert.assertTrue(all_vou.checkBanghiCapphat(taisan.getCode(),2,Department.DEPARTMENT_NAME_AM, Department.DEPARTMENT_NAME_AU1),
                 "Chưa hiển thị bản ghi Cấp phát");
         // Kiểm tra tài sản ở màn danh sách
-        loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
-        homePageApp = new HomePageApp(DriverManager.getAppiumDriver());
         as= new Assets_Page(DriverManager.getWebDriver());
         UsersRole Users = null;
         User user = Users.getUserByRole("AM");
@@ -230,8 +224,6 @@ public class Allocations_VoucherTestCreateFunApp extends BaseTestApp {
         Assert.assertTrue(all_vou.checkBanghiCapphat(taisan.getCode(),3,Department.DEPARTMENT_NAME_AM, Department.DEPARTMENT_NAME_AU1),
                 "Chưa hiển thị bản ghi Cấp phát");
         // Kiểm tra tài sản ở màn danh sách
-        loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
-        homePageApp = new HomePageApp(DriverManager.getAppiumDriver());
         as= new Assets_Page(DriverManager.getWebDriver());
         UsersRole Users = null;
         User user = Users.getUserByRole("AM");
@@ -261,5 +253,16 @@ public class Allocations_VoucherTestCreateFunApp extends BaseTestApp {
         if(!isScrollVisible){
             DriverManager.getAppiumDriver().navigate().back();
         }}
+    }
+    @AfterClass
+    public void tearDown() {
+        try {
+            WebDriver driver = DriverManager.getWebDriver();
+            if (DriverManager.getWebDriver() != null) {
+                DriverManager.quitWebDriver();
+            }
+        } catch (Exception e) {
+            System.out.println("Lỗi khi đóng WebDriver: " + e.getMessage());
+        }
     }
 }

@@ -74,7 +74,6 @@ public class BaseTestApp {
         options.setCapability("unicodeKeyboard", true);
         options.setCapability("resetKeyboard", true);
 
-    //    options.setCapability("autoGrantPermissions", true);
         options.setNoReset(false);
         options.setFullReset(false);
 

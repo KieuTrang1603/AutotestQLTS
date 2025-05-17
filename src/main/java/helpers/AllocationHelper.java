@@ -110,6 +110,20 @@ public class AllocationHelper {
         return taisan;
     }
 
+    public static List<String> ngayCapPhatlonNgayHienTaiData() throws IOException, SQLException, ParseException {
+        String maPBTN = DataBaseUtils.getCodePhongBan().get(0);
+        // Lấy danh sách tài sản
+        List<String> taisan = DataBaseUtils.getOneAssetsAvailable(Department.DEPARTMENT_ID_AM, all_status.getCode(), true);
+        if (taisan.size() > 4) {
+            taisan.add(4, maPBTN);  // Thêm mã phòng ban tại vị trí cụ thể
+        } else {
+            taisan.add(maPBTN); // Thêm cuối nếu chưa đủ 4 phần tử
+        }
+        // Chỉnh sửa dữ liệu theo test case
+        taisan.set(1, MyUtil.getFutureDate(1));
+        return taisan;
+    }
+
     public static List<String> CorrectData() throws IOException, SQLException, ParseException {
         String maPBTN = DataBaseUtils.getCodePhongBan().get(0);
         // Lấy danh sách tài sản

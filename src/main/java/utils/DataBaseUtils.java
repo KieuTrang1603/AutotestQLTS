@@ -4,6 +4,7 @@ import model.Asset;
 import model.Department;
 import model.enums.AllocationStatus;
 import model.enums.AssetStatus;
+import model.enums.MaintainStatus;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -50,6 +51,49 @@ public class DataBaseUtils {
                 PreparedStatement stmt = conn.prepareStatement(query)
         ) {
             stmt.setString(1, ORG_ID);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                names.add(rs.getString("name"));
+            }
+        }
+
+        return names;
+    }
+
+    public static List<String> getNamePhongBanAM() throws SQLException {
+        String query = "SELECT name FROM tbl_department WHERE org_id = ? AND is_active = 1 AND is_asset_management = 1";
+        List<String> names = new ArrayList<>();
+
+        try (
+                Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)
+        ) {
+            stmt.setString(1, ORG_ID);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                names.add(rs.getString("name"));
+            }
+        }
+
+        return names;
+    }
+
+    public static List<String> getNamePhongBanBSCAU() throws SQLException {
+        String query = "SELECT name FROM tbl_department WHERE org_id = ? "+
+                "AND is_active = 1 " +
+                "AND id = ? " +
+                "OR parent_id = ? ";
+        List<String> names = new ArrayList<>();
+
+        try (
+                Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)
+        ) {
+            stmt.setString(1, ORG_ID);
+            stmt.setString(2, Department.DEPARTMENT_ID_AU);
+            stmt.setString(3, Department.DEPARTMENT_ID_AU);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -125,6 +169,20 @@ public class DataBaseUtils {
         return null;
     }
 
+    public static String getDepartmentNameById(String Pb_id) throws SQLException {
+        String query = "SELECT name FROM tbl_department WHERE org_id = ? AND id = ?";
+        Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, ORG_ID);
+        statement.setString(2, Pb_id);
+
+        ResultSet rs = statement.executeQuery();
+        if (rs.next()) {
+            return rs.getString("name");
+        }
+        return null;
+    }
+
     public static List<String> getUserByDepartmentId(String departmentId) throws SQLException {
         String query = "SELECT display_name FROM tbl_person " +
                 "JOIN tbl_user_deparment ON tbl_person.user_id = tbl_user_deparment.user_id " +
@@ -143,7 +201,7 @@ public class DataBaseUtils {
         return result;
     }
 
-    public static int countAssetsAvailable(String departmentId, String allocationStatusId) throws SQLException {
+    public static int countAssetsAvailable_Allocation(String departmentId, String allocationStatusId) throws SQLException {
         AssetStatus status1 = AssetStatus.NEW_IN_STORAGE;
         AssetStatus status2 = AssetStatus.RETURNED_TO_STORAGE;
         String query = "SELECT COUNT(*) FROM tbl_asset " +
@@ -173,6 +231,29 @@ public class DataBaseUtils {
         return 0;
     }
 
+    public static int countAssetsAvailable_Maintain(String departmentId) throws SQLException {
+        String query = "SELECT COUNT(*) FROM tbl_asset " +
+                "WHERE org_id = ? " +
+                "AND asset_class = 1 " +
+                "AND is_deleted = 0 " +
+                "AND use_department_id = ? " +
+                "AND id NOT IN (" +
+                "    SELECT ts_id FROM ar_suco " +
+                "    WHERE ar_trang_thai = ? OR ar_trang_thai = ?" +
+                ")";
+
+        Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, ORG_ID);
+        statement.setString(2, departmentId);
+        statement.setInt(3, MaintainStatus.PENDING.getCode());
+        statement.setInt(4, MaintainStatus.IN_PROCESS.getCode());
+        ResultSet rs = statement.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+        return 0;
+    }
     public static int countAllcationORG() throws SQLException {
         String query = "SELECT COUNT(DISTINCT vc.id) " +
                 "FROM tbl_voucher vc " +
@@ -386,5 +467,35 @@ public class DataBaseUtils {
             return rs.getString("username");
         }
         return null;
+    }
+
+    public static Asset getTSByCode(String maTS) throws SQLException {
+        Asset as = new Asset();
+        String query = "SELECT * " +
+                "FROM tbl_asset a " +
+                "WHERE a.org_id = ? " +
+                "AND a.asset_class = 1 " +
+                "AND a.code = ? " ;
+        Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, ORG_ID);
+        statement.setString(2, maTS);
+        ResultSet rs = statement.executeQuery();
+        if (rs.next()) {
+            String management_code = rs.getString("management_code");
+            String name = rs.getString("name");
+            String model = rs.getString("model");
+            String serial = rs.getString("serial_number");
+            String manager_department_id = rs.getString("management_department_id");
+            as.setCode(maTS);
+            as.setName(name);
+            as.setManagement_code(MyUtil.normalize(management_code));
+            as.setModel(MyUtil.normalize(model));
+            as.setSerial(MyUtil.normalize(serial));
+            as.setManager_department(manager_department_id);
+        } else {
+            System.out.println("Không có tài sản phù hợp.");
+        }
+        return as;
     }
 }

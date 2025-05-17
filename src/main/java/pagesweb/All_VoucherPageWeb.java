@@ -185,6 +185,11 @@ public class All_VoucherPageWeb {
 
     public void searchHigh(int a, String tenPTN){
         searchhigh.click();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         WebElement trangThai = searchhigh.findElement(By.xpath("//label[.//text()[contains(.,'Trạng thái')]]/following::input[1]"));
         trangThai.click();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));

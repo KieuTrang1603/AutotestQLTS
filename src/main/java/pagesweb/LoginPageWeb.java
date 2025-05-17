@@ -51,6 +51,11 @@ public class LoginPageWeb {
         passwordInput.sendKeys(password);
     }
 
+    public String getTypePassword() {
+        wait.until(ExpectedConditions.visibilityOf(passwordInput));
+        return passwordInput.getAttribute("type");
+    }
+
     public void clickLoginButton() {
         wait.until(ExpectedConditions.elementToBeClickable(loginButton));
         loginButton.click();
@@ -150,5 +155,20 @@ public class LoginPageWeb {
         enterUsername(xssScript);
         enterPassword("123456");
         clickLoginButton();
+    }
+
+    // Method to test brute force protection
+    public void attemptMultipleLogins(String username, String password, int attempts) {
+        for (int i = 0; i < attempts; i++) {
+            login(username, password);
+            waitForAlert(5);
+            // Chấp nhận alert
+            acceptAlert();
+            // Check if account gets locked or if there's a CAPTCHA after multiple attempts
+            if (driver.getPageSource().contains("account locked") ||
+                    driver.getPageSource().contains("captcha")) {
+                break;
+            }
+        }
     }
 }

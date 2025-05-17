@@ -171,14 +171,23 @@ public class Allocations_VoucherTestImportExcel extends BaseTestFile {
         Assert.assertTrue(imp.downloadFileError(), "Không tải được file");
         Assert.assertTrue(FileHelper.empty(12), "Thông báo lỗi không hiển thị");
     }
-
     @Test(priority = 14)
+    public void testCreateAllocation_NCPlonNHT() throws IOException, SQLException, ParseException {
+        List<String> taisan = AllocationHelper.ngayCapPhatlonNgayHienTaiData();
+        FileHelper.insert_empty(taisan);
+        imp.uploadFile();
+        Assert.assertTrue(imp.isPopupErrorDisplayed(), "Popup lỗi không hiển thị");
+        Assert.assertTrue(imp.downloadFileError(), "Không tải được file");
+        Assert.assertTrue(FileHelper.empty(13), "Thông báo lỗi không hiển thị");
+    }
+
+    @Test(priority = 15)
     public void testCreateAllocation_TrangThaiDaCapPhat() throws IOException, SQLException, ParseException {
         List<String> taisan = AllocationHelper.CorrectData();
         Asset asset = new Asset();
         asset.setCode(taisan.get(2));
         String tenPBSD = DataBaseUtils.getDepartmentNameByCode(taisan.get(4));
-        asset.setUse_department(tenPBSD);
+        asset.setUse_department_id(tenPBSD);
         FileHelper.insert_empty(taisan);
         imp.uploadFile();
         String toastText = all_vou.getToastMessageText();
@@ -200,7 +209,7 @@ public class Allocations_VoucherTestImportExcel extends BaseTestFile {
         as.navigateToAssetsPage();
         as.closeMenu();
         // Kiểm tra xem dữ liệu tài sản sau cấp phát
-        Assert.assertTrue(as.checkTSCapPhat(asset.getCode(), 3, asset.getUse_department()),
+        Assert.assertTrue(as.checkTSCapPhat(asset.getCode(), 3, asset.getUse_department_id()),
                 "Trạng thái Tài sản bị hiển thị sai");
     }
 

@@ -10,9 +10,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pagesapp.*;
-import pagesweb.All_VoucherCreatePageWeb;
-import pagesweb.All_VoucherPageWeb;
-import pagesweb.DS_TSCD_Dialog;
 import utils.DataBaseUtils;
 import utils.MyUtil;
 
@@ -26,13 +23,14 @@ public class Allocations_VoucherTestValidateApp extends BaseTestApp {
     All_VoucherPageApp all_vou;
     LoginPageApp loginPageapp;
     HomePageApp homePageApp;
+    UsersRole Users = null;
+    User user;
     @BeforeClass
     public void prepareVoucherCreatePage(){
         loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
         homePageApp = new HomePageApp(DriverManager.getAppiumDriver());
         all_vou = new All_VoucherPageApp(DriverManager.getAppiumDriver());
-        UsersRole Users = null;
-        User user = Users.getUserByRole("AM");
+        user = Users.getUserByRole("AM");
         loginPageapp.login(user.getUsername(), user.getPassword());
         homePageApp.navigationtoAllocation();
         all_vou.clickThemmoi();

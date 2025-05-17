@@ -1,9 +1,11 @@
 package pagesweb;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -27,6 +29,9 @@ public class HomePageWeb {
 
     @FindBy(xpath = "//button[text()='Điều chuyển TSCĐ']")
     private WebElement transfer_voucher_tscd;
+
+    @FindBy(xpath = "//button[text()='Sửa chữa - thay thế']")
+    private WebElement main_tain_tscd;
 
     @FindBy(xpath = "//button[text()='Danh sách TSCĐ']")
     private WebElement assets_tscd;
@@ -76,6 +81,25 @@ public class HomePageWeb {
         manager.click();
         manager_tscd.click();
         transfer_voucher_tscd.click();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void Main_tain_ui(){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        WebElement manager = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//button//span[text()='Quản lý']")
+        ));
+        manager.click();
+        manager_tscd.click();
+        main_tain_tscd.click();
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {

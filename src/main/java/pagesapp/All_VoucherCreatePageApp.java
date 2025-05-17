@@ -350,18 +350,6 @@ public class All_VoucherCreatePageApp {
 
     public List<WebElement> getAllElementOptionsNguoiTiepNhan() {
         openDropdownNguoiTiepNhan();
-//        List<WebElement> scrollViews;
-//        WebElement scrollView = null;
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-//        scrollViews = driver.findElements(By.xpath("//android.widget.ScrollView"));
-//        if(!scrollViews.isEmpty()) {
-//                scrollView = scrollViews.get(0);
-//        }else {
-//            scrollView = wait.until(ExpectedConditions.visibilityOfElementLocated(
-//                    By.xpath("//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View")
-//                    ));
-//        }
-
         WebElement scrollView = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View")
         ));

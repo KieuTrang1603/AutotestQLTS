@@ -4,7 +4,7 @@ import model.Department;
 import model.User;
 import model.UsersRole;
 import model.enums.AllocationStatus;
-import pagesweb.DS_TSCD_Dialog;
+import pagesweb.DS_TSCD_Allocation_Dialog;
 import base.BaseTestWeb;
 import drivers.DriverManager;
 import org.testng.Assert;
@@ -136,10 +136,10 @@ public class Allocations_VoucherTestValidateWeb extends BaseTestWeb {
     @Test(priority = 10)
     public void testDanhsachTSCD(){
         All_VoucherCreatePageWeb all = new All_VoucherCreatePageWeb(DriverManager.getWebDriver());
-        DS_TSCD_Dialog ds = new DS_TSCD_Dialog(DriverManager.getWebDriver());
+        DS_TSCD_Allocation_Dialog ds = new DS_TSCD_Allocation_Dialog(DriverManager.getWebDriver());
         ds.getPaginationText();
         try {
-            Integer sobanghi = DataBaseUtils.countAssetsAvailable(Department.DEPARTMENT_ID_AM, AllocationStatus.WAIT_RECEPT.getCode());
+            Integer sobanghi = DataBaseUtils.countAssetsAvailable_Allocation(Department.DEPARTMENT_ID_AM, AllocationStatus.WAIT_RECEPT.getCode());
             System.out.printf("Data from database: %d%n", sobanghi);
             Assert.assertTrue(ds.checkSobanghi(sobanghi),
                     "Danh sách 'TSCĐ' chưa hiển thị đúng!");

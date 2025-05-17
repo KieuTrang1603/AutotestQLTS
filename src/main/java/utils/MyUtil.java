@@ -127,4 +127,8 @@ public class MyUtil {
         else
             return false;
     }
+
+    public static String normalize(String s) {
+        return s == null ? "" : s.trim();
+    }
 }
