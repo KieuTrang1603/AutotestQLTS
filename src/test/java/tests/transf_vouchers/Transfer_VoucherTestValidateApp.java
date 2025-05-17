@@ -2,6 +2,7 @@ package tests.transf_vouchers;
 
 import base.BaseTestApp;
 import drivers.DriverManager;
+import model.Department;
 import model.User;
 import model.UsersRole;
 import org.testng.Assert;
@@ -71,9 +72,8 @@ public class Transfer_VoucherTestValidateApp extends BaseTestApp {
     @Test(priority = 4)
     public void testPhongBanGiaoDataAndEdit() {
         Transfer_VoucherCreatePageApp transfer_vou = new Transfer_VoucherCreatePageApp(DriverManager.getAppiumDriver());
-        String maPBG= "1.8.PVT";
         try {
-            String departmentName = DataBaseUtils.getDepartmentNameByCode(maPBG);
+            String departmentName = DataBaseUtils.getDepartmentNameByCode(Department.DEPARTMENT_CODE_AM);
             System.out.println("Data from database: " + departmentName);
             Assert.assertTrue(transfer_vou.checkPhongBanBanGiaoFirstly(departmentName),
                     "Trường 'Phòng ban bàn giao' không hiển thị đúng!");

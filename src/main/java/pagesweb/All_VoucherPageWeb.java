@@ -29,7 +29,7 @@ public class All_VoucherPageWeb {
     @FindBy(css=(".Toastify__toast--success"))
     private WebElement toastMessage;
 
-    @FindBy(xpath = "//button//span[text()='Tìm kiếm nâng cao']")
+    @FindBy(xpath = "//button//span[text()='TK nâng cao']")
     private WebElement searchhigh;
 
     // Constructor
@@ -65,7 +65,7 @@ public class All_VoucherPageWeb {
         // Bước 3: Đảm bảo allocation_btn đã sẵn sàng
         WebElement allocation_btn = new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(
-                        By.xpath("//button//span[contains(text(), 'Cấp phát TSCĐ')]")
+                        By.xpath("//button//span[contains(text(), 'Thêm mới')]")
                 ));
         // Click bằng JS để đảm bảo không bị lớp nào cản
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", allocation_btn);

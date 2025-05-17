@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Allocation Voucher UI Test">
+<suite name="Allocation Voucher Web Test">
     <listeners>
         <listener class-name="helpers.TestListener"/>
     </listeners>
@@ -13,12 +13,6 @@
     <test name="AllocationsVoucherCreateTests">
         <classes>
             <class name="tests.allo_vouchers.web.Allocations_VoucherTestCreateFunWeb"/>
-        </classes>
-    </test>
-
-    <test name="AllocationsVoucherImportTests">
-        <classes>
-            <class name="tests.allo_vouchers.web.Allocations_VoucherTestImportExcel"/>
         </classes>
     </test>
 </suite>

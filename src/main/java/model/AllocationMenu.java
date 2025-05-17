@@ -11,17 +11,17 @@ public class AllocationMenu {
     static {
         // ORG
         roleMenus.put(UserRole.ORG, Map.of(
-                PlatformType.WEB, Arrays.asList("Cấp phát TSCĐ", "Nhập Excel", "Xuất Excel", "Tìm kiếm nâng cao")
+                PlatformType.WEB, Arrays.asList("Thêm mới", "Nhập Excel", "Xuất Excel", "TK nâng cao")
         ));
 
         // AM
         roleMenus.put(UserRole.AM, Map.of(
-                PlatformType.WEB, Arrays.asList("Cấp phát TSCĐ", "Nhập Excel", "Xuất Excel", "Tìm kiếm nâng cao")
+                PlatformType.WEB, Arrays.asList("Thêm mới", "Nhập Excel", "Xuất Excel", "TK nâng cao")
         ));
 
         // AU
         roleMenus.put(UserRole.AU, Map.of(
-                PlatformType.WEB, Arrays.asList("Xuất Excel", "Tìm kiếm nâng cao")
+                PlatformType.WEB, Arrays.asList("Xuất Excel", "TK nâng cao")
         ));
     }
 

@@ -1,5 +1,7 @@
 package pagesweb;
 
+import drivers.DriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import helpers.FileHelper;
 import org.openqa.selenium.WebDriver;
@@ -85,5 +87,13 @@ public class Import_TSCD_Dialog {
             System.out.println("Không tìm thấy file sau timeout.");
             return false;
         }
+    }
+
+    public boolean getDialogExcel(){
+        boolean isScrollVisible = driver.findElements(By.xpath("//label//span[text()='Mẫu nhập Excel']")).size() > 0;
+        if(!isScrollVisible){
+            return false;
+        }
+        else return true;
     }
 }

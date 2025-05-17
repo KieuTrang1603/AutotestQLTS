@@ -4,6 +4,7 @@ import base.BaseTestApp;
 import drivers.DriverManager;
 import model.User;
 import model.UsersRole;
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -246,5 +247,10 @@ public class Transfer_VoucherTestCreateFunApp extends BaseTestApp {
                 throw new RuntimeException(e);
             }
         }
+        else {
+        boolean isScrollVisible = DriverManager.getAppiumDriver().findElements(By.xpath("//android.widget.Button[contains(@content-desc, 'Chọn tài sản')]")).size() > 0;
+        if(!isScrollVisible){
+            DriverManager.getAppiumDriver().navigate().back();
+        }}
     }
 }

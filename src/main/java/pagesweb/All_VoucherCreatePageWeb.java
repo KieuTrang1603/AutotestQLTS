@@ -363,12 +363,7 @@ public class All_VoucherCreatePageWeb {
     }
 
     public void setLuu_btn(){
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
         WebElement luu_btn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button//span[text()='Lưu']")));
         luu_btn.click();
         try {

@@ -46,7 +46,7 @@ public class Main_TainReportWeb {
     @FindBy(name = "managementDepartment")
     private WebElement phongQuanLy;
 
-    @FindBy(xpath = "//button//span[text()='Chọn tài sản']")
+    @FindBy(xpath = "//button//span[text()='Chọn TS']")
     private WebElement chonts;
 
     @FindBy(id = "upload-images")

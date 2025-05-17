@@ -220,5 +220,9 @@ public class Allocations_VoucherTestImportExcel extends BaseTestFile {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        if(!imp.getDialogExcel()){
+            all_vou.Nhap_Btn_click();
+        }
+
     }
 }

@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Main tain Web Test">
+    <listeners>
+        <listener class-name="helpers.TestListener"/>
+    </listeners>
+    <test name="Main tain web">
+        <classes>
+            <class name="tests.main_tains.web.Main_tainReportTestValidateWeb"/>
+            <class name="tests.main_tains.web.Main_tainReportTestCreateWeb"/>
+        </classes>
+    </test>
+</suite>
