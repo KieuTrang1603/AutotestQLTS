@@ -64,9 +64,9 @@ public class BaseTestApp {
         System.out.println("***SERVER POST: " + PORT);
 
         options.setPlatformName("Android");
-        options.setAutomationName("UiAutomator2");
+    //    options.setAutomationName("UiAutomator2");
         options.setDeviceName("emulator-5554");
-    //    options.setDeviceName("ce07171785147c060d7e");
+        options.setDeviceName("3405261611001RE");
         options.setAppPackage("vn.com.oceantech.asset_mobile");
         options.setAppActivity("vn.com.oceantech.asset_mobile.MainActivity");
         options.setCapability("enableImageInjection",true);

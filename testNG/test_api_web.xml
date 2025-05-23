@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Web API Test">
+    <listeners>
+        <listener class-name="helpers.TestListener"/>
+    </listeners>
+    <test name="Main tain web">
+        <classes>
+            <class name="tests.allo_vouchers.web.Allocations_VoucherTestAPIWeb"/>
+        </classes>
+    </test>
+</suite>

@@ -4,11 +4,6 @@ import model.Asset;
 import model.Department;
 import model.User;
 import model.UsersRole;
-import org.apache.hc.client5.http.classic.methods.HttpPost;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.core5.http.*;
-import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import pagesweb.Assets_Page;
@@ -20,8 +15,6 @@ import org.testng.annotations.Test;
 import pagesweb.All_VoucherCreatePageWeb;
 import pagesweb.All_VoucherPageWeb;
 import utils.MyUtil;
-
-import java.io.IOException;
 
 public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
     All_VoucherPageWeb all_vou;
@@ -305,40 +298,6 @@ public class Allocations_VoucherTestCreateFunWeb extends BaseMultiTestWeb {
         // Kiểm tra xem dữ liệu tài sản sau cấp phát
         Assert.assertTrue(as.checkTSCapPhat(taisan.getCode(), 3, Department.DEPARTMENT_NAME_AU1),
                 "Trạng thái Tài sản bị hiển thị sai");
-    }
-
-    @Test(priority = 12)
-    public void testCreateAllocationWithoutCsrfToken() throws IOException, ParseException {
-        String url = "http://asvn.oceantech.com.vn/asvn/api/v1/fixed-assets/allocation-vouchers";
-
-        String requestBody = "{"
-                + "\"issueDate\":\"2025-05-09\","
-                + "\"handoverDepartmentCode\":\"1.8.PVT\","
-                + "\"handoverPersonName\":\"admin\","
-                + "\"receiverDepartmentCode\":\"2.3.KHTH\","
-                + "\"receiverPersonName\":\"2.3.KHTH\","
-                + "\"assetCode\":\"2.3.KHTH\""
-                + "}";
-
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost post = new HttpPost(url);
-
-        // Set cookie để giả lập đã đăng nhập
-        post.setHeader("Cookie", all_vou.getSessionIdCookie());
-        post.setHeader("Content-Type", "application/json");
-        // Không set CSRF token để test lỗi
-
-        post.setEntity(new StringEntity(requestBody, ContentType.APPLICATION_JSON));
-        HttpResponse response = client.execute(post);
-
-        int statusCode = response.getCode();
-        System.out.println("HTTP Response Status: " + statusCode);
-
-        // Bước 3: Nếu trả về 200 hoặc 201 mà không cần CSRF token thì có lỗ hổng
-        Assert.assertNotEquals(statusCode, 200, "Hệ thống bị lỗi CSRF! Yêu cầu bảo vệ bằng token.");
-        Assert.assertNotEquals(statusCode, 201, "Hệ thống bị lỗi CSRF! Yêu cầu bảo vệ bằng token.");
-
-        client.close();
     }
 
     @AfterMethod

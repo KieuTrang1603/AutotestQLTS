@@ -35,7 +35,7 @@
 <a href="#"><span class="badge badge-primary"></span></a>
 </li>
 <li class="m-r-10">
-<a href="#"><span class="badge badge-primary">May 17, 2025 08:06:18 PM</span></a>
+<a href="#"><span class="badge badge-primary">May 22, 2025 10:54:13 PM</span></a>
 </li>
 </ul>
 </div>
@@ -87,7 +87,7 @@
           <div class="test-detail">
             <p class="name">Taimau</p>
             <p class="text-sm">
-              <span>8:06:35 PM</span> / <span>00:00:00:176</span>
+              <span>10:54:32 PM</span> / <span>00:00:00:038</span>
               <span class="badge pass-bg log float-right">Pass</span>
             </p>
           </div>
@@ -96,9 +96,9 @@
 <div class="p-v-10">
 <div class="info">
 <h5 class="test-status text-pass">Taimau</h5>
-<span class='badge badge-success'>05.17.2025 8:06:35 PM</span>
-<span class='badge badge-danger'>05.17.2025 8:06:35 PM</span>
-<span class='badge badge-default'>00:00:00:176</span>
+<span class='badge badge-success'>05.22.2025 10:54:32 PM</span>
+<span class='badge badge-danger'>05.22.2025 10:54:32 PM</span>
+<span class='badge badge-default'>00:00:00:038</span>
 &middot; <span class='uri-anchor badge badge-default'>#test-id=1</span>
 <span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
 <span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
@@ -111,7 +111,7 @@
   <tbody>
       <tr class="event-row">
         <td><span class="badge log pass-bg">Pass</span></td>
-        <td>8:06:35 PM</td>
+        <td>10:54:32 PM</td>
         <td>
           Test passed
         </td>
@@ -121,25 +121,25 @@
 </div>
           </div>
         </li>
-        <li class="test-item"  status="pass" test-id="2"
+        <li class="test-item"  status="fail" test-id="2"
           author=""
           tag=""
           device="">
           <div class="test-detail">
             <p class="name">testCreateAllocation_emptyNgayChungTu</p>
             <p class="text-sm">
-              <span>8:06:37 PM</span> / <span>00:00:10:674</span>
-              <span class="badge pass-bg log float-right">Pass</span>
+              <span>10:54:33 PM</span> / <span>00:00:09:372</span>
+              <span class="badge fail-bg log float-right">Fail</span>
             </p>
           </div>
           <div class="test-contents d-none">
 <div class="detail-head">
 <div class="p-v-10">
 <div class="info">
-<h5 class="test-status text-pass">testCreateAllocation_emptyNgayChungTu</h5>
-<span class='badge badge-success'>05.17.2025 8:06:37 PM</span>
-<span class='badge badge-danger'>05.17.2025 8:06:48 PM</span>
-<span class='badge badge-default'>00:00:10:674</span>
+<h5 class="test-status text-fail">testCreateAllocation_emptyNgayChungTu</h5>
+<span class='badge badge-success'>05.22.2025 10:54:33 PM</span>
+<span class='badge badge-danger'>05.22.2025 10:54:43 PM</span>
+<span class='badge badge-default'>00:00:09:372</span>
 &middot; <span class='uri-anchor badge badge-default'>#test-id=2</span>
 <span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
 <span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
@@ -151,10 +151,40 @@
   <thead><tr><th class="status-col">Status</th><th class="timestamp-col">Timestamp</th><th class="details-col">Details</th></tr></thead>
   <tbody>
       <tr class="event-row">
-        <td><span class="badge log pass-bg">Pass</span></td>
-        <td>8:06:48 PM</td>
+        <td><span class="badge log fail-bg">Fail</span></td>
+        <td>10:54:43 PM</td>
         <td>
-          Test passed
+          <textarea readonly class="code-block">java.lang.NullPointerException: Cannot invoke "org.apache.poi.ss.usermodel.Cell.getStringCellValue()" because "cell" is null
+	at utils.ExcelUtils.getDataFromErrorRow(ExcelUtils.java:64)
+	at helpers.FileHelper.empty(FileHelper.java:58)
+	at tests.allo_vouchers.web.Allocations_VoucherTestImportExcel.testCreateAllocation_emptyNgayChungTu(Allocations_VoucherTestImportExcel.java:62)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:139)
+	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:664)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:227)
+	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:50)
+	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:957)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:200)
+	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:148)
+	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:128)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.testng.TestRunner.privateRun(TestRunner.java:848)
+	at org.testng.TestRunner.run(TestRunner.java:621)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:443)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:437)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:397)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:336)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1280)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1200)
+	at org.testng.TestNG.runSuites(TestNG.java:1114)
+	at org.testng.TestNG.run(TestNG.java:1082)
+	at com.intellij.rt.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:65)
+	at com.intellij.rt.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:105)
+</textarea>
+          
         </td>
       </tr>
   </tbody>
@@ -169,7 +199,7 @@
           <div class="test-detail">
             <p class="name">testCreateAllocation_emptyMaTaiSan</p>
             <p class="text-sm">
-              <span>8:06:49 PM</span> / <span>00:00:06:072</span>
+              <span>10:54:44 PM</span> / <span>00:00:06:204</span>
               <span class="badge pass-bg log float-right">Pass</span>
             </p>
           </div>
@@ -178,9 +208,9 @@
 <div class="p-v-10">
 <div class="info">
 <h5 class="test-status text-pass">testCreateAllocation_emptyMaTaiSan</h5>
-<span class='badge badge-success'>05.17.2025 8:06:49 PM</span>
-<span class='badge badge-danger'>05.17.2025 8:06:55 PM</span>
-<span class='badge badge-default'>00:00:06:072</span>
+<span class='badge badge-success'>05.22.2025 10:54:44 PM</span>
+<span class='badge badge-danger'>05.22.2025 10:54:50 PM</span>
+<span class='badge badge-default'>00:00:06:204</span>
 &middot; <span class='uri-anchor badge badge-default'>#test-id=3</span>
 <span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
 <span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
@@ -193,7 +223,7 @@
   <tbody>
       <tr class="event-row">
         <td><span class="badge log pass-bg">Pass</span></td>
-        <td>8:06:55 PM</td>
+        <td>10:54:50 PM</td>
         <td>
           Test passed
         </td>
@@ -210,7 +240,7 @@
           <div class="test-detail">
             <p class="name">testCreateAllocation_emptyMaKho</p>
             <p class="text-sm">
-              <span>8:06:56 PM</span> / <span>00:00:06:028</span>
+              <span>10:54:51 PM</span> / <span>00:00:06:091</span>
               <span class="badge pass-bg log float-right">Pass</span>
             </p>
           </div>
@@ -219,9 +249,9 @@
 <div class="p-v-10">
 <div class="info">
 <h5 class="test-status text-pass">testCreateAllocation_emptyMaKho</h5>
-<span class='badge badge-success'>05.17.2025 8:06:56 PM</span>
-<span class='badge badge-danger'>05.17.2025 8:07:02 PM</span>
-<span class='badge badge-default'>00:00:06:028</span>
+<span class='badge badge-success'>05.22.2025 10:54:51 PM</span>
+<span class='badge badge-danger'>05.22.2025 10:54:57 PM</span>
+<span class='badge badge-default'>00:00:06:091</span>
 &middot; <span class='uri-anchor badge badge-default'>#test-id=4</span>
 <span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
 <span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
@@ -234,7 +264,7 @@
   <tbody>
       <tr class="event-row">
         <td><span class="badge log pass-bg">Pass</span></td>
-        <td>8:07:02 PM</td>
+        <td>10:54:57 PM</td>
         <td>
           Test passed
         </td>
@@ -251,7 +281,7 @@
           <div class="test-detail">
             <p class="name">testCreateAllocation_emptyMaPBTN</p>
             <p class="text-sm">
-              <span>8:07:03 PM</span> / <span>00:00:05:836</span>
+              <span>10:54:58 PM</span> / <span>00:00:05:921</span>
               <span class="badge pass-bg log float-right">Pass</span>
             </p>
           </div>
@@ -260,9 +290,9 @@
 <div class="p-v-10">
 <div class="info">
 <h5 class="test-status text-pass">testCreateAllocation_emptyMaPBTN</h5>
-<span class='badge badge-success'>05.17.2025 8:07:03 PM</span>
-<span class='badge badge-danger'>05.17.2025 8:07:09 PM</span>
-<span class='badge badge-default'>00:00:05:836</span>
+<span class='badge badge-success'>05.22.2025 10:54:58 PM</span>
+<span class='badge badge-danger'>05.22.2025 10:55:04 PM</span>
+<span class='badge badge-default'>00:00:05:921</span>
 &middot; <span class='uri-anchor badge badge-default'>#test-id=5</span>
 <span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
 <span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
@@ -275,7 +305,7 @@
   <tbody>
       <tr class="event-row">
         <td><span class="badge log pass-bg">Pass</span></td>
-        <td>8:07:09 PM</td>
+        <td>10:55:04 PM</td>
         <td>
           Test passed
         </td>
@@ -292,7 +322,7 @@
           <div class="test-detail">
             <p class="name">testCreateAllocation_inCorrectNgayCapPhat</p>
             <p class="text-sm">
-              <span>8:07:10 PM</span> / <span>00:00:05:872</span>
+              <span>10:55:05 PM</span> / <span>00:00:06:144</span>
               <span class="badge pass-bg log float-right">Pass</span>
             </p>
           </div>
@@ -301,9 +331,9 @@
 <div class="p-v-10">
 <div class="info">
 <h5 class="test-status text-pass">testCreateAllocation_inCorrectNgayCapPhat</h5>
-<span class='badge badge-success'>05.17.2025 8:07:10 PM</span>
-<span class='badge badge-danger'>05.17.2025 8:07:15 PM</span>
-<span class='badge badge-default'>00:00:05:872</span>
+<span class='badge badge-success'>05.22.2025 10:55:05 PM</span>
+<span class='badge badge-danger'>05.22.2025 10:55:11 PM</span>
+<span class='badge badge-default'>00:00:06:144</span>
 &middot; <span class='uri-anchor badge badge-default'>#test-id=6</span>
 <span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
 <span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
@@ -316,7 +346,7 @@
   <tbody>
       <tr class="event-row">
         <td><span class="badge log pass-bg">Pass</span></td>
-        <td>8:07:15 PM</td>
+        <td>10:55:11 PM</td>
         <td>
           Test passed
         </td>
@@ -333,7 +363,7 @@
           <div class="test-detail">
             <p class="name">testCreateAllocation_inCorrectMaTaiSan</p>
             <p class="text-sm">
-              <span>8:07:17 PM</span> / <span>00:00:06:033</span>
+              <span>10:55:12 PM</span> / <span>00:00:05:910</span>
               <span class="badge pass-bg log float-right">Pass</span>
             </p>
           </div>
@@ -342,9 +372,9 @@
 <div class="p-v-10">
 <div class="info">
 <h5 class="test-status text-pass">testCreateAllocation_inCorrectMaTaiSan</h5>
-<span class='badge badge-success'>05.17.2025 8:07:17 PM</span>
-<span class='badge badge-danger'>05.17.2025 8:07:23 PM</span>
-<span class='badge badge-default'>00:00:06:033</span>
+<span class='badge badge-success'>05.22.2025 10:55:12 PM</span>
+<span class='badge badge-danger'>05.22.2025 10:55:18 PM</span>
+<span class='badge badge-default'>00:00:05:910</span>
 &middot; <span class='uri-anchor badge badge-default'>#test-id=7</span>
 <span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
 <span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
@@ -357,7 +387,7 @@
   <tbody>
       <tr class="event-row">
         <td><span class="badge log pass-bg">Pass</span></td>
-        <td>8:07:23 PM</td>
+        <td>10:55:18 PM</td>
         <td>
           Test passed
         </td>
@@ -374,7 +404,7 @@
           <div class="test-detail">
             <p class="name">testCreateAllocation_inCorrectMaKho</p>
             <p class="text-sm">
-              <span>8:07:24 PM</span> / <span>00:00:05:819</span>
+              <span>10:55:19 PM</span> / <span>00:00:06:110</span>
               <span class="badge pass-bg log float-right">Pass</span>
             </p>
           </div>
@@ -383,9 +413,9 @@
 <div class="p-v-10">
 <div class="info">
 <h5 class="test-status text-pass">testCreateAllocation_inCorrectMaKho</h5>
-<span class='badge badge-success'>05.17.2025 8:07:24 PM</span>
-<span class='badge badge-danger'>05.17.2025 8:07:29 PM</span>
-<span class='badge badge-default'>00:00:05:819</span>
+<span class='badge badge-success'>05.22.2025 10:55:19 PM</span>
+<span class='badge badge-danger'>05.22.2025 10:55:25 PM</span>
+<span class='badge badge-default'>00:00:06:110</span>
 &middot; <span class='uri-anchor badge badge-default'>#test-id=8</span>
 <span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
 <span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
@@ -398,7 +428,7 @@
   <tbody>
       <tr class="event-row">
         <td><span class="badge log pass-bg">Pass</span></td>
-        <td>8:07:29 PM</td>
+        <td>10:55:25 PM</td>
         <td>
           Test passed
         </td>
@@ -415,7 +445,7 @@
           <div class="test-detail">
             <p class="name">testCreateAllocation_inCorrectMaPBTN</p>
             <p class="text-sm">
-              <span>8:07:30 PM</span> / <span>00:00:06:051</span>
+              <span>10:55:26 PM</span> / <span>00:00:05:977</span>
               <span class="badge pass-bg log float-right">Pass</span>
             </p>
           </div>
@@ -424,9 +454,9 @@
 <div class="p-v-10">
 <div class="info">
 <h5 class="test-status text-pass">testCreateAllocation_inCorrectMaPBTN</h5>
-<span class='badge badge-success'>05.17.2025 8:07:30 PM</span>
-<span class='badge badge-danger'>05.17.2025 8:07:36 PM</span>
-<span class='badge badge-default'>00:00:06:051</span>
+<span class='badge badge-success'>05.22.2025 10:55:26 PM</span>
+<span class='badge badge-danger'>05.22.2025 10:55:32 PM</span>
+<span class='badge badge-default'>00:00:05:977</span>
 &middot; <span class='uri-anchor badge badge-default'>#test-id=9</span>
 <span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
 <span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
@@ -439,7 +469,7 @@
   <tbody>
       <tr class="event-row">
         <td><span class="badge log pass-bg">Pass</span></td>
-        <td>8:07:36 PM</td>
+        <td>10:55:32 PM</td>
         <td>
           Test passed
         </td>
@@ -456,7 +486,7 @@
           <div class="test-detail">
             <p class="name">testCreateAllocation_inCorrectNguoiDung</p>
             <p class="text-sm">
-              <span>8:07:38 PM</span> / <span>00:00:05:884</span>
+              <span>10:55:33 PM</span> / <span>00:00:05:896</span>
               <span class="badge pass-bg log float-right">Pass</span>
             </p>
           </div>
@@ -465,9 +495,9 @@
 <div class="p-v-10">
 <div class="info">
 <h5 class="test-status text-pass">testCreateAllocation_inCorrectNguoiDung</h5>
-<span class='badge badge-success'>05.17.2025 8:07:38 PM</span>
-<span class='badge badge-danger'>05.17.2025 8:07:43 PM</span>
-<span class='badge badge-default'>00:00:05:884</span>
+<span class='badge badge-success'>05.22.2025 10:55:33 PM</span>
+<span class='badge badge-danger'>05.22.2025 10:55:39 PM</span>
+<span class='badge badge-default'>00:00:05:896</span>
 &middot; <span class='uri-anchor badge badge-default'>#test-id=10</span>
 <span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
 <span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
@@ -480,7 +510,7 @@
   <tbody>
       <tr class="event-row">
         <td><span class="badge log pass-bg">Pass</span></td>
-        <td>8:07:43 PM</td>
+        <td>10:55:39 PM</td>
         <td>
           Test passed
         </td>
@@ -497,7 +527,7 @@
           <div class="test-detail">
             <p class="name">testCreateAllocation_nondepartmentaluser</p>
             <p class="text-sm">
-              <span>8:07:44 PM</span> / <span>00:00:06:446</span>
+              <span>10:55:40 PM</span> / <span>00:00:06:281</span>
               <span class="badge fail-bg log float-right">Fail</span>
             </p>
           </div>
@@ -506,9 +536,9 @@
 <div class="p-v-10">
 <div class="info">
 <h5 class="test-status text-fail">testCreateAllocation_nondepartmentaluser</h5>
-<span class='badge badge-success'>05.17.2025 8:07:44 PM</span>
-<span class='badge badge-danger'>05.17.2025 8:07:51 PM</span>
-<span class='badge badge-default'>00:00:06:446</span>
+<span class='badge badge-success'>05.22.2025 10:55:40 PM</span>
+<span class='badge badge-danger'>05.22.2025 10:55:47 PM</span>
+<span class='badge badge-default'>00:00:06:281</span>
 &middot; <span class='uri-anchor badge badge-default'>#test-id=11</span>
 <span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
 <span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
@@ -521,7 +551,7 @@
   <tbody>
       <tr class="event-row">
         <td><span class="badge log fail-bg">Fail</span></td>
-        <td>8:07:51 PM</td>
+        <td>10:55:47 PM</td>
         <td>
           <textarea readonly class="code-block">java.lang.AssertionError: Thông báo lỗi không hiển thị expected [true] but found [false]
 	at org.testng.Assert.fail(Assert.java:111)
@@ -569,7 +599,7 @@
           <div class="test-detail">
             <p class="name">testCreateAllocation_NCPnhoNTN</p>
             <p class="text-sm">
-              <span>8:07:52 PM</span> / <span>00:00:05:977</span>
+              <span>10:55:48 PM</span> / <span>00:00:05:923</span>
               <span class="badge pass-bg log float-right">Pass</span>
             </p>
           </div>
@@ -578,9 +608,9 @@
 <div class="p-v-10">
 <div class="info">
 <h5 class="test-status text-pass">testCreateAllocation_NCPnhoNTN</h5>
-<span class='badge badge-success'>05.17.2025 8:07:52 PM</span>
-<span class='badge badge-danger'>05.17.2025 8:07:58 PM</span>
-<span class='badge badge-default'>00:00:05:977</span>
+<span class='badge badge-success'>05.22.2025 10:55:48 PM</span>
+<span class='badge badge-danger'>05.22.2025 10:55:54 PM</span>
+<span class='badge badge-default'>00:00:05:923</span>
 &middot; <span class='uri-anchor badge badge-default'>#test-id=12</span>
 <span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
 <span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
@@ -593,7 +623,7 @@
   <tbody>
       <tr class="event-row">
         <td><span class="badge log pass-bg">Pass</span></td>
-        <td>8:07:58 PM</td>
+        <td>10:55:54 PM</td>
         <td>
           Test passed
         </td>
@@ -610,7 +640,7 @@
           <div class="test-detail">
             <p class="name">testCreateAllocation_NCPlonNHT</p>
             <p class="text-sm">
-              <span>8:07:59 PM</span> / <span>00:00:04:511</span>
+              <span>10:55:55 PM</span> / <span>00:00:04:511</span>
               <span class="badge fail-bg log float-right">Fail</span>
             </p>
           </div>
@@ -619,8 +649,8 @@
 <div class="p-v-10">
 <div class="info">
 <h5 class="test-status text-fail">testCreateAllocation_NCPlonNHT</h5>
-<span class='badge badge-success'>05.17.2025 8:07:59 PM</span>
-<span class='badge badge-danger'>05.17.2025 8:08:03 PM</span>
+<span class='badge badge-success'>05.22.2025 10:55:55 PM</span>
+<span class='badge badge-danger'>05.22.2025 10:55:59 PM</span>
 <span class='badge badge-default'>00:00:04:511</span>
 &middot; <span class='uri-anchor badge badge-default'>#test-id=13</span>
 <span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
@@ -634,7 +664,7 @@
   <tbody>
       <tr class="event-row">
         <td><span class="badge log fail-bg">Fail</span></td>
-        <td>8:08:03 PM</td>
+        <td>10:55:59 PM</td>
         <td>
           <textarea readonly class="code-block">java.lang.AssertionError: Popup lỗi không hiển thị expected [true] but found [false]
 	at org.testng.Assert.fail(Assert.java:111)
@@ -682,7 +712,7 @@
           <div class="test-detail">
             <p class="name">testCreateAllocation_TrangThaiDaCapPhat</p>
             <p class="text-sm">
-              <span>8:08:07 PM</span> / <span>00:00:21:333</span>
+              <span>10:56:02 PM</span> / <span>00:00:21:183</span>
               <span class="badge pass-bg log float-right">Pass</span>
             </p>
           </div>
@@ -691,9 +721,9 @@
 <div class="p-v-10">
 <div class="info">
 <h5 class="test-status text-pass">testCreateAllocation_TrangThaiDaCapPhat</h5>
-<span class='badge badge-success'>05.17.2025 8:08:07 PM</span>
-<span class='badge badge-danger'>05.17.2025 8:08:28 PM</span>
-<span class='badge badge-default'>00:00:21:333</span>
+<span class='badge badge-success'>05.22.2025 10:56:02 PM</span>
+<span class='badge badge-danger'>05.22.2025 10:56:24 PM</span>
+<span class='badge badge-default'>00:00:21:183</span>
 &middot; <span class='uri-anchor badge badge-default'>#test-id=14</span>
 <span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
 <span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
@@ -706,7 +736,7 @@
   <tbody>
       <tr class="event-row">
         <td><span class="badge log pass-bg">Pass</span></td>
-        <td>8:08:28 PM</td>
+        <td>10:56:24 PM</td>
         <td>
           Test passed
         </td>
@@ -729,10 +759,43 @@
 <div class="test-list">
 <div class="test-list-tools">
 <ul class="tools pull-left"><li><a href=""><span class="font-size-14">Exception</span></a></li></ul>
-<ul class="tools text-right"><li><a href="#"><span class="badge badge-primary">1</span></a></li></ul>
+<ul class="tools text-right"><li><a href="#"><span class="badge badge-primary">2</span></a></li></ul>
 </div>
 <div class="test-list-wrapper scrollable">
 <ul class="test-list-item">
+<li class="test-item">
+<div class="test-detail">
+<span class="meta">
+<span class='badge log badge-danger'>1</span>
+</span>
+<p class="name">java.lang.NullPointerException</p>
+<p class="duration text-sm">1 tests</p>
+</div>
+<div class="test-contents d-none">
+<div class="info">
+<h4>java.lang.NullPointerException</h4>
+<span status="fail" class='badge log badge-danger'>1 failed</span>
+</div>
+<table class='table table-sm mt-4'>
+<thead>
+<tr>
+<th class="status-col">Status</th>
+<th class="timestamp-col">Timestamp</th>
+<th>TestName</th>
+</tr>
+</thead>
+<tbody>
+<tr class="tag-test-status" status="fail">
+<td><span class="badge log fail-bg">Fail</span></td>
+<td>22:54:33 PM</td>
+<td>
+<a href="#" class="linked" test-id='2' id='2'>testCreateAllocation_emptyNgayChungTu</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
 <li class="test-item">
 <div class="test-detail">
 <span class="meta">
@@ -757,14 +820,14 @@
 <tbody>
 <tr class="tag-test-status" status="fail">
 <td><span class="badge log fail-bg">Fail</span></td>
-<td>20:07:44 PM</td>
+<td>22:55:40 PM</td>
 <td>
 <a href="#" class="linked" test-id='11' id='11'>testCreateAllocation_nondepartmentaluser</a>
 </td>
 </tr>
 <tr class="tag-test-status" status="fail">
 <td><span class="badge log fail-bg">Fail</span></td>
-<td>20:07:59 PM</td>
+<td>22:55:55 PM</td>
 <td>
 <a href="#" class="linked" test-id='13' id='13'>testCreateAllocation_NCPlonNHT</a>
 </td>
@@ -786,25 +849,25 @@
 <div class="col-md-3">
 <div class="card"><div class="card-body">
 <p class="m-b-0">Started</p>
-<h3>May 17, 2025 08:06:18 PM</h3>
+<h3>May 22, 2025 10:54:13 PM</h3>
 </div></div>
 </div>
 <div class="col-md-3">
 <div class="card"><div class="card-body">
 <p class="m-b-0">Ended</p>
-<h3>May 17, 2025 08:08:32 PM</h3>
+<h3>May 22, 2025 10:56:27 PM</h3>
 </div></div>
 </div>
 <div class="col-md-3">
 <div class="card"><div class="card-body">
 <p class="m-b-0 text-pass">Tests Passed</p>
-<h3>12</h3>
+<h3>11</h3>
 </div></div>
 </div>
 <div class="col-md-3">
 <div class="card"><div class="card-body">
 <p class="m-b-0 text-fail">Tests Failed</p>
-<h3>2</h3>
+<h3>3</h3>
 </div></div>
 </div>
 </div>
@@ -820,12 +883,12 @@
 </div>
 </div>
 <div class="card-footer">
-<div><small data-tooltip='85%'>
-<b>12</b> tests passed
+<div><small data-tooltip='78%'>
+<b>11</b> tests passed
 </small>
 </div>
 <div>
-<small data-tooltip='14%'><b>2</b> tests failed,
+<small data-tooltip='21%'><b>3</b> tests failed,
 <b>0</b> skipped, <b data-tooltip='0%'>0</b> others
 </small>
 </div>
@@ -843,9 +906,9 @@
 </div>
 </div>
 <div class="card-footer">
-<div><small data-tooltip='85%'><b>12</b> events passed</small></div>
+<div><small data-tooltip='78%'><b>11</b> events passed</small></div>
 <div>
-<small data-tooltip='14%'><b>2</b> events failed,
+<small data-tooltip='21%'><b>3</b> events failed,
 <b data-tooltip='%'>0</b> others
 </small>
 </div>
@@ -862,7 +925,7 @@
 </div></div>
 <script>
 var timeline = {
-"Taimau":0.176,"testCreateAllocation_emptyNgayChungTu":10.674,"testCreateAllocation_emptyMaTaiSan":6.072,"testCreateAllocation_emptyMaKho":6.028,"testCreateAllocation_emptyMaPBTN":5.836,"testCreateAllocation_inCorrectNgayCapPhat":5.872,"testCreateAllocation_inCorrectMaTaiSan":6.033,"testCreateAllocation_inCorrectMaKho":5.819,"testCreateAllocation_inCorrectMaPBTN":6.051,"testCreateAllocation_inCorrectNguoiDung":5.884,"testCreateAllocation_nondepartmentaluser":6.446,"testCreateAllocation_NCPnhoNTN":5.977,"testCreateAllocation_NCPlonNHT":4.511,"testCreateAllocation_TrangThaiDaCapPhat":21.333
+"Taimau":0.038,"testCreateAllocation_emptyNgayChungTu":9.372,"testCreateAllocation_emptyMaTaiSan":6.204,"testCreateAllocation_emptyMaKho":6.091,"testCreateAllocation_emptyMaPBTN":5.921,"testCreateAllocation_inCorrectNgayCapPhat":6.144,"testCreateAllocation_inCorrectMaTaiSan":5.91,"testCreateAllocation_inCorrectMaKho":6.11,"testCreateAllocation_inCorrectMaPBTN":5.977,"testCreateAllocation_inCorrectNguoiDung":5.896,"testCreateAllocation_nondepartmentaluser":6.281,"testCreateAllocation_NCPnhoNTN":5.923,"testCreateAllocation_NCPlonNHT":4.511,"testCreateAllocation_TrangThaiDaCapPhat":21.183
 };
 </script>
 <div class="row">
@@ -871,8 +934,8 @@ var timeline = {
 <script>
 var statusGroup = {
 parentCount: 5,
-passParent: 12,
-failParent: 2,
+passParent: 11,
+failParent: 3,
 warningParent: 0,
 skipParent: 0,
 childCount: 5,
@@ -888,8 +951,8 @@ warningGrandChild: 0,
 skipGrandChild: 0,
 infoGrandChild: 0,
 eventsCount: 5,
-passEvents: 12,
-failEvents: 2,
+passEvents: 11,
+failEvents: 3,
 warningEvents: 0,
 skipEvents: 0,
 infoEvents: 0

@@ -388,7 +388,7 @@ public class DataBaseUtils {
                 "    JOIN tbl_voucher v ON vdt.voucher_id = v.id " +
                 "    WHERE v.allocation_status_id = ?" +
                 ") "+
-                "ORDER BY a.date_of_reception DESC, " +
+                "ORDER BY " +
                 "a.code DESC " +
                 "LIMIT ?";
 

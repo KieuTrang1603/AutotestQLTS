@@ -14,6 +14,7 @@ import utils.MyUtil;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class All_VoucherPageWeb {
     private final WebDriver driver;
@@ -280,4 +281,10 @@ public class All_VoucherPageWeb {
         Cookie jsessionid = driver.manage().getCookieNamed("JSESSIONID");
         return jsessionid != null ? "JSESSIONID=" + jsessionid.getValue() : "";
     }
+
+    public Set<Cookie> getCookies(){
+        Set<Cookie> cookies = driver.manage().getCookies();
+        return cookies;
+    }
+
 }

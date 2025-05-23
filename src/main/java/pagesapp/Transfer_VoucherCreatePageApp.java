@@ -55,6 +55,21 @@ public class Transfer_VoucherCreatePageApp {
     @FindBy(xpath = "//android.view.View[contains(@content-desc, 'Lưu')]")
     private WebElement luu_btn;
 
+    //may that
+//    @FindBy(xpath = "//android.view.View[@content-desc='Phòng bàn giao']/following-sibling::android.widget.Button")
+//    private WebElement phongBanBanGiaoInput;
+//
+//    @FindBy(xpath = "//android.view.View[@content-desc='Người bàn giao']/following-sibling::android.widget.Button")
+//    private WebElement nguoiBanGiaoInput;
+//
+//    @FindBy(xpath = "//android.view.View[@content-desc='Trạng thái']/following-sibling::android.widget.Button")
+//    private WebElement trangThaiPhieuInput;
+//
+//    @FindBy(xpath = "//android.view.View[@content-desc='Phòng tiếp nhận']/following-sibling::android.widget.Button")
+//    private WebElement phongBanTiepNhanInput;
+//
+//    @FindBy(xpath = "//android.view.View[@content-desc='Người tiếp nhận']/following-sibling::android.widget.Button")
+//    private WebElement nguoiTiepNhanInput;
     // Khởi tạo các phần tử giao diện bằng Page Factory
     public Transfer_VoucherCreatePageApp(AndroidDriver driver) {
         this.driver = driver;
