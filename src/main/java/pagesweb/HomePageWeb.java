@@ -78,6 +78,11 @@ public class HomePageWeb {
     }
 
     public void Transfer_voucher_ui(){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         manager.click();
         manager_tscd.click();
         transfer_voucher_tscd.click();

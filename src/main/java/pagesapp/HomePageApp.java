@@ -72,14 +72,17 @@ public class HomePageApp {
 
     public void setLogOutAM(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement logOutElement = wait.until(
-                ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ScrollView/android.view.View[4]"))
-        );
-
+        WebElement logOutElement;
+        try {
+            logOutElement = wait.until(
+                    ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ScrollView/android.view.View[4]"))
+            );
+        } catch (Exception e){
         //máy thật
-//        WebElement logOutElement = wait.until(
-//                ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View[4]"))
-//        );
+            logOutElement = wait.until(
+                    ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View[4]"))
+            );
+        }
         logOutElement.click();
         LogOutPageApp logOutPageApp = new LogOutPageApp(driver);
         logOutPageApp.tapLogOutView();
@@ -96,9 +99,16 @@ public class HomePageApp {
 
     public void setLogOutORG(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement logOutElement = wait.until(
-                ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.ScrollView/android.view.View[3]"))
-        );
+        WebElement logOutElement;
+        try{
+            logOutElement = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.ScrollView/android.view.View[3]"))
+            );}
+        catch (Exception e){
+        //máy thật
+            logOutElement = wait.until(
+                    ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View[3]"))
+            );}
         logOutElement.click();
         LogOutPageApp logOutPageApp = new LogOutPageApp(driver);
         logOutPageApp.tapLogOutView();

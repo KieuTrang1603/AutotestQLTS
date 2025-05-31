@@ -115,7 +115,7 @@ public class Allocations_VoucherTestValidateApp extends BaseTestApp {
     @Test(priority = 8)
     public void testNguoiTiepNhan(){
         All_VoucherCreatePageApp all = new All_VoucherCreatePageApp(DriverManager.getAppiumDriver());
-        all.chonPhongBanTiepNhanInput();
+        all.chonPhongBanTiepNhanInputCP();
         String maPTN = MyUtil.getMaPhong(all.getPhongBanTiepNhanInput());
         try {
             String department_id = DataBaseUtils.getDepartmentIdByCode(maPTN);

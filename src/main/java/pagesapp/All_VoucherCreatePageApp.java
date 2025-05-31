@@ -36,20 +36,20 @@ public class All_VoucherCreatePageApp {
     @FindBy(xpath = "//android.view.View[contains(@content-desc, 'Chọn ngày')]")
     private WebElement chonNgayChungTu;
 
-    @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[1]/android.view.View[1]/android.view.View")
-    private WebElement phongBanBanGiaoInput;
-
-    @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[2]")
-    private WebElement nguoiBanGiaoInput;
-
-    @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[3]")
-    private WebElement trangThaiPhieuInput;
-
-    @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[4]")
-    private WebElement phongBanTiepNhanInput;
-
-    @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[5]")
-    private WebElement nguoiTiepNhanInput;
+//    @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[1]/android.view.View[1]/android.view.View")
+//    private WebElement phongBanBanGiaoInput;
+//
+//    @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[2]")
+//    private WebElement nguoiBanGiaoInput;
+//
+//    @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[3]")
+//    private WebElement trangThaiPhieuInput;
+//
+//    @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[4]")
+//    private WebElement phongBanTiepNhanInput;
+//
+//    @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[5]")
+//    private WebElement nguoiTiepNhanInput;
 
     @FindBy(xpath = "//android.widget.Button[contains(@content-desc, 'Chọn tài sản cấp phát')]")
     private WebElement chonTS;
@@ -59,6 +59,23 @@ public class All_VoucherCreatePageApp {
 
     @FindBy(xpath = "//android.widget.Button[contains(@content-desc, 'Lưu')]")
     private WebElement luu_btn;
+
+    //maythat
+
+    @FindBy(xpath = "//android.view.View[@content-desc='Phòng bàn giao']/following-sibling::android.widget.Button//android.view.View[1]//android.view.View")
+    private WebElement phongBanBanGiaoInput;
+
+    @FindBy(xpath = "//android.view.View[@content-desc='Người bàn giao']/following-sibling::android.widget.Button")
+    private WebElement nguoiBanGiaoInput;
+
+    @FindBy(xpath = "//android.view.View[@content-desc='Trạng thái phiếu']/following-sibling::android.widget.Button")
+    private WebElement trangThaiPhieuInput;
+
+    @FindBy(xpath = "//android.view.View[@content-desc='Phòng tiếp nhận']/following-sibling::android.widget.Button")
+    private WebElement phongBanTiepNhanInput;
+
+    @FindBy(xpath = "//android.view.View[@content-desc='Người tiếp nhận']/following-sibling::android.widget.Button")
+    private WebElement nguoiTiepNhanInput;
 
     // Khởi tạo các phần tử giao diện bằng Page Factory
     public All_VoucherCreatePageApp(AndroidDriver driver) {

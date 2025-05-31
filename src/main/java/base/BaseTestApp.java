@@ -65,8 +65,8 @@ public class BaseTestApp {
 
         options.setPlatformName("Android");
         options.setAutomationName("UiAutomator2");
-        options.setDeviceName("emulator-5554");
-    //    options.setDeviceName("3405261611001RE");
+    //    options.setDeviceName("emulator-5554");
+        options.setDeviceName("R58M61WSWFV");
         options.setAppPackage("vn.com.oceantech.asset_mobile");
         options.setAppActivity("vn.com.oceantech.asset_mobile.MainActivity");
         options.setCapability("enableImageInjection",true);
@@ -133,27 +133,48 @@ public class BaseTestApp {
 //        AndroidDriver driver;
 //        DesiredCapabilities caps = new DesiredCapabilities();
 //        caps.setCapability("platformName", "android");
-//        caps.setCapability("deviceName", "emulator-5554"); // Thay bằng ID thiết bị thật nếu cần
+////        caps.setCapability("deviceName", "emulator-5554"); // Thay bằng ID thiết bị thật nếu cần
+//        caps.setCapability("deviceName", "3405261611001RE");
 //        caps.setCapability("automationName", "UiAutomator2");
 //        caps.setCapability("appPackage", "vn.com.oceantech.asset_mobile");
 //        caps.setCapability("appActivity", "vn.com.oceantech.asset_mobile.MainActivity");
 ////        caps.setCapability(MobileCapabilityType.NO_RESET, true); // Giữ trạng thái đăng nhập
 //
-//        driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), caps);
+//        driver = new AndroidDriver(new URL("http://192.168.75.1:4723/wd/hub"), caps);
 //        DriverManager.setAppiumDriver(driver);
 //        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 //
 //        // Tìm các ô nhập mã cơ sở bằng XPath và nhập giá trị
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//        // Tìm các ô nhập mã cơ sở bằng XPath và nhập giá trị
 //        List<WebElement> editTexts = driver.findElements(By.xpath("//android.widget.EditText"));
 //        System.out.println("Số lượng ô nhập liệu tìm thấy: " + editTexts.size());
 //        if (!editTexts.isEmpty()) {
-//            editTexts.getFirst().click();
-//            WebElement inputField = editTexts.getFirst();
-//            Actions actions = new Actions(driver);
-//            actions.sendKeys(inputField, "11111").perform();
+////            editTexts.getFirst().click();
+////            WebElement inputField = editTexts.getFirst();
+//////            Actions actions = new Actions(driver);
+//////            actions.sendKeys(inputField, "11111").perform();
+//
+//        //dùng máy thật
+//            WebElement inputField = editTexts.get(0); // lấy ô đầu tiên
+//            wait.until(ExpectedConditions.elementToBeClickable(inputField));
+//            inputField.click();
+//            inputField.clear();
+//            if (inputField.getText().isEmpty()) {
+//                System.out.println("Ô input vẫn trống, dùng adb shell để nhập text...");
+//                driver.executeScript("mobile: shell", Map.of(
+//                        "command", "input",
+////                        "args", List.of("text", "11111")
+//                        "args", List.of("text", "00000")
+//                ));
+//            } else {
+//                System.out.println("Text đã nhập thành công bằng sendKeys!");
+//            }
+//            //hết dùng máy that
 //        } else {
 //            System.out.println("Không tìm thấy ô nhập liệu nào.");
 //        }
+//
 //
 //        // Tìm nút "Xác nhận" và click vào
 ////        driver.findElement(By.xpath("//android.widget.Button[@content-desc='Xác nhận']")).click(); //dev đang bỏ

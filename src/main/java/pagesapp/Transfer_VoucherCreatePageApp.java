@@ -31,21 +31,6 @@ public class Transfer_VoucherCreatePageApp {
     @FindBy(xpath = "//android.view.View[contains(@content-desc, 'Ngày chứng từ')]/following-sibling::android.view.View[2]")
     private WebElement ngayChungTuInput;
 
-    @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[1]")
-    private WebElement trangThaiPhieuInput;
-
-    @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[2]")
-    private WebElement phongBanBanGiaoInput;
-
-    @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[3]")
-    private WebElement nguoiBanGiaoInput;
-
-    @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[4]")
-    private WebElement phongBanTiepNhanInput;
-
-    @FindBy(xpath = "//android.widget.ScrollView/android.widget.Button[5]")
-    private WebElement nguoiTiepNhanInput;
-
     @FindBy(xpath = "//android.widget.Button[contains(@content-desc, 'Chọn tài sản')]")
     private WebElement chonTS;
 
@@ -56,20 +41,20 @@ public class Transfer_VoucherCreatePageApp {
     private WebElement luu_btn;
 
     //may that
-//    @FindBy(xpath = "//android.view.View[@content-desc='Phòng bàn giao']/following-sibling::android.widget.Button")
-//    private WebElement phongBanBanGiaoInput;
-//
-//    @FindBy(xpath = "//android.view.View[@content-desc='Người bàn giao']/following-sibling::android.widget.Button")
-//    private WebElement nguoiBanGiaoInput;
-//
-//    @FindBy(xpath = "//android.view.View[@content-desc='Trạng thái']/following-sibling::android.widget.Button")
-//    private WebElement trangThaiPhieuInput;
-//
-//    @FindBy(xpath = "//android.view.View[@content-desc='Phòng tiếp nhận']/following-sibling::android.widget.Button")
-//    private WebElement phongBanTiepNhanInput;
-//
-//    @FindBy(xpath = "//android.view.View[@content-desc='Người tiếp nhận']/following-sibling::android.widget.Button")
-//    private WebElement nguoiTiepNhanInput;
+    @FindBy(xpath = "//android.view.View[@content-desc='Phòng bàn giao']/following-sibling::android.widget.Button")
+    private WebElement phongBanBanGiaoInput;
+
+    @FindBy(xpath = "//android.view.View[@content-desc='Người bàn giao']/following-sibling::android.widget.Button")
+    private WebElement nguoiBanGiaoInput;
+
+    @FindBy(xpath = "//android.view.View[@content-desc='Trạng thái']/following-sibling::android.widget.Button")
+    private WebElement trangThaiPhieuInput;
+
+    @FindBy(xpath = "//android.view.View[@content-desc='Phòng tiếp nhận']/following-sibling::android.widget.Button")
+    private WebElement phongBanTiepNhanInput;
+
+    @FindBy(xpath = "//android.view.View[@content-desc='Người tiếp nhận']/following-sibling::android.widget.Button")
+    private WebElement nguoiTiepNhanInput;
     // Khởi tạo các phần tử giao diện bằng Page Factory
     public Transfer_VoucherCreatePageApp(AndroidDriver driver) {
         this.driver = driver;
@@ -146,7 +131,7 @@ public class Transfer_VoucherCreatePageApp {
 
     public String getPhongBanBanGiao() {
         WebElement phongBanBanGiaotext = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//android.widget.ScrollView/android.widget.Button[2]/android.view.View[1]/android.view.View")
+                By.xpath("//android.view.View[@content-desc='Phòng bàn giao']/following-sibling::android.widget.Button//android.view.View[1]//android.view.View")
         ));
         return PageAppUtil.getValueContent(phongBanBanGiaotext);
     }
@@ -231,7 +216,7 @@ public class Transfer_VoucherCreatePageApp {
     }
 
     public void clearPhongBanBanGiao(){
-        driver.findElements(By.xpath("//android.widget.ScrollView/android.widget.Button[2]/android.view.View[2]"))
+        driver.findElements(By.xpath("//android.view.View[@content-desc='Phòng bàn giao']/following-sibling::android.widget.Button//android.view.View[2]"))
                 .stream()
                 .filter(WebElement::isDisplayed)
                 .findFirst()
@@ -304,7 +289,7 @@ public class Transfer_VoucherCreatePageApp {
 
     public String getPhongBanTiepNhan() {
         WebElement phongBanTiepNhantext = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//android.widget.ScrollView/android.widget.Button[4]/android.view.View[1]/android.view.View")
+                By.xpath("//android.view.View[@content-desc='Phòng tiếp nhận']/following-sibling::android.widget.Button//android.view.View[1]//android.view.View")
         ));
         return PageAppUtil.getValueContent(phongBanTiepNhantext);
     }
@@ -382,7 +367,7 @@ public class Transfer_VoucherCreatePageApp {
     }
 
     public void clearPhongBanTiepNhan(){
-        driver.findElements(By.xpath("//android.widget.ScrollView/android.widget.Button[4]/android.view.View[2]"))
+        driver.findElements(By.xpath("//android.view.View[@content-desc='Phòng tiếp nhận']/following-sibling::android.widget.Button//android.view.View[2]"))
                 .stream()
                 .filter(WebElement::isDisplayed)
                 .findFirst()

@@ -30,7 +30,6 @@ public class LoginTestApp extends BaseTestApp {
             System.out.println("Đăng nhập thành công!");
         } else {
             System.out.println("Đăng nhập thất bại!");
-//            Assert.assertFalse(loginPageapp.getErrorMessage().isEmpty(), "Lỗi hiển thị không mong đợi!");
         }
         homePageApp.setLogOutORG();
     }
@@ -44,9 +43,7 @@ public class LoginTestApp extends BaseTestApp {
             System.out.println("Đăng nhập thành công!");
         } else {
             System.out.println("Đăng nhập thất bại!");
-//            Assert.assertFalse(loginPageapp.getErrorMessage().isEmpty(), "Lỗi hiển thị không mong đợi!");
         }
-
         homePageApp.setLogOutAM();
     }
 
@@ -59,7 +56,6 @@ public class LoginTestApp extends BaseTestApp {
             System.out.println("Đăng nhập thành công!");
         } else {
             System.out.println("Đăng nhập thất bại!");
-//            Assert.assertFalse(loginPageapp.getErrorMessage().isEmpty(), "Lỗi hiển thị không mong đợi!");
         }
         homePageApp.setLogOutAU();
     }
@@ -73,7 +69,6 @@ public class LoginTestApp extends BaseTestApp {
             System.out.println("Đăng nhập thành công!");
         } else {
             System.out.println("Đăng nhập thất bại!");
-//            Assert.assertFalse(loginPageapp.getErrorMessage().isEmpty(), "Lỗi hiển thị không mong đợi!");
         }
         homePageApp.setLogOutAU();
     }
