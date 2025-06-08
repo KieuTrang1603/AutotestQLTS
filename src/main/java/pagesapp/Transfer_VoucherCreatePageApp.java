@@ -66,7 +66,10 @@ public class Transfer_VoucherCreatePageApp {
         return PageUtil.getValueText(ngayTaoPhieuInput);
     }
     public boolean isNgayTaoPhieuReadonly(){
-        return PageAppUtil.isNgayTaoPhieuReadonly(ngayTaoPhieuInput);
+        ngayTaoPhieuInput.click();
+        boolean isDatePickerVisible = driver.findElements(By.xpath("//android.view.View[contains(@content-desc, 'Chọn ngày')]")).size() > 0;
+        System.out.println("Date Picker visible: " + isDatePickerVisible);
+        return isDatePickerVisible;
     }
 
     public String getNgayChungTuValue() {
@@ -74,7 +77,10 @@ public class Transfer_VoucherCreatePageApp {
     }
 
     public boolean isNgayChungTuEdit(){
-        return PageAppUtil.isEdit(ngayChungTuInput);
+        ngayChungTuInput.click();
+        boolean isDatePickerVisible = driver.findElements(By.xpath("//android.view.View[contains(@content-desc, 'Chọn ngày')]")).size() > 0;
+        System.out.println("Date Picker visible: " + isDatePickerVisible);
+        return isDatePickerVisible;
     }
 
     public void openDropdownTrangThaiPhieu(){
@@ -526,6 +532,20 @@ public class Transfer_VoucherCreatePageApp {
             danhsach.get(0).click();
         }
         chon_btn.click();
+    }
+
+    public String chonTSCP(){
+        String maTS;
+        List<WebElement> danhsach = getAllElementOptionsDanhsachTS();
+        WebElement checkbox = danhsach.get(2).findElement(By.xpath(".//android.widget.CheckBox"));
+        String checkedAttribute = checkbox.getAttribute("checked");
+        if(checkedAttribute.equals("false")){
+            danhsach.get(2).click();
+            maTS = danhsach.get(2).getAttribute("content-desc");
+        }else
+            maTS = danhsach.get(2).getAttribute("content-desc");
+        chon_btn.click();
+        return maTS;
     }
 
     public void clearTS(){

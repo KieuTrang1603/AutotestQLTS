@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginPageWeb {
     private final WebDriver driver;
@@ -158,17 +160,37 @@ public class LoginPageWeb {
     }
 
     // Method to test brute force protection
-    public void attemptMultipleLogins(String username, String password, int attempts) {
+    public List<Long> attemptMultipleLogins(String username, String password, int attempts) {
+        List<Long> responseTimes = new ArrayList<>();
+
         for (int i = 0; i < attempts; i++) {
+            long start = System.currentTimeMillis();
+
             login(username, password);
-            waitForAlert(5);
-            // Chấp nhận alert
+            waitForAlert(3);
             acceptAlert();
-            // Check if account gets locked or if there's a CAPTCHA after multiple attempts
-            if (driver.getPageSource().contains("account locked") ||
-                    driver.getPageSource().contains("captcha")) {
+
+            long duration = System.currentTimeMillis() - start;
+            responseTimes.add(duration);
+
+            String pageSource = driver.getPageSource();
+            if (pageSource.contains("account locked") ||
+                    pageSource.contains("captcha") ||
+                    pageSource.contains("too many attempts")) {
                 break;
             }
         }
+
+        return responseTimes;
+    }
+    // Hàm kiểm tra thời gian phản hồi có tăng dần hay không
+    public boolean isIncreasingResponseTime(List<Long> times) {
+        if (times.size() < 3) return false;
+        for (int i = 1; i < times.size(); i++) {
+            if (times.get(i) <= times.get(i - 1)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

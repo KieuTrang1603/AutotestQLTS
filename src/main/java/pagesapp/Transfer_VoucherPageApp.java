@@ -1,6 +1,8 @@
 package pagesapp;
 
+import helpers.AllocationHelper;
 import io.appium.java_client.android.AndroidDriver;
+import model.Allocation;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -14,7 +16,7 @@ import java.util.List;
 public class Transfer_VoucherPageApp {
     private final AndroidDriver driver;
     private final WebDriverWait wait ;
-
+    Allocation allocation;
 
     // Khởi tạo các phần tử giao diện bằng Page Factory
     public Transfer_VoucherPageApp(AndroidDriver driver) {
@@ -51,5 +53,56 @@ public class Transfer_VoucherPageApp {
                 ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='Thêm']"))
         );
         themMoiElement.click();
+    }
+
+    public void searchAsset(String ma){
+        WebElement inputSearch = driver.findElement(By.xpath("//android.widget.EditText")); // hoặc sửa thành id thực tế nếu khác
+        inputSearch.click();
+        inputSearch.clear();
+        inputSearch.sendKeys(ma);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void searchHigh(int a){
+        WebElement searchhigh = driver.findElement(By.xpath("//android.widget.EditText/android.view.View[2]"));
+        searchhigh.click();
+        WebElement trangThai = driver.findElement(By.xpath("//android.widget.Button[@content-desc='Trạng thái']"));
+        trangThai.click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement popup = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View")));
+        List<WebElement> trangThaiItems = popup.findElements(By.xpath(".//android.view.View[@content-desc]"));
+        switch (a){
+            case 1:
+                trangThaiItems.get(0).click();
+                break;
+            case 2:
+                trangThaiItems.get(1).click();
+                break;
+            case 3:
+                trangThaiItems.get(2).click();
+                break;
+        }
+        WebElement xacNhanButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//android.widget.Button[@content-desc='Xác nhận']")));
+        xacNhanButton.click();
+    }
+
+    public Allocation getDuLieuCP(){
+        allocation = AllocationHelper.getAllocationMobile(layDanhSachContentDesc()).get(0);
+        return allocation;
+    }
+    public boolean checkBanghiDieuChuyen(String ma, int a, String PBBG, String PBTN){
+        searchAsset(ma);
+        searchHigh(a);
+        getDuLieuCP();
+        boolean check = false;
+        if(allocation.getPhongGiao().contains(PBBG) && allocation.getPhongNhan().contains(PBTN)){
+            check =true;
+            return check;
+        } else
+            return check;
     }
 }

@@ -1,21 +1,30 @@
 package tests.transf_vouchers;
 
 import base.BaseTestApp;
+import base.BaseTestWeb;
 import drivers.DriverManager;
+import model.Asset;
+import model.Department;
 import model.User;
 import model.UsersRole;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pagesapp.*;
+import pagesweb.Assets_Page;
+import utils.MyUtil;
 import utils.SnackbarScreenshot;
 
 public class Transfer_VoucherTestCreateFunApp extends BaseTestApp {
     Transfer_VoucherPageApp transf_voucher;
     LoginPageApp loginPageapp;
     HomePageApp homePageApp;
+    Assets_Page as;
     @BeforeClass
     public void prepareVoucherCreatePage(){
         loginPageapp = new LoginPageApp(DriverManager.getAppiumDriver());
@@ -26,6 +35,14 @@ public class Transfer_VoucherTestCreateFunApp extends BaseTestApp {
         loginPageapp.login(user.getUsername(), user.getPassword());
         homePageApp.navigationtoTransfer();
         transf_voucher.clickThemmoi();
+        System.setProperty("webdriver.chrome.driver", "C:\\Tools\\ChromeDriver114\\chromedriver.exe");
+
+        ChromeOptions options = new ChromeOptions();
+        options.setBinary("C:\\Tools\\Chrome114\\chrome-win64\\chrome.exe");
+        WebDriver driver = new ChromeDriver(options);
+        driver.manage().window().maximize();
+        driver.get(BaseTestWeb.LOGIN_URL);
+        DriverManager.setWebDriver(driver);
     }
 
     @Test(priority = 1)
@@ -172,7 +189,8 @@ public class Transfer_VoucherTestCreateFunApp extends BaseTestApp {
         transf.chonTrangThaiPhieuInput(1);
         transf.chonPhongBanTiepNhanInput();
         transf.chonNguoiTiepNhanInput();
-        transf.chonTS();
+        Asset taisan = new Asset();
+        taisan.setCode(MyUtil.parseAsset(transf.chonTSCP()).getCode());
         transf.setLuu_btn();
         SnackbarScreenshot snackbar = new SnackbarScreenshot(DriverManager.getAppiumDriver());
         try {
@@ -185,6 +203,17 @@ public class Transfer_VoucherTestCreateFunApp extends BaseTestApp {
         // Kiểm tra xem về trang danh sách Điều chuyển
         Assert.assertFalse(transf.isTransferDialogDisplayed(),
                 "Form chưa bị ẩn sau khi click Lưu với dữ liệu chuẩn");
+        Assert.assertTrue(transf_voucher.checkBanghiDieuChuyen(taisan.getCode(),1, Department.DEPARTMENT_NAME_AM, Department.DEPARTMENT_NAME_AU1),
+                "Chưa hiển thị bản ghi Điều chuyển");
+        // Kiểm tra tài sản ở màn danh sách
+        as= new Assets_Page(DriverManager.getWebDriver());
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        as.navigateToAssetsPagetoLogin(user.getUsername(), user.getPassword());
+        as.closeMenu();
+        // Kiểm tra xem dữ liệu tài sản sau cấp phát
+        Assert.assertTrue(as.checkTSDieuchuyen(taisan.getCode(), 1,Department.DEPARTMENT_NAME_AM, Department.DEPARTMENT_NAME_AU1),
+                "Phòng ban sử dụng Tài sản bị hiển thị sai");
     }
 
     @Test(priority = 9)
@@ -195,7 +224,8 @@ public class Transfer_VoucherTestCreateFunApp extends BaseTestApp {
         transf.chonTrangThaiPhieuInput(2);
         transf.chonPhongBanTiepNhanInput();
         transf.chonNguoiTiepNhanInput();
-        transf.chonTS();
+        Asset taisan = new Asset();
+        taisan.setCode(MyUtil.parseAsset(transf.chonTSCP()).getCode());
         transf.setLuu_btn();
         SnackbarScreenshot snackbar = new SnackbarScreenshot(DriverManager.getAppiumDriver());
         try {
@@ -208,6 +238,17 @@ public class Transfer_VoucherTestCreateFunApp extends BaseTestApp {
         // Kiểm tra xem về trang danh sách Điều chuyển
         Assert.assertFalse(transf.isTransferDialogDisplayed(),
                 "Form chưa bị ẩn sau khi click Lưu với dữ liệu chuẩn");
+        Assert.assertTrue(transf_voucher.checkBanghiDieuChuyen(taisan.getCode(),2, Department.DEPARTMENT_NAME_AM, Department.DEPARTMENT_NAME_AU1),
+                "Chưa hiển thị bản ghi Điều chuyển");
+        // Kiểm tra tài sản ở màn danh sách
+        as= new Assets_Page(DriverManager.getWebDriver());
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        as.navigateToAssetsPagetoLogin(user.getUsername(), user.getPassword());
+        as.closeMenu();
+        // Kiểm tra xem dữ liệu tài sản sau cấp phát
+        Assert.assertTrue(as.checkTSDieuchuyen(taisan.getCode(), 2,Department.DEPARTMENT_NAME_AM, Department.DEPARTMENT_NAME_AU1),
+                "Phòng ban sử dụng Tài sản bị hiển thị sai");
     }
 
     @Test(priority = 10)
@@ -218,7 +259,8 @@ public class Transfer_VoucherTestCreateFunApp extends BaseTestApp {
         transf.chonTrangThaiPhieuInput(3);
         transf.chonPhongBanTiepNhanInput();
         transf.chonNguoiTiepNhanInput();
-        transf.chonTS();
+        Asset taisan = new Asset();
+        taisan.setCode(MyUtil.parseAsset(transf.chonTSCP()).getCode());
         transf.setLuu_btn();
         SnackbarScreenshot snackbar = new SnackbarScreenshot(DriverManager.getAppiumDriver());
         try {
@@ -231,6 +273,17 @@ public class Transfer_VoucherTestCreateFunApp extends BaseTestApp {
         // Kiểm tra xem về trang danh sách Điều chuyển
         Assert.assertFalse(transf.isTransferDialogDisplayed(),
                 "Form chưa bị ẩn sau khi click Lưu với dữ liệu chuẩn");
+        Assert.assertTrue(transf_voucher.checkBanghiDieuChuyen(taisan.getCode(),3, Department.DEPARTMENT_NAME_AM, Department.DEPARTMENT_NAME_AU1),
+                "Chưa hiển thị bản ghi Điều chuyển");
+        // Kiểm tra tài sản ở màn danh sách
+        as= new Assets_Page(DriverManager.getWebDriver());
+        UsersRole Users = null;
+        User user = Users.getUserByRole("AM");
+        as.navigateToAssetsPagetoLogin(user.getUsername(), user.getPassword());
+        as.closeMenu();
+        // Kiểm tra xem dữ liệu tài sản sau cấp phát
+        Assert.assertTrue(as.checkTSDieuchuyen(taisan.getCode(), 3,Department.DEPARTMENT_NAME_AM, Department.DEPARTMENT_NAME_AU1),
+                "Phòng ban sử dụng Tài sản bị hiển thị sai");
     }
 
     @AfterMethod

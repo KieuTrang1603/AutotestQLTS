@@ -18,7 +18,8 @@ public class MyUtil {
     public static final String DOWNLOAD_PATH = "D:\\Tester\\Auto\\Selenium\\Login\\File";
     public static final String FILE_PATH = "D:\\Tester\\Auto\\Selenium\\Login\\File\\Mẫu nhập tài sản đã cấp phát.xlsx";
     public static final String FILE_PATH1 = "D:\\Tester\\Auto\\Selenium\\Login\\File\\Mẫu nhập tài sản đã cấp phát (1).xlsx";
-    public static final String FILE_NAME = "D:\\Tester\\Auto\\Selenium\\Login\\File\\Mẫu nhập tài sản đã cấp phát";
+    public static final String FILE_NAME = "Mẫu nhập tài sản đã cấp phát";
+    public static final String FILE_NAME_ERR = "Mẫu nhập tài sản đã cấp phát (1)";
 
     public static final String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 

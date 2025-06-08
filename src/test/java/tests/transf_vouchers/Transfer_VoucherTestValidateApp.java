@@ -48,7 +48,7 @@ public class Transfer_VoucherTestValidateApp extends BaseTestApp {
         Assert.assertEquals(actualDate, expectedDate, "Ngày tạo phiếu không phải là ngày hiện tại!");
         // 2. Kiểm tra không chỉnh sửa được
         boolean isReadonly = transfer_vou.isNgayTaoPhieuReadonly();
-        Assert.assertTrue(isReadonly, "Trường 'Ngày tạo phiếu' không bị readonly!");
+        Assert.assertTrue(!isReadonly, "Trường 'Ngày tạo phiếu' không bị readonly!");
     }
 
     @Test(priority = 2)

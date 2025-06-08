@@ -14,8 +14,8 @@ import java.util.List;
 
 public class BaseTestWeb {
     //    private static final String LOGIN_URL = "https://asvn.oceantech.com.vn/session/signin";
-    public static final String LOGIN_URL = "http://qltsdemo.xhis.vn/session/signin";
-
+    //public static final String LOGIN_URL = "http://qltsdemo.xhis.vn/session/signin";
+    public static final String LOGIN_URL = "http://bv199.oceantech.com.vn/session/signin";
     @BeforeClass
     public void setUp() {
 //        WebDriver driver;

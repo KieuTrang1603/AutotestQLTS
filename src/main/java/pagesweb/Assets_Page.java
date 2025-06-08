@@ -59,6 +59,20 @@ public class Assets_Page {
         }
     }
 
+    public void searchAssetUSE(String ma){
+        WebElement tabDuocCapSuDung = driver.findElement(By.xpath("//button//span[text()='Được cấp sử dụng']"));
+        tabDuocCapSuDung.click();
+        WebElement inputSearch = driver.findElement(By.id("search_box")); // hoặc sửa thành id thực tế nếu khác
+        inputSearch.clear();
+        inputSearch.sendKeys(ma);
+        inputSearch.sendKeys(Keys.ENTER);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Asset getDuLieuTS(){
         WebElement table = driver.findElement(By.cssSelector("table.MuiTable-root"));
 
@@ -156,4 +170,33 @@ public class Assets_Page {
         return check;
     }
 
+    public boolean checkTSDieuchuyen(String maTS, int a,String tenPBDC, String tenPBSD){
+        AssetStatus status= AssetStatus.IN_USE;
+        searchAssetUSE(maTS);
+        getDuLieuTS();
+        boolean check = false;
+        switch (a){
+            case 1,2:
+                if(asset.getStatus().equals(status.getDescription())){
+                    if(!asset.getUse_department_id().contains(tenPBSD)){
+                        if(asset.getUse_department_id().contains(tenPBDC)){
+                            check =true;
+                            return check;
+                        }
+                    }
+                } else
+                    return check;
+                break;
+            case 3:
+                if(asset.getStatus().equals(status.getDescription())){
+                    if(asset.getUse_department_id().contains(tenPBSD)){
+                        check =true;
+                        return check;
+                    }
+                } else
+                    return check;
+                break;
+        }
+        return check;
+    }
 }

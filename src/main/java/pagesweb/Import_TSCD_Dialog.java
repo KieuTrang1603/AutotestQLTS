@@ -45,7 +45,7 @@ public class Import_TSCD_Dialog {
     }
 
     public boolean downloadFile(){
-        boolean downloaded = FileHelper.waitForDownload(MyUtil.DOWNLOAD_PATH, "Mẫu nhập tài sản đã cấp phát", 20);
+        boolean downloaded = FileHelper.waitForDownload(MyUtil.DOWNLOAD_PATH, MyUtil.FILE_NAME, 20);
         if (downloaded) {
             System.out.println("File đã tải thành công!");
             return true;
@@ -79,7 +79,7 @@ public class Import_TSCD_Dialog {
 
     public boolean downloadFileError(){
         fileError_btn.click();
-        boolean downloaded = FileHelper.waitForDownload(MyUtil.DOWNLOAD_PATH, "Mẫu nhập tài sản đã cấp phát (1)", 20);
+        boolean downloaded = FileHelper.waitForDownload(MyUtil.DOWNLOAD_PATH, MyUtil.FILE_NAME_ERR, 20);
         if (downloaded) {
             System.out.println("File đã tải thành công!");
             return true;

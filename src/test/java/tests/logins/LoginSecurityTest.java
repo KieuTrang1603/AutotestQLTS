@@ -191,16 +191,38 @@ public class LoginSecurityTest extends BaseTestWeb {
 
     @Test(description = "Test brute force protection")
     public void testBruteForceProtection() {
-        // Try multiple failed login attempts to check for account lockout or CAPTCHA
-        loginPageWeb.attemptMultipleLogins("wronguser", "wrongpassword", 5);
+        String username = "wronguser";
+        String password = "wrongpassword";
+        int maxAttempts = 5;
+        List<Long> responseTimes = loginPageWeb.attemptMultipleLogins(username,password,maxAttempts);
+        // Lấy HTML sau lần login cuối cùng
+        String pageSource = DriverManager.getWebDriver().getPageSource();
 
-        // Check if there's any protection mechanism after multiple failed attempts
-        boolean hasProtection = DriverManager.getWebDriver().getPageSource().contains("account locked") ||
-                DriverManager.getWebDriver().getPageSource().contains("captcha") ||
-                DriverManager.getWebDriver().getPageSource().contains("too many attempts");
+        // Kiểm tra các dấu hiệu bảo vệ brute force
+        boolean isAccountLocked = pageSource.toLowerCase().contains("account locked");
+        boolean isCaptchaShown = pageSource.toLowerCase().contains("captcha");
+        boolean isRateLimited = loginPageWeb.isIncreasingResponseTime(responseTimes);
+        boolean isBlockedIp = pageSource.toLowerCase().contains("access denied") ||
+                pageSource.toLowerCase().contains("your ip has been blocked");
 
-        Assert.assertTrue(hasProtection,
-                "Brute force protection may be missing after multiple failed login attempts");
+        boolean hasProtection = isAccountLocked || isCaptchaShown || isBlockedIp || isRateLimited;
+
+        // Báo cáo cụ thể theo từng loại bảo vệ
+        if (isAccountLocked) {
+            System.out.println("Tài khoản đã bị khóa sau nhiều lần đăng nhập sai.");
+        }
+        if (isCaptchaShown) {
+            System.out.println("CAPTCHA xuất hiện sau nhiều lần đăng nhập sai.");
+        }
+        if (isRateLimited) {
+            System.out.println("Hệ thống có dấu hiệu giới hạn tốc độ (tăng thời gian phản hồi)");
+        }
+        if (isBlockedIp) {
+            System.out.println("Có thông báo IP bị chặn hoặc từ chối truy cập.");
+        }
+
+        // Xác minh có ít nhất 1 cơ chế bảo vệ
+        Assert.assertTrue(hasProtection, "Hệ thống có thể thiếu cơ chế bảo vệ brute force.");
     }
 
     @Test(description = "Check that password field is secure in the UI (type and visibility)")
@@ -227,7 +249,7 @@ public class LoginSecurityTest extends BaseTestWeb {
         Set<Cookie> cookies = DriverManager.getWebDriver().manage().getCookies();
         for (Cookie cookie : cookies) {
             String cookieValue = cookie.getValue();
-            Assert.assertFalse(cookieValue.contains("123456"),
+            Assert.assertFalse(cookieValue.contains(user.getPassword()),
                     "Mật khẩu bị lưu trong cookie: " + cookie.getName());
         }
     }
