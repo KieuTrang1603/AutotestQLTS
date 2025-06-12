@@ -66,7 +66,7 @@ public class BaseTestApp {
         options.setPlatformName("Android");
         options.setAutomationName("UiAutomator2");
     //    options.setDeviceName("emulator-5554");
-        options.setDeviceName("R58M61WSWFV");
+        options.setDeviceName("1568508941000K6");
         options.setAppPackage("vn.com.oceantech.asset_mobile");
         options.setAppActivity("vn.com.oceantech.asset_mobile.MainActivity");
         options.setCapability("enableImageInjection",true);

@@ -281,29 +281,44 @@ public class Transfer_VoucherTestCreateFunApp extends BaseTestApp {
         User user = Users.getUserByRole("AM");
         as.navigateToAssetsPagetoLogin(user.getUsername(), user.getPassword());
         as.closeMenu();
-        // Kiểm tra xem dữ liệu tài sản sau cấp phát
-        Assert.assertTrue(as.checkTSDieuchuyen(taisan.getCode(), 3,Department.DEPARTMENT_NAME_AM, Department.DEPARTMENT_NAME_AU1),
+        // Kiểm tra xem dữ liệu tài sản sau điều chuyển PBDC
+        Assert.assertTrue(as.checkTSDieuchuyenFinally(taisan.getCode()),
+                "Phòng ban sử dụng Tài sản bị hiển thị sai");
+        // Kiểm tra xem dữ liệu tài sản sau điều chuyển PBTN
+        as= new Assets_Page(DriverManager.getWebDriver());
+        user = UsersRole.getUserByRole("AU");
+        as.navigateToAssetsPagetoLogin(user.getUsername(), user.getPassword());
+        as.closeMenu();
+        Assert.assertTrue(as.checkTSDieuchuyen(taisan.getCode(),3, Department.DEPARTMENT_NAME_AM, Department.DEPARTMENT_NAME_AU1),
                 "Phòng ban sử dụng Tài sản bị hiển thị sai");
     }
 
     @AfterMethod
     public void resetToAddNewScreen() {
-        Transfer_VoucherCreatePageApp transf = new Transfer_VoucherCreatePageApp(DriverManager.getAppiumDriver());
-        Transfer_VoucherPageApp transfer_voucher = new Transfer_VoucherPageApp(DriverManager.getAppiumDriver());
-
-        // Nếu form thêm mới bị ẩn (không còn), thì click lại "Thêm mới" để reset màn hình
-        if (!transf.isTransferDialogDisplayed()) {
-            transfer_voucher.clickThemmoi();
+        if (DriverManager.getAppiumDriver() != null) {
             try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                Transfer_VoucherCreatePageApp transf = new Transfer_VoucherCreatePageApp(DriverManager.getAppiumDriver());
+                Transfer_VoucherPageApp transfer_voucher = new Transfer_VoucherPageApp(DriverManager.getAppiumDriver());
+
+                if (!transf.isTransferDialogDisplayed()) {
+                    transfer_voucher.clickThemmoi();
+                    Thread.sleep(2000);
+                } else {
+                    boolean isScrollVisible = DriverManager.getAppiumDriver().findElements(
+                            By.xpath("//android.widget.Button[contains(@content-desc, 'Chọn tài sản')]")).size() > 0;
+                    if (!isScrollVisible) {
+                        DriverManager.getAppiumDriver().navigate().back();
+                    }
+                }
+            } catch (org.openqa.selenium.NoSuchSessionException e) {
+                System.out.println("Appium session không còn tồn tại. Bỏ qua reset.");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
-        else {
-        boolean isScrollVisible = DriverManager.getAppiumDriver().findElements(By.xpath("//android.widget.Button[contains(@content-desc, 'Chọn tài sản')]")).size() > 0;
-        if(!isScrollVisible){
-            DriverManager.getAppiumDriver().navigate().back();
-        }}
+
+        if (DriverManager.getWebDriver() != null) {
+            DriverManager.quitWebDriver();
+        }
     }
 }

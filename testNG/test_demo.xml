@@ -1,0 +1,39 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="DemoSuite" verbose="1" parallel="false">
+    <listeners>
+        <listener class-name="helpers.TestListener"/>
+    </listeners>
+    <test name="DemoTestRun">
+        <classes>
+            <class name="tests.transf_vouchers.Transfer_VoucherTestCreateFunApp">
+                <methods>
+                    <include name="testCreateAllocation_TrangThaiDaDieuChuyen"/>
+                </methods>
+            </class>
+
+            <class name="tests.allo_vouchers.web.Allocations_VoucherTestImportExcel">
+                <methods>
+                    <include name="testCreateAllocation_TrangThaiDaCapPhat"/>
+                </methods>
+            </class>
+
+            <class name="tests.allo_vouchers.web.Allocations_VoucherTestAPIWeb">
+            </class>
+
+            <class name="tests.logins.LoginSecurityTest">
+                <methods>
+                    <include name="testTraditionalSqlInjectionLogic"/>
+                    <include name="testSecurePasswordHandling"/>
+                    <include name="testPasswordNotInCookies"/>
+                </methods>
+            </class>
+
+            <class name="tests.logins.LoginPerformanceTest">
+                <methods>
+                    <include name="testLoginPerformance"/>
+                </methods>
+            </class>
+
+        </classes>
+    </test>
+</suite>

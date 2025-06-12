@@ -145,7 +145,11 @@ public class All_VoucherPageWeb {
     }
 
     public List<Allocation> getAllocationRecord(){
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         WebElement firstTable = driver.findElement(
                 By.xpath("(//table[contains(@class, 'MuiTable-root')])[1]")
         );
@@ -218,6 +222,37 @@ public class All_VoucherPageWeb {
         denNgay.sendKeys(MyUtil.currentDate);
     }
 
+    public void searchHigh1(int a, String tenPTN){
+        searchhigh.click();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        WebElement trangThai = searchhigh.findElement(By.xpath("//label[.//text()[contains(.,'Trạng thái')]]/following::input[1]"));
+        trangThai.click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[contains(@id, '-popup')]")));
+        List<WebElement> trangThaiItems = trangThai.findElements(By.xpath("//ul[contains(@id, '-popup')]/li"));
+        switch (a){
+            case 1:
+                trangThaiItems.get(0).click();
+                break;
+            case 2:
+                trangThaiItems.get(3).click();
+                break;
+            case 3:
+                trangThaiItems.get(1).click();
+                break;
+        }
+        WebElement phongTN = searchhigh.findElement(By.xpath("//label[.//text()[contains(.,'Phòng ban tiếp nhận')]]/following::input[1]"));
+        phongTN.click();
+        phongTN.sendKeys(tenPTN);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[contains(@id, '-popup')]")));
+        List<WebElement> phongTNItems = trangThai.findElements(By.xpath("//ul[contains(@id, '-popup')]/li"));
+        phongTNItems.get(0).click();
+    }
+
     public Allocation getDuLieuCP(){
         WebElement table = driver.findElement(By.cssSelector("table.MuiTable-root"));
 
@@ -269,6 +304,18 @@ public class All_VoucherPageWeb {
     public boolean checkBanghiCapphat(String ma, int a, String PBBG, String PBTN){
         searchAsset(ma);
         searchHigh(a,PBTN);
+        getDuLieuCP();
+        boolean check = false;
+        if(allocation.getPhongGiao().contains(PBBG) && allocation.getPhongNhan().contains(PBTN)){
+            check =true;
+            return check;
+        } else
+            return check;
+    }
+
+    public boolean checkBanghiCapphatImport(String ma, int a, String PBBG, String PBTN){
+        searchAsset(ma);
+        searchHigh1(a,PBTN);
         getDuLieuCP();
         boolean check = false;
         if(allocation.getPhongGiao().contains(PBBG) && allocation.getPhongNhan().contains(PBTN)){

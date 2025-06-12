@@ -3,7 +3,7 @@
     <listeners>
         <listener class-name="helpers.TestListener"/>
     </listeners>
-    <test name="Main tain web">
+    <test name="API web">
         <classes>
             <class name="tests.allo_vouchers.web.Allocations_VoucherTestAPIWeb"/>
         </classes>

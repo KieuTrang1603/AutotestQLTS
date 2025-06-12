@@ -48,6 +48,11 @@ public class Assets_Page {
     }
 
     public void searchAsset(String ma){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         WebElement inputSearch = driver.findElement(By.id("search_box")); // hoặc sửa thành id thực tế nếu khác
         inputSearch.clear();
         inputSearch.sendKeys(ma);
@@ -136,6 +141,16 @@ public class Assets_Page {
         return asset;
     }
 
+    public boolean checkDulieuTS(){
+        String expected = "Không có bản ghi nào";
+        WebElement table = driver.findElement(By.cssSelector("table.MuiTable-root"));
+        WebElement noDataCell = table.findElement(By.tagName("td"));
+        if(noDataCell.getText().trim().contains(expected)){
+            return true;
+        }
+        else return false;
+    }
+
     public boolean checkTSCapPhat(String maTS, int a, String tenPBSD){
         AssetStatus status1= AssetStatus.NEW_IN_STORAGE;
         AssetStatus status2= AssetStatus.RETURNED_TO_STORAGE;
@@ -170,13 +185,21 @@ public class Assets_Page {
         return check;
     }
 
+    public boolean checkTSDieuchuyenFinally(String maTS){
+        searchAssetUSE(maTS);
+        if(checkDulieuTS()) {
+            return true;
+        }
+        else return false;
+    }
+
     public boolean checkTSDieuchuyen(String maTS, int a,String tenPBDC, String tenPBSD){
         AssetStatus status= AssetStatus.IN_USE;
-        searchAssetUSE(maTS);
-        getDuLieuTS();
         boolean check = false;
         switch (a){
             case 1,2:
+                searchAssetUSE(maTS);
+                getDuLieuTS();
                 if(asset.getStatus().equals(status.getDescription())){
                     if(!asset.getUse_department_id().contains(tenPBSD)){
                         if(asset.getUse_department_id().contains(tenPBDC)){
@@ -188,6 +211,8 @@ public class Assets_Page {
                     return check;
                 break;
             case 3:
+                searchAsset(maTS);
+                getDuLieuTS();
                 if(asset.getStatus().equals(status.getDescription())){
                     if(asset.getUse_department_id().contains(tenPBSD)){
                         check =true;

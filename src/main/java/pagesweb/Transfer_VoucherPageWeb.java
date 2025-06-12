@@ -43,7 +43,11 @@ public class Transfer_VoucherPageWeb {
     }
 
     public List<Allocation> getAllocationRecord(){
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         WebElement firstTable = driver.findElement(
                 By.xpath("(//table[contains(@class, 'MuiTable-root')])[1]")
         );

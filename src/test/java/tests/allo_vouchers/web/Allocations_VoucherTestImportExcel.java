@@ -202,7 +202,7 @@ public class Allocations_VoucherTestImportExcel extends BaseTestFile {
         // Kiểm tra xem về trang danh sách cấp phát
         Assert.assertFalse(all.isAllocatonDialogDisplayed(),
                 "Form chưa bị ẩn sau khi click Lưu với dữ liệu chuẩn");
-        Assert.assertTrue(all_vou.checkBanghiCapphat(asset.getCode(),3, Department.DEPARTMENT_NAME_AM, tenPBSD),
+        Assert.assertTrue(all_vou.checkBanghiCapphatImport(asset.getCode(),3, Department.DEPARTMENT_NAME_AM, tenPBSD),
                 "Chưa hiển thị bản ghi Cấp phát");
         // Kiểm tra tài sản ở màn danh sách
         as= new Assets_Page(DriverManager.getWebDriver());

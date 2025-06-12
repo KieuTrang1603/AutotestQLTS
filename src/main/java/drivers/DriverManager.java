@@ -33,9 +33,14 @@ public class DriverManager {
     }
 
     public static void quitAppiumDriver() {
-        if (appiumDriver.get() != null) {
-            appiumDriver.get().quit();
-            appiumDriver.remove();
+        if (appiumDriver != null && appiumDriver.get() != null) {
+            try {
+                appiumDriver.get().quit();
+            } catch (org.openqa.selenium.NoSuchSessionException e) {
+                System.out.println("Appium session already ended.");
+            } finally {
+                appiumDriver.remove();
+            }
         }
     }
 }
