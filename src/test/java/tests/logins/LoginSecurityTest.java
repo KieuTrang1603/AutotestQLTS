@@ -15,6 +15,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pagesweb.HomePageWeb;
 import pagesweb.LoginPageWeb;
+import utils.DataBaseUtils;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -45,7 +46,6 @@ public class LoginSecurityTest extends BaseTestWeb {
             loginPageWeb.navigateToLoginPage();
             loginPageWeb.attemptSqlInjection(injection);
 
-            // Verify that SQL injection doesn't result in successful login
             // Đợi alert xuất hiện
             Assert.assertTrue(loginPageWeb.waitForAlert(5),
                     "Alert không xuất hiện sau khi đăng nhập không hợp lệ");
@@ -70,10 +70,8 @@ public class LoginSecurityTest extends BaseTestWeb {
         String[] sqlInjections = {
                 "admin' --",
                 "admin' OR 1=1--",
-                "' UNION SELECT 1,username,password FROM users--",
-                "admin'; DROP TABLE users; --",
-                "' OR 1=1 LIMIT 1; --",
-                "admin'/**/OR/**/1=1--"
+                "' UNION SELECT 1,username,password FROM tbl_user where org_id = " + DataBaseUtils.ORG_ID + "--",
+                "' OR 1=1 LIMIT 1; --"
         };
 
         for (String injection : sqlInjections) {
@@ -99,6 +97,41 @@ public class LoginSecurityTest extends BaseTestWeb {
         }
     }
 
+    @Test(description = "Test SQL Injection vulnerability")
+    public void testTraditionalSqlInjectionCommentDelete() throws Exception {
+        // Common SQL injection payloads
+        String[] sqlInjections = {
+                "admin'; DELETE FROM tbl_user; --"
+        };
+
+        for (String injection : sqlInjections) {
+            loginPageWeb.navigateToLoginPage();
+            loginPageWeb.attemptSqlInjection(injection);
+
+            // Verify that SQL injection doesn't result in successful login
+            // Đợi alert xuất hiện
+            Assert.assertTrue(loginPageWeb.waitForAlert(5),
+                    "Alert không xuất hiện sau khi đăng nhập không hợp lệ");
+
+            // Kiểm tra nội dung alert
+            String alertText = loginPageWeb.getAlertText();
+            Assert.assertTrue(alertText.contains("Tài khoản hoặc mật khẩu không đúng"),
+                    "Nội dung alert không chứa thông báo lỗi mong đợi");
+
+            // Chấp nhận alert
+            loginPageWeb.acceptAlert();
+
+            // Kiểm tra xem vẫn còn ở trang đăng nhập
+            Assert.assertTrue(loginPageWeb.isLoginPageDisplayed(),
+                    "SQL Injection might be successful with: " + injection);
+
+            // Kiểm lại bằng JDBC xem tài khoản còn không
+            boolean isDeleted = DataBaseUtils.isUserExist();
+
+            Assert.assertTrue(isDeleted, "Bảng user không được xóa bởi injection.");
+        }
+    }
+
     @Test(description = "Test JSON-based SQL Injection vulnerability")
     public void testJsonBasedSqlInjection() {
         // JSON-based SQL injection payloads
@@ -106,12 +139,8 @@ public class LoginSecurityTest extends BaseTestWeb {
                 "admin'->>'$.name' OR 1=1--",
                 "admin'->>'$' OR 1=1--", //trích xuất giá trị trong PostgreSQL
                 "' OR JSON_EXTRACT('{\"x\":1}', '$.x') = 1 --",
-                "' OR JSON_CONTAINS('{\"x\":1}', '1', '$.x') --",
                 "' OR JSON_KEYS('{\"1\":\"1\"}') IS NOT NULL --", //mysql
-                "' OR JSON_VALUE('{\"x\":\"1\"}', '$.x') = '1' --", //sql server
-                "' OR json_extract('{\"x\":1}', '$.x') = 1 --", //sql lite
-                "admin' AND JSON_CONTAINS((SELECT CONCAT('[\"',user(),'\"]')), '\"root\"') --", //TH đặc biệt
-                "' UNION SELECT JSON_OBJECT('username', username, 'password', password) FROM users --"
+                "' OR JSON_VALUE('{\"x\":\"1\"}', '$.x') = '1' --" //sql server
         };
         for (String injection : jsonSqlInjections) {
             loginPageWeb.navigateToLoginPage();

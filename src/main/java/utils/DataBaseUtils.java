@@ -18,7 +18,7 @@ public class DataBaseUtils {
     private static final String URL = "jdbc:mysql://localhost:3306/assetvn_bv199";
     private static final String USER = "root";
     private static final String PASSWORD = "kFviK&1466FT@Oct";
-    private static final String ORG_ID = "6af1ff18-f0bd-44ce-bf98-69492806016c";
+    public static final String ORG_ID = "6af1ff18-f0bd-44ce-bf98-69492806016c";
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
@@ -497,5 +497,17 @@ public class DataBaseUtils {
             System.out.println("Không có tài sản phù hợp.");
         }
         return as;
+    }
+
+    public static boolean isUserExist() throws Exception {
+        String query = "SELECT * FROM tbl_user WHERE org_id = ?";
+        Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, ORG_ID);
+        ResultSet rs = statement.executeQuery();
+
+        boolean exists = rs.next();
+        rs.close();
+        return exists;
     }
 }
